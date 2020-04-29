@@ -1,6 +1,7 @@
 package it.unipv.ingsw.k20.model.tournament;
 
 import it.unipv.ingsw.k20.model.match.Match;
+import it.unipv.ingsw.k20.model.team.Team;
 import it.unipv.ingsw.k20.model.manager.Manager;
 
 
@@ -32,6 +33,10 @@ public abstract class Tournament {
 	
 	public abstract void initTournament(int maxDays);
 	
+	public abstract boolean addTeamInTournament(Team t);
+	
+	public abstract boolean removeTeamFromTournament(Team t);
+	
 	public void insertScore(Match m) {;}
 	
 	@Override
@@ -40,7 +45,7 @@ public abstract class Tournament {
 	}
 	
 	/**
-	 * Assegno il torneo al manager.
+	 * Il metodo assegna il torneo al manager.
 	 */
 	public void setTournamentManager(Manager m) {
 		m.addTournament(this);
