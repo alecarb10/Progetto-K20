@@ -62,7 +62,7 @@ public class Manager {
 		}
 	}
 	
-	/* Metodo che aggiunge il Tournament passato come parametro alla mappa. */
+	/* Metodo che aggiunge alla mappa il Tournament passato come parametro. */
 	public void addTournament(Tournament tournament) throws NullPointerException {
 		this.tournaments.put(tournament.getTournamentID(), tournament);
 	}
