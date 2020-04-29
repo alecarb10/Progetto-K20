@@ -5,11 +5,13 @@ import java.util.List;
 
 import it.unipv.ingsw.k20.model.element.Board;
 import it.unipv.ingsw.k20.model.element.Group;
+import it.unipv.ingsw.k20.model.element.TournamentElement;
+import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 
 public class MixedTournament extends Tournament {
 	
-	private List<Group> groupsList;
-	private Board board;
+	private List<TournamentElement> groupsList;
+	private TournamentElement board;
 	
 	public MixedTournament(String name) {
 		super(name);
@@ -17,7 +19,7 @@ public class MixedTournament extends Tournament {
 		this.board=null;
 	}
 	
-	public Board getBoard() {
+	public TournamentElement getBoard() {
 		return this.board;
 	}
 	
@@ -26,7 +28,7 @@ public class MixedTournament extends Tournament {
 			this.board=board;
 	}
 	
-	public List<Group> getGroupsList(){
+	public List<TournamentElement> getGroupsList(){
 		return this.groupsList;
 	}
 	
@@ -45,9 +47,27 @@ public class MixedTournament extends Tournament {
 	
 	@Override
 	public String toString() {
-		return null;
+		StringBuilder sb= new StringBuilder().append("Gironi\n");
+		for(TournamentElement te: this.groupsList)
+			sb.append(te).append("\n");
+		return super.toString()+String.format("Tournament type: %s\n%s\n%s\n", this.getTournamentType(),sb.toString(),this.board.toString());	
 	}
 	
+	@Override
+	public void initTournament(int maxDays) {
+		try {
+			
+			//fase a gironi
+			for(TournamentElement te:this.groupsList)
+				te.initTournamentElement(maxDays);
+			//fase a eliminazione diretta 
+			//this.board.initTournamentElement(maxDays);
+			
+		}
+		catch(OddTeamsSizeException ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	
 
 }

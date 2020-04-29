@@ -1,17 +1,19 @@
 package it.unipv.ingsw.k20.model.tournament;
 
 import it.unipv.ingsw.k20.model.element.Board;
+import it.unipv.ingsw.k20.model.element.TournamentElement;
+import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 
 public class KnockoutPhase extends Tournament {	
 	
-	private Board board;
+	private TournamentElement board;
 	
 	public KnockoutPhase(String name) {
 		super(name);
 		this.board=null;
 	}
 	
-	public Board getBoard() {
+	public TournamentElement getBoard() {
 		return this.board;
 	}
 	
@@ -27,6 +29,16 @@ public class KnockoutPhase extends Tournament {
 	
 	@Override
 	public String toString() {
-		return null;
+		return super.toString()+String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
+	}
+	
+	@Override
+	public void initTournament(int maxDays) {
+		try {
+			this.board.initTournamentElement(maxDays);
+		}
+		catch(OddTeamsSizeException ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }

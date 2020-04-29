@@ -1,20 +1,17 @@
 package it.unipv.ingsw.k20.model.tournament;
 
-import java.util.*;
-
-import it.unipv.ingsw.k20.model.team.Team;
+import it.unipv.ingsw.k20.model.match.Match;
+import it.unipv.ingsw.k20.model.manager.Manager;
 
 
 public abstract class Tournament {
 	private static int n=1;
 	private int tournamentID;
 	private String name;
-	private List<Team> teamsList;
 	
 	public Tournament(String name) {
 		this.tournamentID=n;
 		this.name=name;
-		this.teamsList= new ArrayList<>();
 		n++;
 	}
 	
@@ -31,37 +28,24 @@ public abstract class Tournament {
 			this.name=name;
 	}
 	
-	public List<Team> getTeamsList(){
-		return this.teamsList;
-	}
-	
-	public boolean addTeam(Team team)throws NullPointerException{
-		return this.teamsList.add(team);
-	} 
-	
-	public boolean removeTeam(Team team)throws NullPointerException{
-		return this.teamsList.remove(team);
-	}
-	
 	public abstract TournamentType getTournamentType();
+	
+	public abstract void initTournament(int maxDays);
+	
+	public void insertScore(Match m) {;}
 	
 	@Override
 	public String toString() {
-		return String.format("Tournament name: %s\nTournament type: %s\n%s",this.name,this.getTournamentType().toString(),this.getTeamsListToString());	}
-	
-	private String getTeamsListToString() {
-		StringBuilder sb= new StringBuilder("List of teams:\n");
-		for(Team t:this.teamsList) 
-			sb.append("\t").append(t.toString()).append("\n");
-		return sb.append("\n").toString();
+		return String.format("Tournament name: %s\n",this.name);	
 	}
 	
-	public void init() {;}
+	/**
+	 * Assegno il torneo al manager.
+	 */
+	public void setTournamentManager(Manager m) {
+		m.addTournament(this);
+	}
 	
-	private void generateSchedule() {;}
-	
-	private void generateRanking() {;}
-	
-	public void insertScore() {;} 
+	 
 	
 }

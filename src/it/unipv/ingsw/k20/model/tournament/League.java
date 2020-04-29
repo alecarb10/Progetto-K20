@@ -1,16 +1,18 @@
 package it.unipv.ingsw.k20.model.tournament;
 
 import it.unipv.ingsw.k20.model.element.Group;
+import it.unipv.ingsw.k20.model.element.TournamentElement;
+import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 
 public class League extends Tournament {
-	private Group group; // girone unico
+	private TournamentElement group; // girone unico
 	
 	public League(String name) {
 		super(name);
 		this.group=null;
 	}
 	
-	public Group getGroup() {
+	public TournamentElement getGroup() {
 		return this.group;
 	}
 	
@@ -26,7 +28,17 @@ public class League extends Tournament {
 	
 	@Override
 	public String toString() {
-		return null;
+		return super.toString()+String.format("Tournament type: %s\n%s", this.getTournamentType(), this.group.toString());
+	}
+	
+	@Override
+	public void initTournament(int maxDays) {
+		try {
+			this.group.initTournamentElement(maxDays);
+		}
+		catch(OddTeamsSizeException ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 	
 	
