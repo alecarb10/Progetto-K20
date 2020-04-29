@@ -14,11 +14,7 @@ public class ScheduleGenerator {
 
 	private static ScheduleGenerator scheduleGenerator;
 	
-	private List<Day> schedule;
-
-	private ScheduleGenerator() {
-		schedule = new ArrayList<>();
-	}
+	private ScheduleGenerator() {}
 
 	public static synchronized ScheduleGenerator getInstance() {
 		if (scheduleGenerator == null)
@@ -28,7 +24,7 @@ public class ScheduleGenerator {
 
 	// maxDays = numero massimo di giornate
 	public List<Day> generateSchedule(List<Team> teamsList, int maxDays) throws OddTeamsSizeException {
-		
+		List<Day> schedule = new ArrayList<>();
 		List<Team> teams; 								// lista di appoggio per estrarre squadre a caso
 		List<Match> matches;						 	// partite di un'intera giornata
 		List<Team> matchTeams = new ArrayList<>(); 		// due squadre a caso per ogni match
