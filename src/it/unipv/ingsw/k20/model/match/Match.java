@@ -37,11 +37,12 @@ public class Match {
 		} else if (homeScore < awayScore) {
 			awayTeam.setPoints(awayTeam.getPoints() + 3);
 			return awayTeam;
-		} else
+		} else {
 			homeTeam.setPoints(homeTeam.getPoints() + 1);
 		awayTeam.setPoints(awayTeam.getPoints() + 1);
 
 		return null;
+		}
 	}
 
 	public String toString() {
