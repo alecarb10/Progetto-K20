@@ -8,9 +8,7 @@ import it.unipv.ingsw.k20.model.util.ScheduleGenerator;
 
 public class Board extends TournamentElement {
 
-	public Board(List<Team> teamsList) {
-		super(teamsList);
-	}
+	public Board() {}
 
 	@Override
 	public void initTournamentElement(int maxDays) throws OddTeamsSizeException {
@@ -31,12 +29,18 @@ public class Board extends TournamentElement {
 	}
 	
 	@Override
+	public void endTournamentElement() {
+		completed = true;
+		// decreta vincitore...
+	}
+	
+	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Team Name" + "\n");
 		for (Team team : teamsList) {
-			sb.append(team);
+			sb.append(team + "\n");
 		}
 
 		return sb.toString();

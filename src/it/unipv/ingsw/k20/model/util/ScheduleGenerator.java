@@ -32,6 +32,10 @@ public class ScheduleGenerator {
 		Random random = new Random();
 		Calendar calendar = initDate();
 		
+		// non genero calendario se ci sono meno di 2 squadre
+		if (teamsList.size() < 2)
+			return null;
+		
 		if (teamsList.size() % 2 != 0)
 			throw new OddTeamsSizeException("Teams size must be even");
 		
@@ -50,7 +54,7 @@ public class ScheduleGenerator {
 					teams.remove(randomIndex);
 				}
 
-				// matches.add(new Match(matchTeams.get(0), matchTeams.get(1), calendar.getTime());
+				matches.add(new Match(calendar.getTime(), matchTeams.get(0), matchTeams.get(1)));
 			}
 
 			Day day = new Day(i, matches, calendar.getTime());

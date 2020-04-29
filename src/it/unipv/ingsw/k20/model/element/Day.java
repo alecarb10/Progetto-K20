@@ -43,7 +43,7 @@ public class Day {
 		sb.append("Day " + number + "(" + date.toString() +")" + " : \n");
 		
 		for (Match m: matchesList)
-			sb.append(m);
+			sb.append(m + "\n");
 		
 		return sb.toString();
 	}

@@ -10,9 +10,7 @@ import it.unipv.ingsw.k20.model.util.ScheduleGenerator;
 
 public class Group extends TournamentElement {
 
-	public Group(List<Team> teamsList) {
-		super(teamsList);
-	}
+	public Group() {}
 
 	@Override
 	public void initTournamentElement(int maxDays) throws OddTeamsSizeException {
@@ -40,6 +38,12 @@ public class Group extends TournamentElement {
 		
 		return ranking;
 	}
+	
+	@Override
+	public void endTournamentElement() {
+		completed = true;
+		// decreta vincitore...
+	}
 
 	@Override
 	public String toString() {
@@ -48,8 +52,8 @@ public class Group extends TournamentElement {
 		
 		sb.append("Team Name" + "\t" + " Points" + "\n");
 		for (Team team : ranking) {
-			sb.append(team);
-			// sb.append(Team.getName() + "\t" + team.getPoints());
+			sb.append(team + "\n");
+			// sb.append(Team.getName() + "\t" + team.getPoints() + "\n");
 		}
 
 		return sb.toString();
