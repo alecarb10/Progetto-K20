@@ -2,8 +2,6 @@ package it.unipv.ingsw.k20.model.tournament;
 
 import java.util.*;
 
-import it.unipv.ingsw.k20.model.element.Ranking;
-import it.unipv.ingsw.k20.model.element.Schedule;
 import it.unipv.ingsw.k20.model.team.Team;
 
 
@@ -60,9 +58,9 @@ public abstract class Tournament {
 	
 	public void init() {;}
 	
-	private void generateSchedule(Schedule schedule) {;}
+	private void generateSchedule() {;}
 	
-	private void generateRanking(Ranking ranking) {;}
+	private void generateRanking() {;}
 	
 	public void insertScore() {;} 
 	
