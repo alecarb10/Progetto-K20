@@ -7,7 +7,7 @@ public class Player {
 	private boolean holder;
 	
 	
-	public Player (String name, int number, String position, boolean holder) {
+public Player (String name, int number, String position, boolean holder) {
 	   
 		this.name = name;
 		this.number = number;
