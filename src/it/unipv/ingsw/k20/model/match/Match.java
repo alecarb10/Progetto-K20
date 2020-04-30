@@ -1,9 +1,10 @@
 package it.unipv.ingsw.k20.model.match;
+
 import it.unipv.ingsw.k20.model.team.*;
 import java.util.Date;
 
 public class Match {
-	/*
+
 	private Date date;
 	private Team homeTeam;
 	private Team awayTeam;
@@ -15,11 +16,35 @@ public class Match {
 		this.date = date;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
-		this.stadium = homeTeam.getStadium();
+//		this.stadium = homeTeam.getStadium();
 		homeScore = 0;
 		awayScore = 0;
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
+	public Team getHomeTeam() {
+		return homeTeam;
+	}
+
+	public Team getAwayTeam() {
+		return awayTeam;
+	}
+
+	private int getHomeScore() {
+		return homeScore;
+	}
+
+	private int getAwayScore() {
+		return awayScore;
+	}
+
+	public Stadium getStadium() {
+		return stadium;
+	}
+/*
 	public void setScore(int x, int y) {
 		homeScore = x;
 		homeTeam.setGoalsScored(homeTeam.getGoalsScored() + x);
@@ -39,9 +64,8 @@ public class Match {
 			return awayTeam;
 		} else {
 			homeTeam.setPoints(homeTeam.getPoints() + 1);
-		awayTeam.setPoints(awayTeam.getPoints() + 1);
-
-		return null;
+			awayTeam.setPoints(awayTeam.getPoints() + 1);
+			return null;
 		}
 	}
 
