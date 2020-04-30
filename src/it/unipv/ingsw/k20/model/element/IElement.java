@@ -5,7 +5,7 @@ import java.util.List;
 import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 import it.unipv.ingsw.k20.model.team.Team;
 
-public interface iElement {
+public interface IElement {
 
 	public void initTournamentElement(int maxDays) throws OddTeamsSizeException;
 	

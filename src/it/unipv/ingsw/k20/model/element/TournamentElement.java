@@ -6,7 +6,7 @@ import java.util.List;
 
 import it.unipv.ingsw.k20.model.team.Team;
 
-public abstract class TournamentElement implements iElement {
+public abstract class TournamentElement implements IElement {
 
 	protected List<Team> teamsList;
 	protected List<Day> schedule;
