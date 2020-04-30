@@ -7,6 +7,7 @@ import it.unipv.ingsw.k20.model.element.Board;
 import it.unipv.ingsw.k20.model.element.Group;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
 import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
+import it.unipv.ingsw.k20.model.manager.Manager;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class MixedTournament extends Tournament {
@@ -14,8 +15,8 @@ public class MixedTournament extends Tournament {
 	private List<TournamentElement> groupsList;
 	private TournamentElement board;
 	
-	public MixedTournament(String name, int maxDays) {
-		super(name);
+	public MixedTournament(String name,Manager manager, int maxDays) {
+		super(name,manager);
 		this.groupsList=new ArrayList<>();
 		this.initTournament(maxDays);
 	}
@@ -100,5 +101,6 @@ public class MixedTournament extends Tournament {
 				return te.removeTeam(team);
 		return false;
 	}
+	
 
 }

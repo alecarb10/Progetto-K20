@@ -3,13 +3,14 @@ package it.unipv.ingsw.k20.model.tournament;
 import it.unipv.ingsw.k20.model.element.Group;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
 import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
+import it.unipv.ingsw.k20.model.manager.Manager;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class League extends Tournament {
 	private TournamentElement group; // girone unico
 	
-	public League(String name, int maxDays) {
-		super(name);
+	public League(String name,Manager manager, int maxDays) {
+		super(name,manager);
 		this.initTournament(maxDays);
 	}
 	

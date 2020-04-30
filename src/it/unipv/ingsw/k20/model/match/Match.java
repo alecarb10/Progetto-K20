@@ -44,17 +44,17 @@ public class Match {
 	public Stadium getStadium() {
 		return stadium;
 	}
-/*
-	public void setScore(int x, int y) {
-		homeScore = x;
-		homeTeam.setGoalsScored(homeTeam.getGoalsScored() + x);
-		homeTeam.setGoalsConceded(homeTeam.getGoalsConceded() + y);
-		awayScore = y;
-		awayTeam.setGoalsScored(awayTeam.getGoalsScored() + y);
-		awayTeam.setGoalsConceded(awayTeam.getGoalsConceded() + x);
+
+	public void setScore(int homeScore, int awayScore) {
+		this.homeScore = homeScore;
+		//homeTeam.setGoalsScored(homeTeam.getGoalsScored() + x);
+		//homeTeam.setGoalsConceded(homeTeam.getGoalsConceded() + y);
+		this.awayScore = awayScore;
+		//awayTeam.setGoalsScored(awayTeam.getGoalsScored() + y);
+		//awayTeam.setGoalsConceded(awayTeam.getGoalsConceded() + x);
 
 	}
-
+/*
 	public Team getWinner() {
 		if (homeScore > awayScore) {
 			homeTeam.setPoints(homeTeam.getPoints() + 3);
