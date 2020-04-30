@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 import it.unipv.ingsw.k20.model.team.Team;
 
-public abstract class TournamentElement {
+public abstract class TournamentElement implements iElement {
 
 	protected List<Team> teamsList;
 	protected List<Day> schedule;
@@ -18,12 +17,6 @@ public abstract class TournamentElement {
 		this.completed = false;
 	}
 
-	public abstract List<Team> getRanking();
-
-	public abstract void initTournamentElement(int maxDays) throws OddTeamsSizeException;
-	
-	public abstract void endTournamentElement();
-
 	public List<Team> getTeamsList() {
 		return teamsList;
 	}
@@ -33,15 +26,7 @@ public abstract class TournamentElement {
 	}
 
 	public boolean removeTeam(Team team) {
-		/*
-		 * for (int i = 0; i < teamsList.size(); i++) 
-		 * 	if (teamsList.get(i).getName().equals(team.getName())) { 
-		 * 		teamsList.remove(i);
-		 * 		return true; 
-		 * 	}
-		 */
-
-		return false;
+		return teamsList.remove(team);
 	}
 
 	public boolean isCompleted() {
