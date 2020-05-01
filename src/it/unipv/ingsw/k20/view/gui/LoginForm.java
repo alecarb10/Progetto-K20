@@ -1,5 +1,7 @@
 package it.unipv.ingsw.k20.view.gui;
 
+import javafx.scene.control.Alert;
+
 //import javafx.application.Application;
 //import javafx.geometry.Pos;
 //import javafx.scene.Scene;
@@ -31,6 +33,9 @@ public class LoginForm /*extends Application*/  {
 //		pwdFldPwd.setPromptText("password");
 //
 //		Button btnLogin = new Button("Log In");
+//		btnLogin.setOnAction(e ->{
+//			new Alert(Alert.AlertType.INFORMATION, "Hello World!").showAndWait();
+//		});
 //
 //		gPane.add(lblUsername, 0, 1);
 //		gPane.add(txtFldUsername, 1, 1);
