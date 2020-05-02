@@ -1,19 +1,39 @@
 package it.unipv.ingsw.k20.model.team;
 
+import java.util.ArrayList;
+
 public class Stadium {
 	private String name;
 	private String TeamName;
 	private int NumTeam;
 	private String location;
+	private int points;
+	private ArrayList<Team> teams;
 	private int capacity;
-	public Stadium(String name,String location,int capacity,String TeamName, int NumTeam) {
+	public Stadium(String name,String location,int capacity,String TeamName, int NumTeam,String coach) {
 		this.name=name;
 		this.location=location;
 		this.capacity=capacity;
 		this.NumTeam=NumTeam;
 		this.TeamName=TeamName;
+		this.teams=new ArrayList<>();
 		
 	}
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	public void setNumTeam(int numTeam) {
+		NumTeam = numTeam;
+	}
+
+	public void addTeam(Team s ) {
+		teams.add(s);
+	}
+	
 	public String getTeamName() {
 		return TeamName;
 	}
