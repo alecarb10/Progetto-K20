@@ -1,7 +1,6 @@
 package it.unipv.ingsw.k20.model.tournament;
 
 import it.unipv.ingsw.k20.model.match.Match;
-import it.unipv.ingsw.k20.model.team.Team;
 import it.unipv.ingsw.k20.model.manager.Manager;
 
 public abstract class Tournament implements ITournament {
