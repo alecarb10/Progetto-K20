@@ -4,7 +4,7 @@ public class Player {
 	private String name;
 	private int number;
 	private String position;
-	private boolean holder;
+	private boolean holder; //titolare 
 	
 	
 public Player (String name, int number, String position, boolean holder) {

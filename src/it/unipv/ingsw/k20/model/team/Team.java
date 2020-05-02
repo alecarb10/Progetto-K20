@@ -6,6 +6,7 @@ public class Team implements Comparable<Team>{
 	 private int score;
 	    private String stadium;
 	    private Player[] players;
+	    private int points;
 	    
 	   public Team(String name, String stadium) {
 	        if (name==null)
