@@ -23,7 +23,6 @@ public class LoginController {
 			
 		}
 		*/
-		System.out.println("ciao");
 	}
 	
 	
