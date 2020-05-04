@@ -14,9 +14,10 @@ public class LoginMain extends Application {
 		FXMLLoader loader=new FXMLLoader(getClass().getResource(Constants.PATH_PREFIX+"/resources/Login.fxml"));
 		loader.setController(new LoginController());
 		Scene scene= new Scene(loader.load());
-		scene.getStylesheets().add(getClass().getResource(Constants.PATH_PREFIX+"/style/StyleLogin.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(Constants.STYLE_PATH).toExternalForm());
 		primaryStage.setTitle("Manager");
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 		
 	}

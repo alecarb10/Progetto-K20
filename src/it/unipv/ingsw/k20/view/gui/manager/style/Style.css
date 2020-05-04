@@ -20,6 +20,10 @@
     -fx-font-size: 12;
 }
 
+.label:hover{
+	-fx-underline: true;
+}
+
 .text-field{
     -fx-background-color: transparent, white, transparent, white;
     -fx-background-radius: 0, 0, 0, 0;

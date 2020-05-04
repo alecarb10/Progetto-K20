@@ -8,39 +8,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class LoginController {	
-	
+public class RegistrationController {
+
 	@FXML
 	private TextField txtFldUsername;
-	@FXML
-	private PasswordField pwdFldPassword;
-	@FXML
-	private Label lblSignUp;
 	
-	public LoginController() {
+	@FXML
+	private PasswordField pwdFldPassword,pwdFldRepeatPassword;
+	
+	public RegistrationController(){
 		this.txtFldUsername=new TextField();
 		this.pwdFldPassword=new PasswordField();
-		this.lblSignUp= new Label();
+		this.pwdFldRepeatPassword=new PasswordField();
 	}
 	
-	public void login(ActionEvent event) {
-		/*
-		 * if(txtFldUsername.getText().equals("")&&this.pwdFldPassword.getText().equals("")) {
-			
-		}
-		*/
-	}
-	
-	public void signUp(MouseEvent event) throws IOException
-	{	        
-	    FXMLLoader loader= new FXMLLoader(getClass().getResource(Constants.PATH_PREFIX+"/resources/Registration.fxml"));
-		loader.setController(new RegistrationController());
+	public void registration(ActionEvent event) throws IOException {
+		FXMLLoader loader=new FXMLLoader(getClass().getResource(Constants.PATH_PREFIX+"/resources/Login.fxml"));
+		loader.setController(new LoginController());
 		Scene scene= new Scene(loader.load());
 		scene.getStylesheets().add(getClass().getResource(Constants.STYLE_PATH).toExternalForm());
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -50,6 +38,8 @@ public class LoginController {
 		primaryStage.show();
 	}
 	
-	
+//	private boolean pwdMatching() {
+//		return this.pwdFldPassword.getText().equals(this.pwdFldRepeatPassword.getText());
+//	}
 	
 }
