@@ -25,4 +25,10 @@ public class FacadeImpl implements IFacade {
 		return m.checkManagerLogin(username, password);
 	}
 
+	@Override
+	public boolean checkUnique(String username) throws SQLException {
+		IManagerDAO m = new ManagerDAOImpl();
+		return m.checkUnique(username);
+	}
+
 }

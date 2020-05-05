@@ -8,6 +8,8 @@ public interface IManagerDAO {
 	
 	public boolean removeManager(String username) throws SQLException;
 	
+	public boolean checkUnique(String username) throws SQLException;
+	
 	public boolean checkManagerLogin(String username, String password) throws SQLException;
 	
 }

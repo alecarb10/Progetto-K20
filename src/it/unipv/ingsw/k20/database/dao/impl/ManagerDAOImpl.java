@@ -76,6 +76,29 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 
+	@Override
+	public boolean checkUnique(String username) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement st;
+		ResultSet rs;
+
+		String query = "SELECT count(*) from manager where Username=?";
+		st = conn.prepareStatement(query);
+		st.setString(1, username);
+
+		rs = st.executeQuery();
+
+		rs.next();
+		int count = Integer.parseInt(rs.getString(1));
+		
+		if (count == 0)
+			return true;
+
+		DBConnection.closeConnection(conn);
+
+		return false;
+	}
+
 	/* TEST
 	public static void main(String[] args) {
 		ManagerDAOImpl m = new ManagerDAOImpl();
@@ -123,6 +146,17 @@ public class ManagerDAOImpl implements IManagerDAO {
 				System.out.println("Loggato");
 			else
 				System.out.println("Non Loggato");
+		}
+		
+		try {
+			check = m.checkUnique("bho1");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (check)
+				System.out.println("OK");
+			else
+				System.out.println("Esiste un altro utente con questo username");
 		}
 	}
 	*/
