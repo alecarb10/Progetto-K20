@@ -1,19 +1,15 @@
 package it.unipv.ingsw.k20.model.tournament;
 
 import it.unipv.ingsw.k20.model.match.Match;
-import it.unipv.ingsw.k20.model.manager.Manager;
 
 public abstract class Tournament implements ITournament {
 	private static int n = 1;
 	private int tournamentID;
 	private String name;
-	private Manager manager;
 
-	public Tournament(String name, Manager manager) {
+	public Tournament(String name) {
 		this.tournamentID = n;
 		this.name = name;
-		this.manager = manager;
-		this.manager.addTournament(this);
 		n++;
 	}
 
@@ -30,17 +26,13 @@ public abstract class Tournament implements ITournament {
 			this.name = name;
 	}
 
-	public Manager getManager() {
-		return this.manager;
-	}
-
 	public void insertScore(Match m, int homeScore, int awayScore) {
 		m.setScore(homeScore, awayScore);
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Tournament name: %s\nTournament manager:%s\n", this.name, this.manager);
+		return String.format("Tournament name: %s\n", this.name);
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import it.unipv.ingsw.k20.model.team.Team;
 
 public interface IElement {
 
-	public void initTournamentElement(int maxDays) throws OddTeamsSizeException;
+	public void initTournamentElement() throws OddTeamsSizeException;
 	
 	public void endTournamentElement();
 	

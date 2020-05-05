@@ -11,9 +11,8 @@ public class Board extends TournamentElement {
 	public Board() {}
 
 	@Override
-	public void initTournamentElement(int maxDays) throws OddTeamsSizeException {
-		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, maxDays);
-		// ...
+	public void initTournamentElement() throws OddTeamsSizeException {
+		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, 1);
 	}
 	
 	@Override

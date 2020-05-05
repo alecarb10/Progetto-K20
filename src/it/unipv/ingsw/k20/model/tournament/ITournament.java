@@ -6,7 +6,7 @@ public interface ITournament {
 
 	public TournamentType getTournamentType();
 
-	public void initTournament(int maxDays);
+	public void initTournament();
 
 	public boolean addTeamInTournament(Team t);
 

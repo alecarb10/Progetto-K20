@@ -14,9 +14,8 @@ public class Group extends TournamentElement {
 	}
 
 	@Override
-	public void initTournamentElement(int maxDays) throws OddTeamsSizeException {
-		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, maxDays);
-		// ...
+	public void initTournamentElement() throws OddTeamsSizeException {
+		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, teamsList.size() - 1);
 	}
 
 	@Override
@@ -65,8 +64,7 @@ public class Group extends TournamentElement {
 
 		sb.append("Team Name" + "\t" + " Points" + "\n");
 		for (Team team : ranking) {
-			sb.append(team + "\n");
-			// sb.append(Team.getName() + "\t" + team.getPoints() + "\n");
+			sb.append(team.getName() + "\t" + team.getPoints() + "\n");
 		}
 
 		return sb.toString();

@@ -7,7 +7,6 @@ import it.unipv.ingsw.k20.model.element.Board;
 import it.unipv.ingsw.k20.model.element.Group;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
 import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
-import it.unipv.ingsw.k20.model.manager.Manager;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class MixedTournament extends Tournament {
@@ -15,10 +14,10 @@ public class MixedTournament extends Tournament {
 	private List<TournamentElement> groupsList;
 	private TournamentElement board;
 
-	public MixedTournament(String name, Manager manager, int maxDays) {
-		super(name, manager);
+	public MixedTournament(String name) {
+		super(name);
 		this.groupsList = new ArrayList<>();
-		this.initTournament(maxDays);
+		this.initTournament();
 	}
 
 	public TournamentElement getBoard() {
@@ -55,10 +54,10 @@ public class MixedTournament extends Tournament {
 	}
 
 	@Override
-	public void initTournament(int maxDays) {
+	public void initTournament() {
 		try {
 			for (TournamentElement te : this.groupsList)
-				te.initTournamentElement(maxDays);
+				te.initTournamentElement();
 		} catch (OddTeamsSizeException ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -97,7 +96,7 @@ public class MixedTournament extends Tournament {
 	public void initKnockoutPhase(int maxDays) {
 		try {
 			if (this.isEachGroupCompleted())
-				this.board.initTournamentElement(maxDays);
+				this.board.initTournamentElement();
 
 		} catch (OddTeamsSizeException ex) {
 			System.out.println(ex.getMessage());

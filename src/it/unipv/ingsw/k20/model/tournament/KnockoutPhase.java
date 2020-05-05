@@ -3,16 +3,15 @@ package it.unipv.ingsw.k20.model.tournament;
 import it.unipv.ingsw.k20.model.element.Board;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
 import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
-import it.unipv.ingsw.k20.model.manager.Manager;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class KnockoutPhase extends Tournament {
 
 	private TournamentElement board;
 
-	public KnockoutPhase(String name, Manager manager, int maxDays) {
-		super(name, manager);
-		this.initTournament(maxDays);
+	public KnockoutPhase(String name) {
+		super(name);
+		this.initTournament();
 	}
 
 	public TournamentElement getBoard() {
@@ -30,10 +29,10 @@ public class KnockoutPhase extends Tournament {
 	}
 
 	@Override
-	public void initTournament(int maxDays) {
+	public void initTournament() {
 		try {
 			this.board = new Board();
-			this.board.initTournamentElement(maxDays);
+			this.board.initTournamentElement();
 		} catch (OddTeamsSizeException ex) {
 			System.out.println(ex.getMessage());
 		}
