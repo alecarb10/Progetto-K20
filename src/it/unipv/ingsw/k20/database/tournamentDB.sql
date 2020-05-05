@@ -13,6 +13,45 @@ DROP TABLE IF EXISTS `team`;
 DROP TABLE IF EXISTS `tournament`;
 DROP TABLE IF EXISTS `tournament_type`;
 
+CREATE TABLE `manager` (
+  `Username` varchar(20) NOT NULL,
+  `Name` varchar(20) DEFAULT NULL,
+  `Surname` varchar(20) DEFAULT NULL,
+  `Password` varchar(45) NOT NULL,
+  PRIMARY KEY (`Username`)
+);
+
+CREATE TABLE `tournament_type` (
+  `IDTournamentType` int(11) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  PRIMARY KEY (`IDTournamentType`)
+);
+
+CREATE TABLE `player_position_type` (
+  `IDPlayerPositionType` int(11) NOT NULL,
+  `Position` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`IDPlayerPositionType`)
+);
+
+CREATE TABLE `stadium` (
+  `Name` varchar(20) NOT NULL,
+  `Location` varchar(20) DEFAULT NULL,
+  `Capacity` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`Name`)
+);
+
+CREATE TABLE `tournament` (
+  `IDTournament` int(11) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  `Manager` varchar(20) DEFAULT NULL,
+  `TournamentType` int(11) DEFAULT NULL,
+  PRIMARY KEY (`IDTournament`),
+  KEY `Manager_idx` (`Manager`),
+  KEY `TournamentType_idx` (`TournamentType`),
+  CONSTRAINT `manager` FOREIGN KEY (`Manager`) REFERENCES `manager` (`Username`) ON UPDATE CASCADE,
+  CONSTRAINT `tournament_type` FOREIGN KEY (`TournamentType`) REFERENCES `tournament_type` (`IDTournamentType`) ON UPDATE CASCADE
+);
+
 CREATE TABLE `board` (
   `IDBoard` int(11) NOT NULL,
   `IDTournament` int(11) DEFAULT NULL,
@@ -20,6 +59,15 @@ CREATE TABLE `board` (
   PRIMARY KEY (`IDBoard`),
   KEY `tournament_idx` (`IDTournament`),
   CONSTRAINT `tournament_board` FOREIGN KEY (`IDTournament`) REFERENCES `tournament` (`IDTournament`)
+);
+
+CREATE TABLE `group` (
+  `IDGroup` int(11) NOT NULL,
+  `IDTournament` int(11) DEFAULT NULL,
+  `Completed` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`IDGroup`),
+  KEY `tournament.idx` (`IDTournament`),
+  CONSTRAINT `tournament_group` FOREIGN KEY (`IDTournament`) REFERENCES `tournament` (`IDTournament`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE `day` (
@@ -34,21 +82,24 @@ CREATE TABLE `day` (
   CONSTRAINT `group` FOREIGN KEY (`Group`) REFERENCES `group` (`IDGroup`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE `group` (
-  `IDGroup` int(11) NOT NULL,
+CREATE TABLE `team` (
+  `IDTeam` int(11) NOT NULL,
+  `Name` varchar(20) NOT NULL,
   `IDTournament` int(11) DEFAULT NULL,
-  `Completed` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`IDGroup`),
-  KEY `tournament.idx` (`IDTournament`),
-  CONSTRAINT `tournament_group` FOREIGN KEY (`IDTournament`) REFERENCES `tournament` (`IDTournament`) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE `manager` (
-  `Username` varchar(20) NOT NULL,
-  `Name` varchar(20) DEFAULT NULL,
-  `Surname` varchar(20) DEFAULT NULL,
-  `Password` varchar(45) NOT NULL,
-  PRIMARY KEY (`Username`)
+  `Stadium` varchar(20) DEFAULT NULL,
+  `Points` int(11) DEFAULT NULL,
+  `GoalsScored` int(11) DEFAULT NULL,
+  `GoalsConceded` int(11) DEFAULT NULL,
+  `Group` int(11) DEFAULT NULL,
+  `Board` int(11) DEFAULT NULL,
+  PRIMARY KEY (`IDTeam`),
+  KEY `id_tournament_idx` (`IDTournament`),
+  KEY `stadium_idx` (`Stadium`),
+  KEY `group_idx` (`Group`),
+  KEY `board_idx` (`Board`),
+  CONSTRAINT `stadium` FOREIGN KEY (`Stadium`) REFERENCES `stadium` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `team_board` FOREIGN KEY (`Board`) REFERENCES `board` (`IDBoard`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `team_group` FOREIGN KEY (`Group`) REFERENCES `group` (`IDGroup`) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE `match` (
@@ -84,57 +135,6 @@ CREATE TABLE `player` (
   KEY `position_type_idx` (`PlayerPositionType`),
   CONSTRAINT `position_type` FOREIGN KEY (`PlayerPositionType`) REFERENCES `player_position_type` (`IDPlayerPositionType`) ON UPDATE CASCADE,
   CONSTRAINT `team_player` FOREIGN KEY (`IDTeam`) REFERENCES `team` (`IDTeam`) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-CREATE TABLE `player_position_type` (
-  `IDPlayerPositionType` int(11) NOT NULL,
-  `Position` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`IDPlayerPositionType`)
-);
-
-CREATE TABLE `stadium` (
-  `Name` varchar(20) NOT NULL,
-  `Location` varchar(20) DEFAULT NULL,
-  `Capacity` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`Name`)
-);
-
-CREATE TABLE `team` (
-  `IDTeam` int(11) NOT NULL,
-  `Name` varchar(20) NOT NULL,
-  `IDTournament` int(11) DEFAULT NULL,
-  `Stadium` varchar(20) DEFAULT NULL,
-  `Points` int(11) DEFAULT NULL,
-  `GoalsScored` int(11) DEFAULT NULL,
-  `GoalsConceded` int(11) DEFAULT NULL,
-  `Group` int(11) DEFAULT NULL,
-  `Board` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDTeam`),
-  KEY `id_tournament_idx` (`IDTournament`),
-  KEY `stadium_idx` (`Stadium`),
-  KEY `group_idx` (`Group`),
-  KEY `board_idx` (`Board`),
-  CONSTRAINT `stadium` FOREIGN KEY (`Stadium`) REFERENCES `stadium` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `team_board` FOREIGN KEY (`Board`) REFERENCES `board` (`IDBoard`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `team_group` FOREIGN KEY (`Group`) REFERENCES `group` (`IDGroup`) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-CREATE TABLE `tournament` (
-  `IDTournament` int(11) NOT NULL,
-  `Name` varchar(20) NOT NULL,
-  `Manager` varchar(20) DEFAULT NULL,
-  `TournamentType` int(11) DEFAULT NULL,
-  PRIMARY KEY (`IDTournament`),
-  KEY `Manager_idx` (`Manager`),
-  KEY `TournamentType_idx` (`TournamentType`),
-  CONSTRAINT `manager` FOREIGN KEY (`Manager`) REFERENCES `manager` (`Username`) ON UPDATE CASCADE,
-  CONSTRAINT `tournament_type` FOREIGN KEY (`TournamentType`) REFERENCES `tournament_type` (`IDTournamentType`) ON UPDATE CASCADE
-);
-
-CREATE TABLE `tournament_type` (
-  `IDTournamentType` int(11) NOT NULL,
-  `Name` varchar(20) NOT NULL,
-  PRIMARY KEY (`IDTournamentType`)
 );
 
 LOCK TABLES `player_position_type` WRITE;
