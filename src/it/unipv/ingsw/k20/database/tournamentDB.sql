@@ -35,7 +35,7 @@ CREATE TABLE `player_position_type` (
 
 CREATE TABLE `stadium` (
   `Name` varchar(20) NOT NULL,
-  `Location` varchar(20) DEFAULT NULL,
+  `City` varchar(20) DEFAULT NULL,
   `Capacity` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Name`)
 );
@@ -53,7 +53,7 @@ CREATE TABLE `tournament` (
 );
 
 CREATE TABLE `board` (
-  `IDBoard` int(11) NOT NULL,
+  `IDBoard` int(11) NOT NULL AUTO_INCREMENT,
   `IDTournament` int(11) DEFAULT NULL,
   `Completed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`IDBoard`),
@@ -62,7 +62,7 @@ CREATE TABLE `board` (
 );
 
 CREATE TABLE `group` (
-  `IDGroup` int(11) NOT NULL,
+  `IDGroup` int(11) NOT NULL AUTO_INCREMENT,
   `IDTournament` int(11) DEFAULT NULL,
   `Completed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`IDGroup`),
@@ -83,7 +83,7 @@ CREATE TABLE `day` (
 );
 
 CREATE TABLE `team` (
-  `IDTeam` int(11) NOT NULL,
+  `IDTeam` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(20) NOT NULL,
   `IDTournament` int(11) DEFAULT NULL,
   `Stadium` varchar(20) DEFAULT NULL,
@@ -99,11 +99,12 @@ CREATE TABLE `team` (
   KEY `board_idx` (`Board`),
   CONSTRAINT `stadium` FOREIGN KEY (`Stadium`) REFERENCES `stadium` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `team_board` FOREIGN KEY (`Board`) REFERENCES `board` (`IDBoard`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `team_group` FOREIGN KEY (`Group`) REFERENCES `group` (`IDGroup`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `team_group` FOREIGN KEY (`Group`) REFERENCES `group` (`IDGroup`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tournament_team` FOREIGN KEY (`IDTournament`) REFERENCES `tournament` (`IDTournament`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `match` (
-  `IDMatch` int(11) NOT NULL,
+  `IDMatch` int(11) NOT NULL AUTO_INCREMENT,
   `Day` int(11) DEFAULT NULL,
   `Date` date DEFAULT NULL,
   `Stadium` varchar(20) DEFAULT NULL,
@@ -124,7 +125,7 @@ CREATE TABLE `match` (
 );
 
 CREATE TABLE `player` (
-  `IDPlayer` int(11) NOT NULL,
+  `IDPlayer` int(11) NOT NULL AUTO_INCREMENT,
   `IDTeam` int(11) DEFAULT NULL,
   `Number` int(11) DEFAULT NULL,
   `Name` varchar(20) DEFAULT NULL,
@@ -142,5 +143,5 @@ INSERT INTO `player_position_type` VALUES (1,'GK'),(2,'CB'),(3,'MF'),(4,'CF');
 UNLOCK TABLES;
 
 LOCK TABLES `tournament_type` WRITE;
-INSERT INTO `tournament_type` VALUES (1,'LEAGUE'),(2,'KNOCKOUT_PHASE'),(3,'MIXED');
+INSERT INTO `tournament_type` VALUES (1,'MIXED'),(2,'LEAGUE'),(3,'KNOCKOUT_PHASE');
 UNLOCK TABLES;
