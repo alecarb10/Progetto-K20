@@ -2,11 +2,11 @@ package it.unipv.ingsw.k20.model.util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import it.unipv.ingsw.k20.model.element.Day;
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 import it.unipv.ingsw.k20.model.match.Match;
 import it.unipv.ingsw.k20.model.team.Team;
 
@@ -23,17 +23,16 @@ public class ScheduleGenerator {
 		return scheduleGenerator;
 	}
 
-	public List<Day> generateSchedule(List<Team> teamsList, int maxDays) throws OddTeamsSizeException {
+	public List<Day> generateSchedule(List<Team> teamsList, int maxDays) {
 		List<Day> schedule = new ArrayList<>();
 		List<Match> matches = new ArrayList<>();
 		Calendar calendar = initDate();
 		int numTeams = teamsList.size();
 		
-		if (teamsList.size() < 2)
-			return null;
+		Collections.shuffle(teamsList); 	// random shuffle
 		
-		if (teamsList.size() % 2 != 0)
-			throw new OddTeamsSizeException("Teams size must be even");
+		if (teamsList.size() < 2)			// schedule not generated
+			return null;
 
 		/* Berger's Algorithm */
 		
