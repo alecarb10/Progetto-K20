@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 import it.unipv.ingsw.k20.model.team.Team;
 import it.unipv.ingsw.k20.model.util.ScheduleGenerator;
 
@@ -14,7 +13,7 @@ public class Group extends TournamentElement {
 	}
 
 	@Override
-	public void initTournamentElement() throws OddTeamsSizeException {
+	public void initTournamentElement() {
 		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, teamsList.size() - 1);
 	}
 

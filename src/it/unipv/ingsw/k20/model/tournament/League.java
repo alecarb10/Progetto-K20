@@ -1,16 +1,19 @@
 package it.unipv.ingsw.k20.model.tournament;
 
+import java.util.List;
+
+import it.unipv.ingsw.k20.model.element.Day;
 import it.unipv.ingsw.k20.model.element.Group;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
+import it.unipv.ingsw.k20.model.match.Match;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class League extends Tournament {
 	private TournamentElement group; // girone unico
 
-	public League(String name) {
-		super(name);
-		this.initTournament();
+	public League(String name, List<Team> teamsList) {
+		super(name, teamsList);
+		initTournament(teamsList);
 	}
 
 	public TournamentElement getGroup() {
@@ -28,13 +31,10 @@ public class League extends Tournament {
 	}
 
 	@Override
-	public void initTournament() {
-		try {
-			this.group = new Group();
-			this.group.initTournamentElement();
-		} catch (OddTeamsSizeException ex) {
-			System.out.println(ex.getMessage());
-		}
+	public void initTournament(List<Team> teamsList) {
+		this.group = new Group();
+		addTeams(teamsList);
+		this.group.initTournamentElement();
 	}
 
 	@Override
@@ -47,4 +47,13 @@ public class League extends Tournament {
 		return this.group.addTeam(team);
 	}
 
+	@Override
+	public boolean insertScore(int numberDay, Match match, int homeScore, int awayScore) {
+		return this.group.insertScore(numberDay, match, homeScore, awayScore);
+	}
+
+	@Override
+	public List<Day> getSchedule() {
+		return this.group.getSchedule();
+	}
 }

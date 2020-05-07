@@ -2,7 +2,6 @@ package it.unipv.ingsw.k20.model.element;
 
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
 import it.unipv.ingsw.k20.model.team.Team;
 import it.unipv.ingsw.k20.model.util.ScheduleGenerator;
 
@@ -11,7 +10,7 @@ public class Board extends TournamentElement {
 	public Board() {}
 
 	@Override
-	public void initTournamentElement() throws OddTeamsSizeException {
+	public void initTournamentElement() {
 		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, 1);
 	}
 	

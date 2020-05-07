@@ -12,6 +12,7 @@ public class Match {
 	private Stadium stadium;
 	private int homeScore;
 	private int awayScore;
+	private boolean played;
 
 	public Match(Date date, Team homeTeam, Team awayTeam) {
 		this.date = date;
@@ -21,10 +22,15 @@ public class Match {
 		homeScore = 0;
 		awayScore = 0;
 		winner = null;
+		played = false;
 	}
 
 	public Date getDate() {
 		return date;
+	}
+	
+	public boolean isPlayed() {
+		return played;
 	}
 
 	public Team getHomeTeam() {
@@ -56,6 +62,7 @@ public class Match {
 		awayTeam.setGoalsScored(awayTeam.getGoalsScored() + awayScore);
 		awayTeam.setGoalsConceded(awayTeam.getGoalsConceded() + homeScore);
 
+		played = true;
 		setWinner();
 	}
 
@@ -76,10 +83,42 @@ public class Match {
 	public Team getWinner() {
 		return this.winner;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "MATCH: " + homeTeam.getName() + "  " + homeScore + "  VS  " + awayScore + "  " + awayTeam.getName()
 				+ "    DATE: " + date;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((awayTeam == null) ? 0 : awayTeam.hashCode());
+		result = prime * result + ((homeTeam == null) ? 0 : homeTeam.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+
+		Match other = (Match) obj;
+
+		if (awayTeam == null) {
+			if (other.awayTeam != null)
+				return false;
+		} else if (!awayTeam.equals(other.awayTeam))
+			return false;
+
+		if (homeTeam == null) {
+			if (other.homeTeam != null)
+				return false;
+		} else if (!homeTeam.equals(other.homeTeam))
+			return false;
+		return true;
 	}
 }

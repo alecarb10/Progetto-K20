@@ -2,12 +2,12 @@ package it.unipv.ingsw.k20.model.team;
 
 public class Stadium {
 	private String name;
-	private String location;
+	private String city;
 	private int capacity;
 
 	public Stadium(String name, String location, int capacity) {
 		this.name = name;
-		this.location = location;
+		this.city = location;
 		this.capacity = capacity;
 	}
 
@@ -20,11 +20,11 @@ public class Stadium {
 	}
 
 	public String getLocation() {
-		return location;
+		return city;
 	}
 
 	public void setLocation(String location) {
-		this.location = location;
+		this.city = location;
 	}
 
 	public int getCapacity() {
@@ -37,6 +37,6 @@ public class Stadium {
 
 	@Override
 	public String toString() {
-		return "Stadium: " + this.name + "\n\tLocation: " + this.location + "\n\tCapacity: " + this.capacity;
+		return "Stadium: " + this.name + "\n\tLocation: " + this.city + "\n\tCapacity: " + this.capacity;
 	}
 }

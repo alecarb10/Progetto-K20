@@ -1,13 +1,16 @@
 package it.unipv.ingsw.k20.model.tournament;
 
-import it.unipv.ingsw.k20.model.match.Match;
+import java.util.List;
+
+import it.unipv.ingsw.k20.model.team.Team;
 
 public abstract class Tournament implements ITournament {
+	
 	private static int n = 1;
 	private int tournamentID;
 	private String name;
 
-	public Tournament(String name) {
+	public Tournament(String name, List<Team> teamsList) {
 		this.tournamentID = n;
 		this.name = name;
 		n++;
@@ -25,9 +28,10 @@ public abstract class Tournament implements ITournament {
 		if (!name.isBlank())
 			this.name = name;
 	}
-
-	public void insertScore(Match m, int homeScore, int awayScore) {
-		m.setScore(homeScore, awayScore);
+	
+	protected void addTeams(List<Team> teamsList) {
+		for (Team t: teamsList)
+			addTeamInTournament(t);
 	}
 
 	@Override
@@ -49,5 +53,4 @@ public abstract class Tournament implements ITournament {
 	public int hashCode() {
 		return ((Integer) this.tournamentID).hashCode();
 	}
-
 }

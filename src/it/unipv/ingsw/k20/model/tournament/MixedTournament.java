@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unipv.ingsw.k20.model.element.Board;
+import it.unipv.ingsw.k20.model.element.Day;
 import it.unipv.ingsw.k20.model.element.Group;
 import it.unipv.ingsw.k20.model.element.TournamentElement;
-import it.unipv.ingsw.k20.model.exception.OddTeamsSizeException;
+import it.unipv.ingsw.k20.model.match.Match;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public class MixedTournament extends Tournament {
@@ -14,10 +15,10 @@ public class MixedTournament extends Tournament {
 	private List<TournamentElement> groupsList;
 	private TournamentElement board;
 
-	public MixedTournament(String name) {
-		super(name);
+	public MixedTournament(String name, List<Team> teamsList) {
+		super(name, teamsList);
 		this.groupsList = new ArrayList<>();
-		this.initTournament();
+		initTournament(teamsList);
 	}
 
 	public TournamentElement getBoard() {
@@ -33,7 +34,7 @@ public class MixedTournament extends Tournament {
 		return this.groupsList;
 	}
 
-	public boolean addGroup(Group group) throws NullPointerException {
+	public boolean addGroup(Group group) {
 		return this.groupsList.add(group);
 	}
 
@@ -54,13 +55,10 @@ public class MixedTournament extends Tournament {
 	}
 
 	@Override
-	public void initTournament() {
-		try {
-			for (TournamentElement te : this.groupsList)
-				te.initTournamentElement();
-		} catch (OddTeamsSizeException ex) {
-			System.out.println(ex.getMessage());
-		}
+	public void initTournament(List<Team> teamsList) {
+		addTeams(teamsList);
+		for (TournamentElement te : this.groupsList)
+			te.initTournamentElement();		
 	}
 
 	/**
@@ -72,7 +70,6 @@ public class MixedTournament extends Tournament {
 			if (te.isCompleted())
 				n++;
 		return n == this.groupsList.size() ? true : false;
-
 	}
 
 	@Override
@@ -93,14 +90,33 @@ public class MixedTournament extends Tournament {
 	/**
 	 * Il metodo viene invocato quando la fase a gironi è terminata.
 	 */
-	public void initKnockoutPhase(int maxDays) {
-		try {
-			if (this.isEachGroupCompleted())
-				this.board.initTournamentElement();
-
-		} catch (OddTeamsSizeException ex) {
-			System.out.println(ex.getMessage());
-		}
+	public void initKnockoutPhase() {
+		if (this.isEachGroupCompleted())
+			this.board.initTournamentElement();
 	}
 
+	@Override
+	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
+		if (isEachGroupCompleted())
+			return this.board.insertScore(dayNumber, match, homeScore, awayScore);
+		else 
+			for (TournamentElement te : this.groupsList)
+				if (te.insertScore(dayNumber, match, homeScore, awayScore))
+					return true;
+		
+		return false;
+	}
+
+	@Override
+	public List<Day> getSchedule() {
+		List<Day> schedule = new ArrayList<>();
+		
+		if (isEachGroupCompleted())
+			schedule = this.board.getSchedule();
+		else 
+			for (TournamentElement te : this.groupsList)
+				schedule.addAll(te.getSchedule());
+		
+		return schedule;	
+	}
 }

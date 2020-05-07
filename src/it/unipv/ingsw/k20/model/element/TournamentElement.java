@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import it.unipv.ingsw.k20.model.match.Match;
 import it.unipv.ingsw.k20.model.team.Team;
 
 public abstract class TournamentElement implements IElement {
@@ -30,11 +31,30 @@ public abstract class TournamentElement implements IElement {
 	}
 
 	public boolean isCompleted() {
+		for (Day d: schedule)
+			for(Match m: d.getMatchesList())
+				if(m.isPlayed())
+					completed = true;
+				else
+					completed = false;
+		
 		return completed;
 	}
 	
 	public List<Day> getSchedule() {
 		return schedule;
+	}
+	
+	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
+		Day day = getDayByNumber(dayNumber);
+		
+		for (Match m: day.getMatchesList())
+			if (m.equals(match)) {
+				m.setScore(homeScore, awayScore);
+				return true;
+			}
+		
+		return false;
 	}
 
 	public Day getDayByNumber(int number) {

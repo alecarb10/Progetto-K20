@@ -5,17 +5,14 @@ import java.util.List;
 
 public class Team {
 	private String name;
-	private String coach;
 	private int goalsScored;
 	private int goalsConceded;
 	private int points;
 	private Stadium stadium;
 	private ArrayList<Player> players;
 
-	public Team(String name, Stadium stadium, String coach) {
+	public Team(String name) {
 		this.name = name;
-		this.coach = coach;
-		this.stadium = stadium;
 		this.players = new ArrayList<>();
 		this.points = 0;
 		this.goalsScored = 0;
@@ -41,14 +38,6 @@ public class Team {
 				lineup.add(p);
 		
 		return lineup;
-	}
-
-	public String getCoach() {
-		return coach;
-	}
-
-	public void setCoach(String coach) {
-		this.coach = coach;
 	}
 
 	public int getGoalsScored() {
@@ -82,6 +71,10 @@ public class Team {
 	public Stadium getStadium() {
 		return stadium;
 	}
+	
+	public void setStadium(Stadium stadium) {
+		this.stadium = stadium;
+	}
 
 	public int numberOfPlayers() {
 		return this.players.size();
@@ -104,6 +97,6 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return "Team: " + this.name + "\n\tStadium: " + this.stadium + "\n\tCoach: ";
+		return "Team: " + this.name + "\n\tStadium: " + this.stadium;
 	}
 }
