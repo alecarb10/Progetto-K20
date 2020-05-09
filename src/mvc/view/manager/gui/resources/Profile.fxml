@@ -12,7 +12,7 @@
    <children>
       <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="54.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@/it/unipv/ingsw/k20/view/gui/manager/images/profile.jpg" />
+             <Image url="@/mvc/view/manager/gui/images/profile.jpg" />
          </image></ImageView>
       <TextField layoutX="304.0" layoutY="83.0" promptText="Name" />
       <Text layoutX="304.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />

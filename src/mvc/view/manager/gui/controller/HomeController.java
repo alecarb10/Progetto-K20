@@ -3,16 +3,15 @@ package mvc.view.manager.gui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import it.unipv.ingsw.k20.view.gui.manager.util.Constants;
-import it.unipv.ingsw.k20.view.gui.manager.util.GraphicHandler;
+import mvc.view.manager.gui.util.Constants;
+import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
+
 
 public class HomeController implements Initializable {
 	@FXML

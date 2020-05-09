@@ -1,8 +1,8 @@
 package mvc.view.manager.gui.main;
 
-import it.unipv.ingsw.k20.view.gui.manager.controller.HomeController;
-import it.unipv.ingsw.k20.view.gui.manager.util.Constants;
-import it.unipv.ingsw.k20.view.gui.manager.util.GraphicHandler;
+import mvc.view.manager.gui.controller.HomeController;
+import mvc.view.manager.gui.util.Constants;
+import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
