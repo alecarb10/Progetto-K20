@@ -1,0 +1,7 @@
+package mvc.view.manager.gui.util;
+
+public class Constants {
+	public static String PATH_PREFIX="/it/unipv/ingsw/k20/view/gui/manager";
+	public static String STYLE_LOGREG_PATH=Constants.PATH_PREFIX+"/style/StyleLogReg.css";
+	public static String STYLE_PATH=Constants.PATH_PREFIX+"/style/Style.css";
+}
