@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPaneHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox fx:id="vboxMenu" prefHeight="500.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="107.0" prefWidth="149.0">
+               <children>
+                  <ComboBox fx:id="cmbBoxProfile" layoutX="55.0" layoutY="28.0" prefHeight="25.0" prefWidth="88.0" promptText="Profile" />
+                  <ImageView fx:id="imgViewProfile" fitHeight="33.0" fitWidth="38.0" layoutX="11.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/it/unipv/ingsw/k20/view/gui/manager/images/profile.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Button fx:id="btnCreateTournament" mnemonicParsing="false" onAction="#createTournament" prefHeight="54.0" prefWidth="150.0" text="Create Tournament" />
+            <Button fx:id="btnInsertResult" mnemonicParsing="false" onAction="#insertResult" prefHeight="54.0" prefWidth="150.0" text="Insert Result" />
+            <Button fx:id="btnEditTeam" mnemonicParsing="false" onAction="#editTeam" prefHeight="54.0" prefWidth="150.0" text="Edit Team" />
+            <Button fx:id="btnEditPlayer" mnemonicParsing="false" onAction="#editPlayer" prefHeight="54.0" prefWidth="150.0" text="Edit Player" />
+
+
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="312.0" prefWidth="551.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
