@@ -1,8 +1,8 @@
-package it.unipv.ingsw.k20.model.tournament;
+package mvc.model.tournament;
 
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.team.Team;
+import mvc.model.team.Team;
 
 public abstract class Tournament implements ITournament {
 	

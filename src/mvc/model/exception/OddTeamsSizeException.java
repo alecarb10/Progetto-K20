@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.exception;
+package mvc.model.exception;
 
 @SuppressWarnings("serial")
 public class OddTeamsSizeException extends Exception{

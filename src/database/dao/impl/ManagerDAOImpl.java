@@ -1,12 +1,12 @@
-package it.unipv.ingsw.k20.database.dao.impl;
+package database.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import it.unipv.ingsw.k20.database.dao.IManagerDAO;
-import it.unipv.ingsw.k20.database.util.DBConnection;
+import database.dao.IManagerDAO;
+import database.util.DBConnection;
 
 public class ManagerDAOImpl implements IManagerDAO {
 

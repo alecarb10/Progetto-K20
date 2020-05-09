@@ -1,9 +1,9 @@
-package it.unipv.ingsw.k20.model.element;
+package mvc.model.element;
 
 import java.util.Date;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.match.Match;
+import mvc.model.match.Match;
 
 public class Day {
 	

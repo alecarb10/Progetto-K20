@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.team;
+package mvc.model.team;
 
 public enum PlayerPositionType {
 	GK,CB,MF,CF;

@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.tournament;
+package mvc.model.tournament;
 
 public enum TournamentType {
 	MIXED, LEAGUE, KNOCKOUT_PHASE;

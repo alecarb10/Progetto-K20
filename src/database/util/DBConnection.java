@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.database.util;
+package database.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

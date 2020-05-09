@@ -1,4 +1,4 @@
-package clientserver.client.fan.textui;
+package mvc.view.manager.textui;
 
 import java.sql.SQLException;
 

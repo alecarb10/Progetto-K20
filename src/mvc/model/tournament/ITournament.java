@@ -1,10 +1,10 @@
-package it.unipv.ingsw.k20.model.tournament;
+package mvc.model.tournament;
 
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.element.Day;
-import it.unipv.ingsw.k20.model.match.Match;
-import it.unipv.ingsw.k20.model.team.Team;
+import mvc.model.element.Day;
+import mvc.model.match.Match;
+import mvc.model.team.Team;
 
 public interface ITournament {
 

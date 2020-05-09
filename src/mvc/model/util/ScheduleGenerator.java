@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.util;
+package mvc.model.util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.element.Day;
-import it.unipv.ingsw.k20.model.match.Match;
-import it.unipv.ingsw.k20.model.team.Team;
+import mvc.model.element.Day;
+import mvc.model.match.Match;
+import mvc.model.team.Team;
 
 public class ScheduleGenerator {
 

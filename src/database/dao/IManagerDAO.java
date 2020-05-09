@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.database.dao;
+package database.dao;
 
 import java.sql.SQLException;
 

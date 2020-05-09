@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.team;
+package mvc.model.team;
 
 public class Stadium {
 	private String name;

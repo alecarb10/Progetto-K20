@@ -1,11 +1,11 @@
-package it.unipv.ingsw.k20.model.element;
+package mvc.model.element;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.match.Match;
-import it.unipv.ingsw.k20.model.team.Team;
+import mvc.model.match.Match;
+import mvc.model.team.Team;
 
 public abstract class TournamentElement implements IElement {
 

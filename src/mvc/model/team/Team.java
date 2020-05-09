@@ -1,4 +1,4 @@
-package it.unipv.ingsw.k20.model.team;
+package mvc.model.team;
 
 import java.util.ArrayList;
 import java.util.List;

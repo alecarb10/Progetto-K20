@@ -1,27 +1,28 @@
 package mvc.view.manager.textui;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
-import it.unipv.ingsw.k20.model.team.Team;
-import it.unipv.ingsw.k20.model.tournament.KnockoutPhase;
-import it.unipv.ingsw.k20.model.tournament.League;
-import it.unipv.ingsw.k20.model.tournament.MixedTournament;
-import it.unipv.ingsw.k20.model.tournament.Tournament;
+import database.dao.impl.FacadeImpl;
+import mvc.model.team.Team;
+import mvc.model.tournament.*;
 
 public class ManagerTextUI {
 
 	private Scanner scanner;
 	private String inputString;
 	private Tournament tournament;
+	FacadeImpl facade;
 
 	public ManagerTextUI() {
 		scanner = new Scanner(System.in);
+		this.facade = new FacadeImpl();
 	}
 
 	/* Metodo di avvio. */
 	public void start() {
 		while (true) {
-			System.out.println("** Welcome to the reserved area for managers. **\n");
+			System.out.println("** Welcome to the reserved area for managers. **");
 			System.out.println("Enter \"1\" to get login, \"2\" to get registration.");
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
 
@@ -36,7 +37,7 @@ public class ManagerTextUI {
 				System.out.println("You're already on the main menu.\n");
 				continue;
 			}
-			
+
 			try {
 				switch (Integer.parseInt(inputString)) {
 				case 1:
@@ -56,28 +57,43 @@ public class ManagerTextUI {
 	}
 
 	private void registration() {
-		System.out.println("Name: ");
-		String managerName = scanner.nextLine();
-		System.out.println("Surname: ");
-		String managerSurname = scanner.nextLine();
-		System.out.println("Username: ");
-		String managerUsername = scanner.nextLine();
-		System.out.println("Password:");
-		String managerPassword = scanner.nextLine();
-		System.out.println("Repeat password: ");
-		String managerRepeatPassword = scanner.nextLine();
-		// regi
-		this.menu();
-
+		while (true) {
+			System.out.println("Name: ");
+			String managerName = scanner.nextLine();
+			System.out.println("Surname: ");
+			String managerSurname = scanner.nextLine();
+			System.out.println("Username: ");
+			String managerUsername = scanner.nextLine();
+			System.out.println("Password:");
+			String managerPassword = scanner.nextLine();
+			// System.out.println("Repeat password: ");
+			// String managerRepeatPassword = scanner.nextLine();
+			try {
+				if (this.facade.storeManager(managerUsername, managerName, managerSurname, managerPassword) && this.facade.checkUnique(managerUsername)) {
+					this.menu();
+				} else {
+					System.out.println("Registration failed. Please retry.");
+				}
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+		}
 	}
 
 	private void login() {
-		System.out.println("Username: ");
-		String usernameString = scanner.nextLine();
-		System.out.println("Password: ");
-		String passwordString = scanner.nextLine();
-		// log
-		this.menu();
+		while (true) {
+			System.out.println("Username: ");
+			String usernameString = scanner.nextLine();
+			System.out.println("Password: ");
+			String passwordString = scanner.nextLine();
+			try {
+				facade.checkManagerLogin(usernameString, passwordString);
+				this.menu();
+			} catch (SQLException e) {
+				e.getMessage();
+			}
+
+		}
 	}
 
 	private void menu() {
@@ -98,7 +114,7 @@ public class ManagerTextUI {
 			}
 			if (inputString.contentEquals("b"))
 				break;
-			
+
 			try {
 				switch (Integer.parseInt(inputString)) {
 				case 1:
@@ -132,10 +148,8 @@ public class ManagerTextUI {
 	private void addTeamInTournament() {
 		System.out.println("Team Name: ");
 		String teamName = scanner.nextLine();
-		System.out.println("Team Coach: ");
-		String teamCoach = scanner.nextLine();
-		// Team team = new Team(teamName, stadium, teamCoach);
-		// this.tournament.addTeamInTournament(t);
+		Team newTeam = new Team(teamName);
+		this.tournament.addTeamInTournament(newTeam);
 	}
 
 	private void getTournamentsList() {
@@ -160,7 +174,7 @@ public class ManagerTextUI {
 			}
 			if (inputString.contentEquals("b"))
 				break;
-			
+
 			try {
 
 				switch (Integer.parseInt(inputString)) {
@@ -186,20 +200,32 @@ public class ManagerTextUI {
 	private void createMixedTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		this.tournament = new MixedTournament(inputString);
+		try {
+			this.tournament = new MixedTournament(inputString, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	private void createKnockoutPhaseTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		this.tournament = new KnockoutPhase(inputString);
+		try {
+			this.tournament = new KnockoutPhase(inputString, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
 	private void createLeagueTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		this.tournament = new League(inputString);
+		try {
+			this.tournament = new League(inputString, null);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }

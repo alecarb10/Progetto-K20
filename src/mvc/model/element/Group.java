@@ -1,11 +1,11 @@
-package it.unipv.ingsw.k20.model.element;
+package mvc.model.element;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import it.unipv.ingsw.k20.model.team.Team;
-import it.unipv.ingsw.k20.model.util.ScheduleGenerator;
+import mvc.model.team.Team;
+import mvc.model.util.ScheduleGenerator;
 
 public class Group extends TournamentElement {
 

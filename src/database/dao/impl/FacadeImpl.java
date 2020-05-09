@@ -1,9 +1,8 @@
-package it.unipv.ingsw.k20.database.dao.impl;
+package database.dao.impl;
 
 import java.sql.SQLException;
 
-import it.unipv.ingsw.k20.database.dao.IFacade;
-import it.unipv.ingsw.k20.database.dao.IManagerDAO;
+import database.dao.*;
 
 public class FacadeImpl implements IFacade {
 

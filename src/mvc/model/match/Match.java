@@ -1,6 +1,6 @@
-package it.unipv.ingsw.k20.model.match;
+package mvc.model.match;
 
-import it.unipv.ingsw.k20.model.team.*;
+import mvc.model.team.*;
 import java.util.Date;
 
 public class Match {
