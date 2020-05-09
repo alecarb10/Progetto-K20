@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutX="248.0" layoutY="111.0" prefHeight="375.0" prefWidth="332.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <ComboBox layoutX="54.0" layoutY="23.0" prefWidth="150.0" promptText="Select Tournament" />
+      <ComboBox layoutX="54.0" layoutY="61.0" prefWidth="150.0" promptText="Select Team" />
+      <TextField layoutX="55.0" layoutY="175.0" promptText="Name" />
+      <TextField layoutX="55.0" layoutY="218.0" promptText="Surname" />
+      <TextField layoutX="55.0" layoutY="258.0" promptText="Number" />
+      <ComboBox layoutX="55.0" layoutY="302.0" prefWidth="150.0" promptText="Player Position" />
+      <Button layoutX="164.0" layoutY="402.0" mnemonicParsing="false" text="New" />
+      <Button layoutX="30.0" layoutY="402.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="100.0" layoutY="402.0" mnemonicParsing="false" text="Edit" />
+   </children>
+</AnchorPane>
