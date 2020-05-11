@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import database.dao.IManagerDAO;
 import database.util.DBConnection;
+import database.util.MD5;
 
 public class ManagerDAOImpl implements IManagerDAO {
 
@@ -20,17 +21,47 @@ public class ManagerDAOImpl implements IManagerDAO {
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
-		int rs;
-
-		String query = "INSERT INTO manager(Username, Name, Surname, Password) VALUES" + "('" + username + "', '" + name
-				+ "', '" + surname + "', '" + password + "')";
+		boolean rs;
+		
+		password = MD5.getMd5(password);
+		String query = "INSERT INTO manager(Username, Name, Surname, Password) VALUES(?,?,?,?)";
 		ps = conn.prepareStatement(query);
-		rs = ps.executeUpdate(query);
-		if (rs > 0)
+		ps.setString(1, username);
+		ps.setString(2, name);
+		ps.setString(3, surname);
+		ps.setString(4, password);
+		
+		rs = ps.execute();
+		if (!rs) {
+			DBConnection.closeConnection(conn);
 			return true;
+		}	
 
 		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
+	@Override
+	public boolean updateManager(String username, String name, String surname, String password) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		password = MD5.getMd5(password);
+		String query = "UPDATE manager SET Name=?, Surname=?, Password=? WHERE Username=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, name);
+		ps.setString(2, surname);
+		ps.setString(3, password);
+		ps.setString(4, username);
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}	
 
+		DBConnection.closeConnection(conn);
 		return false;
 	}
 
@@ -38,126 +69,66 @@ public class ManagerDAOImpl implements IManagerDAO {
 	public boolean removeManager(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
-		int rs;
+		boolean rs;
 
-		String query = "DELETE from manager where Username='" + username + "'";
+		String query = "DELETE from manager where Username=?";
 		ps = conn.prepareStatement(query);
-		rs = ps.executeUpdate(query);
-		if (rs > 0)
+		ps.setString(1, username);
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
 			return true;
-
+		}
+			
 		DBConnection.closeConnection(conn);
-
 		return false;
 	}
 
 	@Override
 	public boolean checkManagerLogin(String username, String password) throws SQLException {
 		conn = DBConnection.startConnection(conn);
-		PreparedStatement st;
+		PreparedStatement ps;
 		ResultSet rs;
 
+		password = MD5.getMd5(password);
 		String query = "SELECT * from manager where Username=? and Password=?";
-		st = conn.prepareStatement(query);
-		st.setString(1, username);
-		st.setString(2, password);
+		ps = conn.prepareStatement(query);
+		ps.setString(1, username);
+		ps.setString(2, password);
 
-		rs = st.executeQuery();
+		rs = ps.executeQuery();
 
-		rs.next();
-		String usernameDB = rs.getString(1);
-		String passwordDB = rs.getString(4);
-
-		if (username.equals(usernameDB) && password.equals(passwordDB))
+		if (rs.next()) {
+			DBConnection.closeConnection(conn);
 			return true;
-
+		}
+			
 		DBConnection.closeConnection(conn);
-
 		return false;
 	}
 
 	@Override
 	public boolean checkUnique(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
-		PreparedStatement st;
+		PreparedStatement ps;
 		ResultSet rs;
 
 		String query = "SELECT count(*) from manager where Username=?";
-		st = conn.prepareStatement(query);
-		st.setString(1, username);
+		ps = conn.prepareStatement(query);
+		ps.setString(1, username);
 
-		rs = st.executeQuery();
+		rs = ps.executeQuery();
 
 		rs.next();
 		int count = Integer.parseInt(rs.getString(1));
 		
-		if (count == 0)
+		if (count == 0) {
+			DBConnection.closeConnection(conn);
 			return true;
-
+		}
+			
 		DBConnection.closeConnection(conn);
-
 		return false;
 	}
-
-	
-	public static void main(String[] args) {
-		ManagerDAOImpl m = new ManagerDAOImpl();
-		boolean check = false;
-
-		try {
-			check = m.storeManager("bho1", "bho2", "bho3", "password");
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		} finally {
-			if (check)
-				System.out.println("Manager Inserito");
-			else
-				System.out.println("Manager Non inserito");
-		}
-		
-		try {
-			check = m.storeManager("bho2", "bho3", "bho4", "password");
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		} finally {
-			if (check)
-				System.out.println("Manager Inserito");
-			else
-				System.out.println("Manager Non inserito");
-		}
-		
-		try {
-			check = m.removeManager("bho2");
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		} finally {
-			if (check)
-				System.out.println("Manager Rimosso");
-			else
-				System.out.println("Manager Non rimosso");
-		}
-
-		try {
-			check = m.checkManagerLogin("bho1", "password");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (check)
-				System.out.println("Loggato");
-			else
-				System.out.println("Non Loggato");
-		}
-		
-		try {
-			check = m.checkUnique("bho1");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (check)
-				System.out.println("OK");
-			else
-				System.out.println("Esiste un altro utente con questo username");
-		}
-	}
-	
 }

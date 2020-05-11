@@ -13,6 +13,12 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
+	public boolean updateManager(String username, String name, String surname, String password) throws SQLException {
+		IManagerDAO m = new ManagerDAOImpl();
+		return m.updateManager(username, name, surname, password);
+	}
+	
+	@Override
 	public boolean removeManager(String username) throws SQLException {
 		IManagerDAO m = new ManagerDAOImpl();
 		return m.removeManager(username);
@@ -29,5 +35,4 @@ public class FacadeImpl implements IFacade {
 		IManagerDAO m = new ManagerDAOImpl();
 		return m.checkUnique(username);
 	}
-
 }
