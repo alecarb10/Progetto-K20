@@ -3,6 +3,8 @@ package mvc.view.manager.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import database.dao.impl.ManagerDAOImpl;
 import mvc.view.manager.gui.util.Constants;
@@ -34,11 +36,15 @@ public class LoginController implements Initializable{
 		try {
 			 
 			boolean checkLogin=new ManagerDAOImpl().checkManagerLogin(this.txtFldUsername.getText(),this.pwdFldPassword.getText());		
-			String message=checkLogin?"logged":"incorrect credentials";
-			AlertType alertType=checkLogin?AlertType.CONFIRMATION:AlertType.ERROR;
-			new Alert(alertType,message,ButtonType.OK).showAndWait();
+			if(checkLogin) {
+				Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Home.fxml", new HomeController(),Constants.STYLE_PATH);
+				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				GraphicHandler.loadStage(scene, primaryStage);
+			}
+			else new Alert(AlertType.ERROR,"Incorrect credentials.",ButtonType.OK).show();
+
 		} catch (Exception e) {
-		    e.printStackTrace();
+			Logger.getGlobal().log(Level.SEVERE,e.getMessage());
 		}
 		
 	
@@ -49,10 +55,7 @@ public class LoginController implements Initializable{
 	{	        
 		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Registration.fxml", new RegistrationController(),Constants.STYLE_LOGREG_PATH);
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Manager");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
+		GraphicHandler.loadStage(scene, primaryStage);
 	}
 
 	@Override

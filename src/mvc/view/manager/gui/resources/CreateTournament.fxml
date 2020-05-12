@@ -13,9 +13,9 @@
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="txtFldName" layoutX="43.0" layoutY="36.0" promptText="Name" />
-      <ComboBox fx:id="cmdBoxType" layoutX="43.0" layoutY="76.0" prefWidth="150.0" promptText="Type" />
-      <ComboBox fx:id="cmdBoxSize" layoutX="43.0" layoutY="120.0" prefWidth="150.0" promptText="Size" />
-      <VBox layoutX="43.0" layoutY="197.0" prefHeight="313.0" prefWidth="217.0">
+      <ComboBox fx:id="cmbBoxType" layoutX="43.0" layoutY="76.0" prefWidth="150.0" promptText="Type" />
+      <ComboBox fx:id="cmbBoxSize" layoutX="43.0" layoutY="120.0" prefWidth="150.0" promptText="Size" />
+      <VBox layoutX="43.0" layoutY="197.0" prefHeight="313.0" prefWidth="244.0">
          <children>
             <HBox prefHeight="31.0" prefWidth="233.0">
                <children>
@@ -25,6 +25,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#removeTeamFromList" text="Delete" />
                </children>
             </HBox>
             <ListView fx:id="listViewTeams" prefHeight="283.0" prefWidth="217.0" />

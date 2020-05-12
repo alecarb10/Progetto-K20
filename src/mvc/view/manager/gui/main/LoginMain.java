@@ -12,10 +12,7 @@ public class LoginMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);	
-		primaryStage.setTitle("Manager");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
+		GraphicHandler.loadStage(scene, primaryStage);
 	}
 	
 	public static void main(String[] args) {

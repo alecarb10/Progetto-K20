@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class GraphicHandler {
 	public static Scene getScene(String resource, Initializable controller) {
@@ -41,5 +42,12 @@ public class GraphicHandler {
 		FXMLLoader fxmlLoader=new FXMLLoader(new Object() {}.getClass().getEnclosingClass().getResource(resource));
 		fxmlLoader.setController(controller);
 		return fxmlLoader;
+	}
+	
+	public static void loadStage(Scene scene,Stage primaryStage) {
+		primaryStage.setTitle("Manager");
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
 	}
 }

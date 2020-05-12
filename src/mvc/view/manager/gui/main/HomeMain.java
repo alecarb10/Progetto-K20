@@ -12,9 +12,7 @@ public class HomeMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Home.fxml",new HomeController(),Constants.STYLE_PATH);
-		primaryStage.setTitle("Manager");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		GraphicHandler.loadStage(scene, primaryStage);
 	}
 	
 	public static void main(String[] args) {
