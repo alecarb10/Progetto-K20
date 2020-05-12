@@ -9,7 +9,7 @@ import mvc.model.match.Match;
 import mvc.model.team.Team;
 
 public class League extends Tournament {
-	private TournamentElement group; // girone unico
+	private TournamentElement group; 
 
 	public League(String name, List<Team> teamsList) {
 		super(name, teamsList);
@@ -32,7 +32,7 @@ public class League extends Tournament {
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.group = new Group();
+		this.group = new Group("League");
 		addTeams(teamsList);
 		this.group.initTournamentElement();
 	}

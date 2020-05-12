@@ -7,7 +7,7 @@ import mvc.model.util.ScheduleGenerator;
 
 public class Board extends TournamentElement {
 
-	public Board() {}
+	public Board(String name) {super(name);}
 
 	@Override
 	public void initTournamentElement() {

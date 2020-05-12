@@ -25,11 +25,6 @@ public class MixedTournament extends Tournament {
 		return this.board;
 	}
 
-	public void setBoard(Board board) {
-		if (board != null)
-			this.board = board;
-	}
-
 	public List<TournamentElement> getGroupsList() {
 		return this.groupsList;
 	}
@@ -45,17 +40,15 @@ public class MixedTournament extends Tournament {
 
 	@Override
 	public String toString() {
-		char groupLetter = 65; // A
-		StringBuilder sb = new StringBuilder().append("Gironi\n");
-		for (TournamentElement te : this.groupsList) {
-			sb.append("Group ").append(groupLetter).append("\n").append(te).append("\n");
-			groupLetter++;
-		}
+		StringBuilder sb = new StringBuilder().append("Groups\n");
+		for (TournamentElement te : this.groupsList)
+			sb.append(te.getName()).append("\n").append(te).append("\n");
 		return super.toString() + String.format("Tournament type: %s\n%s\n%s\n", this.getTournamentType(), sb.toString(), this.board.toString());
 	}
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
+		initializeGroups(teamsList.size()/4);
 		addTeams(teamsList);
 		for (TournamentElement te : this.groupsList)
 			te.initTournamentElement();		
@@ -91,8 +84,10 @@ public class MixedTournament extends Tournament {
 	 * Il metodo viene invocato quando la fase a gironi è terminata.
 	 */
 	public void initKnockoutPhase() {
-		if (this.isEachGroupCompleted())
+		if (this.isEachGroupCompleted()) {
+			this.board= new Board("Board");
 			this.board.initTournamentElement();
+		}
 	}
 
 	@Override
@@ -118,5 +113,13 @@ public class MixedTournament extends Tournament {
 				schedule.addAll(te.getSchedule());
 		
 		return schedule;	
+	}
+	
+	private void initializeGroups(int number) {	
+		char groupLetter=65;
+		for(int i=0;i<number;i++) {
+			addGroup(new Group("Group "+groupLetter));
+			groupLetter++;
+		}
 	}
 }
