@@ -32,6 +32,7 @@ public class GraphicHandler {
 	public static Parent getParent(String resource, Initializable controller) {
 		try {
 			return getLoader(resource, controller).load();
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
