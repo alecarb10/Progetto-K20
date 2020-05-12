@@ -3,9 +3,6 @@ package mvc.view.manager.gui.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,8 +13,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
-import mvc.view.manager.gui.util.Constants;
-import mvc.view.manager.gui.util.GraphicHandler;
 
 public class CreateTournamentController implements Initializable {
 	
@@ -51,8 +46,7 @@ public class CreateTournamentController implements Initializable {
 	
 	private ObservableList<String> getSizeList(){
 		ObservableList<String> sizeList= FXCollections.observableArrayList();
-		int i,j;
-		for(i=4,j=2;i<=16&&j<=4;) {
+		for(int i=4,j=2;i<=16&&j<=4;) {
 			if(this.cmbBoxType.getSelectionModel().getSelectedIndex()==0) {
 				sizeList.add(Integer.toString(i));
 				i+=2;

@@ -16,7 +16,7 @@
          </font></Text>
       <TextField fx:id="txtFldUsername" layoutX="81.0" layoutY="107.0" prefHeight="33.0" prefWidth="188.0" promptText="username" />
       <PasswordField fx:id="pwdFldPassword" layoutX="81.0" layoutY="154.0" prefHeight="33.0" prefWidth="188.0" promptText="password" />
-      <Button fx:id="btnSignIn" layoutX="81.0" layoutY="206.0" onAction="#login" prefHeight="17.0" prefWidth="188.0" text="Sign In" />
+      <Button fx:id="btnSignIn" layoutX="81.0" layoutY="206.0" onAction="#login" prefHeight="17.0" prefWidth="188.0" text="Sign in" />
       <Text fx:id="txtSignUp" layoutX="81.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account?" />
       <Label fx:id="lblSignUp" layoutX="207.0" layoutY="296.0" onMouseClicked="#signUp" text="Sign up" />
       

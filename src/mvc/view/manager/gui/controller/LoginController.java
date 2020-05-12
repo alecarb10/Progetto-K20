@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.dao.impl.ManagerDAOImpl;
+import database.dao.impl.FacadeImpl;
 import mvc.view.manager.gui.util.Constants;
 import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.event.ActionEvent;
@@ -23,46 +23,42 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class LoginController implements Initializable{	
-	
+public class LoginController implements Initializable {
+
 	@FXML
 	private TextField txtFldUsername;
 	@FXML
 	private PasswordField pwdFldPassword;
 	@FXML
 	private Label lblSignUp;
-	
-	public void login(ActionEvent event){
+
+	public void login(ActionEvent event) {
 		try {
-			 
-			boolean checkLogin=new ManagerDAOImpl().checkManagerLogin(this.txtFldUsername.getText(),this.pwdFldPassword.getText());		
-			if(checkLogin) {
-				Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Home.fxml", new HomeController(),Constants.STYLE_PATH);
+
+			boolean checkLogin = new FacadeImpl().checkManagerLogin(this.txtFldUsername.getText(),
+					this.pwdFldPassword.getText());
+			if (checkLogin) {
+				Scene scene = GraphicHandler.getScene(Constants.PATH_PREFIX + "/resources/Home.fxml",
+						new HomeController(), Constants.STYLE_PATH);
 				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				GraphicHandler.loadStage(scene, primaryStage);
-			}
-			else new Alert(AlertType.ERROR,"Incorrect credentials.",ButtonType.OK).show();
+			} else new Alert(AlertType.ERROR, "Incorrect credentials.", ButtonType.OK).show();
 
 		} catch (Exception e) {
-			Logger.getGlobal().log(Level.SEVERE,e.getMessage());
+			Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 		}
-		
-	
-		 
+
 	}
-	
-	public void signUp(MouseEvent event) throws IOException
-	{	        
-		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Registration.fxml", new RegistrationController(),Constants.STYLE_LOGREG_PATH);
+
+	public void signUp(MouseEvent event) throws IOException {
+		Scene scene = GraphicHandler.getScene(Constants.PATH_PREFIX + "/resources/Registration.fxml", new RegistrationController(), Constants.STYLE_LOGREG_PATH);
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		GraphicHandler.loadStage(scene, primaryStage);
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
-	
-	
-	
+
 }

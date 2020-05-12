@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import database.dao.impl.ManagerDAOImpl;
+import database.dao.impl.FacadeImpl;
 import mvc.view.manager.gui.util.Constants;
 import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.event.ActionEvent;
@@ -19,6 +19,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class RegistrationController implements Initializable {
@@ -29,11 +30,11 @@ public class RegistrationController implements Initializable {
 	private PasswordField pwdFldPassword,pwdFldRepeatPassword;
 	
 	public void registration(ActionEvent event) throws IOException {
-		ManagerDAOImpl managerDaoImpl= new ManagerDAOImpl();
+		FacadeImpl facadeImpl= new FacadeImpl();
 		try {
 			if(this.pwdMatching()&&this.isNotBlankControl()) {
-				if(managerDaoImpl.checkUnique(this.txtFldUsername.getText())) {
-					managerDaoImpl.storeManager(this.txtFldUsername.getText(), this.txtFldName.getText(), this.txtFldSurname.getText(),this.pwdFldPassword.getText());
+				if(facadeImpl.checkUnique(this.txtFldUsername.getText())) {
+					facadeImpl.storeManager(this.txtFldUsername.getText(), this.txtFldName.getText(), this.txtFldSurname.getText(),this.pwdFldPassword.getText());
 					Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);
 					Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 					GraphicHandler.loadStage(scene, primaryStage);
@@ -62,6 +63,13 @@ public class RegistrationController implements Initializable {
 	
 	private void createAlert(String message) {
 		new Alert(AlertType.ERROR,message,ButtonType.OK).show();
+	}
+	
+	public void signIn(MouseEvent event)
+	{	        
+		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);
+		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		GraphicHandler.loadStage(scene, primaryStage);
 	}
 	
 	
