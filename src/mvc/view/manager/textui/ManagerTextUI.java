@@ -1,6 +1,7 @@
 package mvc.view.manager.textui;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
@@ -20,7 +21,7 @@ public class ManagerTextUI {
 	}
 
 	/* Metodo di avvio. */
-	public void start() {
+	public void start() throws SQLException {
 		while (true) {
 			System.out.println("** Welcome to the reserved area for managers. **");
 			System.out.println("Enter \"1\" to get login, \"2\" to get registration.");
@@ -56,7 +57,19 @@ public class ManagerTextUI {
 
 	}
 
-	private void registration() {
+	private void login() throws SQLException {
+		while (true) {
+			System.out.println("Username: ");
+			String usernameString = scanner.nextLine();
+			System.out.println("Password: ");
+			String passwordString = scanner.nextLine();
+
+			facade.checkManagerLogin(usernameString, passwordString);
+			this.menu();
+		}
+	}
+
+	private void registration() throws SQLException {
 		while (true) {
 			System.out.println("Name: ");
 			String managerName = scanner.nextLine();
@@ -66,33 +79,21 @@ public class ManagerTextUI {
 			String managerUsername = scanner.nextLine();
 			System.out.println("Password:");
 			String managerPassword = scanner.nextLine();
-			// System.out.println("Repeat password: ");
-			// String managerRepeatPassword = scanner.nextLine();
-			try {
-				if (this.facade.storeManager(managerUsername, managerName, managerSurname, managerPassword) && this.facade.checkUnique(managerUsername)) {
-					this.menu();
-				} else {
-					System.out.println("Registration failed. Please retry.");
-				}
-			} catch (SQLException e) {
-				e.getMessage();
-			}
-		}
-	}
+			System.out.println("Repeat password: ");
+			String managerRepeatPassword = scanner.nextLine();
 
-	private void login() {
-		while (true) {
-			System.out.println("Username: ");
-			String usernameString = scanner.nextLine();
-			System.out.println("Password: ");
-			String passwordString = scanner.nextLine();
-			try {
-				facade.checkManagerLogin(usernameString, passwordString);
-				this.menu();
-			} catch (SQLException e) {
-				e.getMessage();
+			if (!(managerPassword == managerRepeatPassword)) {
+				System.out.println("Passwords were different. Please retry. ");
+				break;
 			}
 
+			if (!this.facade.checkUnique(managerUsername)) {
+				System.out.println("Username already used. Please change it. ");
+				break;
+			}
+
+			this.facade.storeManager(managerUsername, managerName, managerSurname, managerPassword);
+			this.login();
 		}
 	}
 
@@ -101,8 +102,6 @@ public class ManagerTextUI {
 			System.out.println("** Main menu. Enter the number relate to your preference. **\n");
 			System.out.println("1 - Get tournaments list.");
 			System.out.println("2 - Create tournament.");
-			System.out.println("3 - Add team in a tournament.");
-			System.out.println("4 - Remove team from a tournament.\n");
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
 
 			System.out.print("Input: ");
@@ -123,10 +122,6 @@ public class ManagerTextUI {
 				case 2:
 					this.createTournament();
 					break;
-				case 3:
-					this.addTeamInTournament();
-				case 4:
-					this.removeTeamFromTournament();
 				default:
 					System.out.println("Unavailable input.\n");
 				}
@@ -136,24 +131,8 @@ public class ManagerTextUI {
 		}
 	}
 
-	private void removeTeamFromTournament() {
-		System.out.println("Team Name: ");
-		String teamName = scanner.nextLine();
-		System.out.println("Team Coach: ");
-		String teamCoach = scanner.nextLine();
-		// Team team = new Team(teamName, stadium, teamCoach);
-		// this.tournament.removeTeamFromTournament(t);
-	}
-
-	private void addTeamInTournament() {
-		System.out.println("Team Name: ");
-		String teamName = scanner.nextLine();
-		Team newTeam = new Team(teamName);
-		this.tournament.addTeamInTournament(newTeam);
-	}
-
 	private void getTournamentsList() {
-
+		// lista ...
 	}
 
 	private void createTournament() {
@@ -200,32 +179,66 @@ public class ManagerTextUI {
 	private void createMixedTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		try {
-			this.tournament = new MixedTournament(inputString, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+
+		ArrayList<Team> teams = new ArrayList<>();
+
+		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
+		// limite in sospeso)
+		System.out.println("Enter team name: ");
+		String teamName = scanner.nextLine();
+		Team team = new Team(teamName);
+		teams.add(team);
+
+		this.tournament = new League(inputString, teams);
+
 	}
 
 	private void createKnockoutPhaseTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		try {
-			this.tournament = new KnockoutPhase(inputString, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+
+		ArrayList<Team> teams = new ArrayList<>();
+
+		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
+		// limite in sospeso)
+		System.out.println("Enter team name: ");
+		String teamName = scanner.nextLine();
+		Team team = new Team(teamName);
+		teams.add(team);
+
+		this.tournament = new League(inputString, teams);
 
 	}
 
 	private void createLeagueTournament() {
 		System.out.println("Enter tournament name: ");
 		inputString = scanner.nextLine();
-		try {
-			this.tournament = new League(inputString, null);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+
+		ArrayList<Team> teams = new ArrayList<>();
+
+		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
+		// limite in sospeso)
+		System.out.println("Enter team name: ");
+		String teamName = scanner.nextLine();
+		Team team = new Team(teamName);
+		teams.add(team);
+
+		this.tournament = new League(inputString, teams);
+
+	}
+
+	private void removeTeamFromTournament() throws IllegalArgumentException {
+		System.out.println("Team Name to remove: ");
+		String teamName = scanner.nextLine();
+		Team teamToRemove = new Team(teamName);
+		this.tournament.removeTeamFromTournament(teamToRemove);
+	}
+
+	private void addTeamInTournament() throws IllegalArgumentException {
+		System.out.println("Team Name to add: ");
+		String teamName = scanner.nextLine();
+		Team TeamToAdd = new Team(teamName);
+		this.tournament.addTeamInTournament(TeamToAdd);
 	}
 
 }
