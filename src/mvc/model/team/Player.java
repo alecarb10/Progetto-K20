@@ -4,15 +4,13 @@ public class Player {
 	private String name;
 	private String surname;
 	private int number;
-	private boolean holder;
 	private PlayerPositionType position;
 
-	public Player(String name, String surname, int number, PlayerPositionType position, boolean holder) {
+	public Player(String name, String surname, int number, PlayerPositionType position) {
 		this.name = name;
 		this.surname = surname;
 		this.number = number;
 		this.position = position;
-		this.holder = holder;
 	}
 
 	public PlayerPositionType getPosition() {
@@ -37,14 +35,6 @@ public class Player {
 	
 	public int getNumber() {
 		return this.number;
-	}
-	
-	public void setHolder(boolean holder) {
-		this.holder = holder;
-	}
-
-	public boolean getHolder() {
-		return this.holder;
 	}
 
 	@Override

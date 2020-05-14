@@ -29,7 +29,6 @@ public class Board extends TournamentElement {
 	@Override
 	public void endTournamentElement() {
 		completed = true;
-		// decreta vincitore...
 	}
 	
 	@Override

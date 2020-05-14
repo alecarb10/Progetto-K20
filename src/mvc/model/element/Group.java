@@ -54,7 +54,6 @@ public class Group extends TournamentElement {
 	@Override
 	public void endTournamentElement() {
 		completed = true;
-		// decreta vincitore...
 	}
 
 	@Override

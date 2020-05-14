@@ -29,19 +29,9 @@ public class Team {
 				return players.remove(p);
 		return false;
 	}
-
-	public List<Player> getLineUp() {
-		List<Player> lineup = new ArrayList<>();
-		
-		for (Player p : players)
-			if (p.getHolder())
-				lineup.add(p);
-		
-		return lineup;
-	}
-
-	public int getGoalsScored() {
-		return goalsScored;
+	
+	public List<Player> getPlayers(){
+		return this.players;
 	}
 
 	public int getPoints() {
@@ -55,6 +45,10 @@ public class Team {
 	public void setGoalsScored(int goalsScored) {
 		this.goalsScored = goalsScored;
 	}
+	
+	public int getGoalsScored() {
+		return goalsScored;
+	}
 
 	public int getGoalsConceded() {
 		return goalsConceded;
@@ -64,6 +58,10 @@ public class Team {
 		this.goalsConceded = goalsConceded;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
 		return this.name;
 	}
@@ -74,10 +72,6 @@ public class Team {
 	
 	public void setStadium(Stadium stadium) {
 		this.stadium = stadium;
-	}
-
-	public int numberOfPlayers() {
-		return this.players.size();
 	}
 
 	@Override

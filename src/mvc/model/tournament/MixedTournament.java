@@ -15,10 +15,9 @@ public class MixedTournament extends Tournament {
 	private List<TournamentElement> groupsList;
 	private TournamentElement board;
 
-	public MixedTournament(String name, List<Team> teamsList) {
-		super(name, teamsList);
+	public MixedTournament(String name) {
+		super(name);
 		this.groupsList = new ArrayList<>();
-		initTournament(teamsList);
 	}
 
 	public TournamentElement getBoard() {
@@ -31,19 +30,6 @@ public class MixedTournament extends Tournament {
 
 	public boolean addGroup(Group group) {
 		return this.groupsList.add(group);
-	}
-
-	@Override
-	public TournamentType getTournamentType() {
-		return TournamentType.MIXED;
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder().append("Groups\n");
-		for (TournamentElement te : this.groupsList)
-			sb.append(te.getName()).append("\n").append(te).append("\n");
-		return super.toString() + String.format("Tournament type: %s\n%s\n%s\n", this.getTournamentType(), sb.toString(), this.board.toString());
 	}
 
 	@Override
@@ -121,5 +107,18 @@ public class MixedTournament extends Tournament {
 			addGroup(new Group("Group "+groupLetter));
 			groupLetter++;
 		}
+	}
+	
+	@Override
+	public TournamentType getTournamentType() {
+		return TournamentType.MIXED;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder().append("Groups\n");
+		for (TournamentElement te : this.groupsList)
+			sb.append(te.getName()).append("\n").append(te).append("\n");
+		return super.toString() + String.format("Tournament type: %s\n%s\n%s\n", this.getTournamentType(), sb.toString(), this.board.toString());
 	}
 }

@@ -11,23 +11,12 @@ import mvc.model.team.Team;
 public class League extends Tournament {
 	private TournamentElement group; 
 
-	public League(String name, List<Team> teamsList) {
-		super(name, teamsList);
-		initTournament(teamsList);
+	public League(String name) {
+		super(name);
 	}
 
 	public TournamentElement getGroup() {
 		return this.group;
-	}
-
-	@Override
-	public TournamentType getTournamentType() {
-		return TournamentType.LEAGUE;
-	}
-
-	@Override
-	public String toString() {
-		return super.toString() + String.format("Tournament type: %s\n%s", this.getTournamentType(), this.group.toString());
 	}
 
 	@Override
@@ -55,5 +44,15 @@ public class League extends Tournament {
 	@Override
 	public List<Day> getSchedule() {
 		return this.group.getSchedule();
+	}
+	
+	@Override
+	public TournamentType getTournamentType() {
+		return TournamentType.LEAGUE;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + String.format("Tournament type: %s\n%s", this.getTournamentType(), this.group.toString());
 	}
 }

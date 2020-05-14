@@ -12,24 +12,12 @@ public class KnockoutPhase extends Tournament {
 
 	private TournamentElement board;
 
-	public KnockoutPhase(String name, List<Team> teamsList) {
-		super(name, teamsList);
-		initTournament(teamsList);
+	public KnockoutPhase(String name) {
+		super(name);
 	}
 
 	public TournamentElement getBoard() {
 		return this.board;
-	}
-
-	@Override
-	public TournamentType getTournamentType() {
-		return TournamentType.KNOCKOUT_PHASE;
-	}
-
-	@Override
-	public String toString() {
-		return super.toString()
-				+ String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
 	}
 
 	@Override
@@ -57,5 +45,16 @@ public class KnockoutPhase extends Tournament {
 	@Override
 	public List<Day> getSchedule() {
 		return this.board.getSchedule();
+	}
+	
+	@Override
+	public TournamentType getTournamentType() {
+		return TournamentType.KNOCKOUT_PHASE;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()
+				+ String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
 	}
 }

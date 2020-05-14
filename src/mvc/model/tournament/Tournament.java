@@ -6,18 +6,10 @@ import mvc.model.team.Team;
 
 public abstract class Tournament implements ITournament {
 	
-	private static int n = 1;
-	private int tournamentID;
 	private String name;
 
-	public Tournament(String name, List<Team> teamsList) {
-		this.tournamentID = n;
+	public Tournament(String name) {
 		this.name = name;
-		n++;
-	}
-
-	public int getTournamentID() {
-		return this.tournamentID;
 	}
 
 	public String getName() {
@@ -37,20 +29,5 @@ public abstract class Tournament implements ITournament {
 	@Override
 	public String toString() {
 		return String.format("Tournament name: %s\n", this.name);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (obj == this)
-			return true;
-		Tournament tournament = (Tournament) obj;
-		return tournament.tournamentID == this.tournamentID;
-	}
-
-	@Override
-	public int hashCode() {
-		return ((Integer) this.tournamentID).hashCode();
 	}
 }
