@@ -1,15 +1,15 @@
 package mvc.view.manager.gui.util;
 
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GraphicHandler {
-	public static Scene getScene(String resource, Initializable controller) {
+	
+	public static Scene getScene(String resource) {
 		try {        
-    		return new Scene(getLoader(resource, controller).load());
+    		return new Scene(getLoader(resource).load());
     		
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -17,9 +17,9 @@ public class GraphicHandler {
         }
 	}
 	
-	public static Scene getScene(String resource, Initializable controller,String style) {
+	public static Scene getScene(String resource,String style) {
 		try {
-			Scene scene= new Scene(getLoader(resource, controller).load());
+			Scene scene= new Scene(getLoader(resource).load());
 			scene.getStylesheets().add(new Object() {}.getClass().getEnclosingClass().getResource(style).toExternalForm());
     		return scene;
     		
@@ -29,9 +29,21 @@ public class GraphicHandler {
         }
 	}
 	
-	public static Parent getParent(String resource, Initializable controller) {
+	public static Scene getScene(Parent root,String style) {
 		try {
-			return getLoader(resource, controller).load();
+			Scene scene= new Scene(root);
+			scene.getStylesheets().add(new Object() {}.getClass().getEnclosingClass().getResource(style).toExternalForm());
+    		return scene;
+    		
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+	}
+	
+	public static Parent getParent(String resource) {
+		try {
+			return getLoader(resource).load();
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -39,10 +51,8 @@ public class GraphicHandler {
 		}
 	}
 	
-	private static FXMLLoader getLoader(String resource, Initializable controller) {
-		FXMLLoader fxmlLoader=new FXMLLoader(new Object() {}.getClass().getEnclosingClass().getResource(resource));
-		fxmlLoader.setController(controller);
-		return fxmlLoader;
+	public static FXMLLoader getLoader(String resource) {
+		return new FXMLLoader(new Object() {}.getClass().getEnclosingClass().getResource(resource));
 	}
 	
 	public static void loadStage(Scene scene,Stage primaryStage) {

@@ -11,8 +11,10 @@ import mvc.view.manager.gui.util.Constants;
 import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -35,23 +37,26 @@ public class LoginController implements Initializable {
 	public void login(ActionEvent event) {
 		try {
 
-			boolean checkLogin = new FacadeImpl().checkManagerLogin(this.txtFldUsername.getText(),
-					this.pwdFldPassword.getText());
+			boolean checkLogin = new FacadeImpl().checkManagerLogin(this.txtFldUsername.getText(),this.pwdFldPassword.getText());
 			if (checkLogin) {
-				Scene scene = GraphicHandler.getScene(Constants.PATH_PREFIX + "/resources/Home.fxml",
-						new HomeController(), Constants.STYLE_PATH);
+				FXMLLoader loader=GraphicHandler.getLoader(Constants.PATH_PREFIX + "/resources/Home.fxml");
+				Parent root=loader.load();
+				HomeController controller=loader.getController();
+				controller.setUsername(this.txtFldUsername.getText());
+				Scene scene = GraphicHandler.getScene(root, Constants.STYLE_PATH);
 				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-				GraphicHandler.loadStage(scene, primaryStage);
+				GraphicHandler.loadStage(scene, primaryStage);							
 			} else new Alert(AlertType.ERROR, "Incorrect credentials.", ButtonType.OK).show();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 		}
 
 	}
 
 	public void signUp(MouseEvent event) throws IOException {
-		Scene scene = GraphicHandler.getScene(Constants.PATH_PREFIX + "/resources/Registration.fxml", new RegistrationController(), Constants.STYLE_LOGREG_PATH);
+		Scene scene = GraphicHandler.getScene(Constants.PATH_PREFIX + "/resources/Registration.fxml", Constants.STYLE_LOGREG_PATH);
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		GraphicHandler.loadStage(scene, primaryStage);
 	}

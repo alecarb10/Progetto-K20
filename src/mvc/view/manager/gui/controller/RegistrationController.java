@@ -35,7 +35,7 @@ public class RegistrationController implements Initializable {
 			if(this.pwdMatching()&&this.isNotBlankControl()) {
 				if(facadeImpl.checkUnique(this.txtFldUsername.getText())) {
 					facadeImpl.storeManager(this.txtFldUsername.getText(), this.txtFldName.getText(), this.txtFldSurname.getText(),this.pwdFldPassword.getText());
-					Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);
+					Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
 					Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 					GraphicHandler.loadStage(scene, primaryStage);
 				}
@@ -67,7 +67,7 @@ public class RegistrationController implements Initializable {
 	
 	public void signIn(MouseEvent event)
 	{	        
-		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);
+		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		GraphicHandler.loadStage(scene, primaryStage);
 	}

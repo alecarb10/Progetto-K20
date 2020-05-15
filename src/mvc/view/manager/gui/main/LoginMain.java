@@ -1,6 +1,5 @@
 package mvc.view.manager.gui.main;
 
-import mvc.view.manager.gui.controller.LoginController;
 import mvc.view.manager.gui.util.Constants;
 import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.application.Application;
@@ -11,7 +10,7 @@ public class LoginMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml", new LoginController(),Constants.STYLE_LOGREG_PATH);	
+		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);	
 		GraphicHandler.loadStage(scene, primaryStage);
 	}
 	

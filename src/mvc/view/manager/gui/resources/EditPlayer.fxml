@@ -7,16 +7,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.EditPlayerController">
    <children>
+      <ComboBox fx:id="cmbBoxTournament" layoutX="54.0" layoutY="23.0" prefWidth="150.0" promptText="Select Tournament" />
+      <ComboBox layoutX="54.0" layoutY="61.0" prefWidth="150.0" promptText="Select Team" />
       <TableView layoutX="248.0" layoutY="111.0" prefHeight="375.0" prefWidth="332.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <ComboBox layoutX="54.0" layoutY="23.0" prefWidth="150.0" promptText="Select Tournament" />
-      <ComboBox layoutX="54.0" layoutY="61.0" prefWidth="150.0" promptText="Select Team" />
       <TextField layoutX="55.0" layoutY="175.0" promptText="Name" />
       <TextField layoutX="55.0" layoutY="218.0" promptText="Surname" />
       <TextField layoutX="55.0" layoutY="258.0" promptText="Number" />

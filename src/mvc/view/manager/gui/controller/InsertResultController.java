@@ -22,10 +22,14 @@ import javafx.util.Pair;
 public class InsertResultController implements Initializable {
 	
 	@FXML
+	private ComboBox<String> cmbBoxTournament;
+	@FXML
 	private ListView<String> listViewMatches;
 	
 	private ObservableList<String> matches = FXCollections.observableArrayList("team1 vs team2", "team3 vs team4");
 	private Dialog<Pair<String, String>> dialog = new Dialog<>();
+	private String managerUsername;
+	private ObservableList<String> tournaments = FXCollections.observableArrayList();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -62,5 +66,14 @@ public class InsertResultController implements Initializable {
 		grid.add(chkBoxIsPlayed, 2, 0);
 		dialog.getDialogPane().getButtonTypes().add(btnTypeSaveResult);
 		return grid;
+	}
+	
+	public void setUsername(String username) {		
+		this.managerUsername=username;
+	}
+	
+	public void populateCmbBoxTournament(ObservableList<String> tournaments) {
+		this.tournaments=tournaments;
+		this.cmbBoxTournament.setItems(tournaments);
 	}
 }
