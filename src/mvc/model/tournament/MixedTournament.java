@@ -47,28 +47,11 @@ public class MixedTournament extends Tournament {
 
 	@Override
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
-//		if (isEachGroupCompleted())
-//			return this.board.insertScore(dayNumber, match, homeScore, awayScore);
-//		else 
-//			for (TournamentElement te : this.groupsList)
-//				if (te.insertScore(dayNumber, match, homeScore, awayScore))
-//					return true;
-//		
-//		return false;
 		return isGroupCompleted()?board.insertScore(dayNumber, match, homeScore, awayScore):group.insertScore(dayNumber, match, homeScore, awayScore);
 	}
 
 	@Override
 	public List<Day> getSchedule() {
-//		List<Day> schedule = new ArrayList<>();
-//		
-//		if (isEachGroupCompleted())
-//			schedule = this.board.getSchedule();
-//		else 
-//			for (TournamentElement te : this.groupsList)
-//				schedule.addAll(te.getSchedule());
-//		
-//		return schedule;	
 		return isGroupCompleted()?board.getSchedule():group.getSchedule();
 	}
 	
