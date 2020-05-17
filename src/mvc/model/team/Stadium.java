@@ -5,9 +5,9 @@ public class Stadium {
 	private String city;
 	private int capacity;
 
-	public Stadium(String name, String location, int capacity) {
+	public Stadium(String name, String city, int capacity) {
 		this.name = name;
-		this.city = location;
+		this.city = city;
 		this.capacity = capacity;
 	}
 
@@ -19,11 +19,11 @@ public class Stadium {
 		this.name = name;
 	}
 
-	public String getLocation() {
+	public String getCity() {
 		return city;
 	}
 
-	public void setLocation(String location) {
+	public void setCity(String location) {
 		this.city = location;
 	}
 
@@ -37,6 +37,6 @@ public class Stadium {
 
 	@Override
 	public String toString() {
-		return "Stadium: " + this.name + "\n\tLocation: " + this.city + "\n\tCapacity: " + this.capacity;
+		return "Stadium: " + this.name + "\n\tCity: " + this.city + "\n\tCapacity: " + this.capacity;
 	}
 }
