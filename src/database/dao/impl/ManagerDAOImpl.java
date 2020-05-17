@@ -121,7 +121,7 @@ public class ManagerDAOImpl implements IManagerDAO {
 		rs = ps.executeQuery();
 
 		rs.next();
-		int count = Integer.parseInt(rs.getString(1));
+		int count = rs.getInt(1);
 		
 		if (count == 0) {
 			DBConnection.closeConnection(conn);

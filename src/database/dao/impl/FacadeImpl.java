@@ -1,7 +1,8 @@
 package database.dao.impl;
 
 import java.sql.SQLException;
-import java.util.List;
+
+import java.util.Map;
 
 import database.dao.*;
 import mvc.model.team.Player;
@@ -13,32 +14,32 @@ public class FacadeImpl implements IFacade {
 
 	@Override
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException {
-		IManagerDAO m = new ManagerDAOImpl();
-		return m.storeManager(username, name, surname, password);
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.storeManager(username, name, surname, password);
 	}
 
 	@Override
 	public boolean updateManager(String username, String name, String surname, String password) throws SQLException {
-		IManagerDAO m = new ManagerDAOImpl();
-		return m.updateManager(username, name, surname, password);
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.updateManager(username, name, surname, password);
 	}
 	
 	@Override
 	public boolean removeManager(String username) throws SQLException {
-		IManagerDAO m = new ManagerDAOImpl();
-		return m.removeManager(username);
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.removeManager(username);
 	}
 
 	@Override
 	public boolean checkManagerLogin(String username, String password) throws SQLException {
-		IManagerDAO m = new ManagerDAOImpl();
-		return m.checkManagerLogin(username, password);
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.checkManagerLogin(username, password);
 	}
 
 	@Override
 	public boolean checkUnique(String username) throws SQLException {
-		IManagerDAO m = new ManagerDAOImpl();
-		return m.checkUnique(username);
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.checkUnique(username);
 	}
 
 	@Override
@@ -48,50 +49,50 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
-	public List<Tournament> getAllTournaments() throws SQLException {
+	public int getLastTournamentID() throws SQLException {
+		ITournamentDAO td = new TournamentDAOImpl();
+		return td.getLastTournamentID();
+	}
+	
+	@Override
+	public Map<Integer, Tournament> getAllTournaments() throws SQLException {
 		ITournamentDAO td = new TournamentDAOImpl();
 		return td.getAllTournaments();
 	}
 	
 	@Override
-	public List<Tournament> getAllTournamentsByManager(String username) throws SQLException {
+	public Map<Integer, Tournament> getAllTournamentsByManager(String username) throws SQLException {
 		ITournamentDAO td = new TournamentDAOImpl();
 		return td.getAllTournamentsByManager(username);
 	}
 
 	@Override
-	public boolean storeTeam(Team t) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean storeTeam(Team team, Tournament t, int IDTournament) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.storeTeam(team, t, IDTournament);
 	}
 
 	@Override
-	public boolean storePlayer(Player p) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean storePlayer(Player p, Team t, int IDTournament) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.storePlayer(p, t, IDTournament);
 	}
 
 	@Override
 	public boolean storeStadium(Stadium s) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.storeStadium(s);
 	}
 
 	@Override
 	public boolean removeTeam(Team t) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.removeTeam(t);
 	}
 
 	@Override
-	public boolean removePlayer(Player p) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean removeStadium(Stadium s) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean removePlayer(Player p, Team t, int IDTournament) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.removePlayer(p, t, IDTournament);
 	}
 }
