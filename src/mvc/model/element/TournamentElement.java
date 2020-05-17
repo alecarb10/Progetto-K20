@@ -1,7 +1,6 @@
 package mvc.model.element;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import mvc.model.match.Match;
@@ -53,9 +52,12 @@ public abstract class TournamentElement implements IElement {
 	}
 	
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
-		Day day = getDayByNumber(dayNumber);
+		int index = getDayByNumber(dayNumber);
 		
-		for (Match m: day.getMatchesList())
+		if (index < 0)
+			return false;
+		
+		for (Match m: schedule.get(index).getMatchesList())
 			if (m.equals(match)) {
 				m.setScore(homeScore, awayScore);
 				return true;
@@ -64,23 +66,19 @@ public abstract class TournamentElement implements IElement {
 		return false;
 	}
 
-	public Day getDayByNumber(int number) {
-		Day day = null;
+	// returns the day index in the schedule list
+	private int getDayByNumber(int number) {
+		int index = 0;
 
-		for (Day d : schedule)
-			if (d.getNumber() == number)
-				day = d;
-
-		return day;
-	}
-
-	public Day getDayByDate(Date date) {
-		Day day = null;
-
-		for (Day d : schedule)
-			if (d.getDate().equals(date))
-				day = d;
-
-		return day;
+		for (int i = 0; i < schedule.size(); i++)
+			if (schedule.get(i).getNumber() == number) {
+				index = i;
+				break;
+			}
+				
+			else
+				index = -1;
+		
+		return index;
 	}
 }
