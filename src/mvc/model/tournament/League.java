@@ -15,9 +15,7 @@ public class League extends Tournament {
 		super(name);
 	}
 
-	public TournamentElement getGroup() {
-		return this.group;
-	}
+	
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
@@ -28,11 +26,6 @@ public class League extends Tournament {
 
 	@Override
 	public boolean addTeamInTournament(Team team) {
-		return this.group.addTeam(team);
-	}
-
-	@Override
-	public boolean removeTeamFromTournament(Team team) {
 		return this.group.addTeam(team);
 	}
 
@@ -54,5 +47,12 @@ public class League extends Tournament {
 	@Override
 	public String toString() {
 		return super.toString() + String.format("Tournament type: %s\n%s", this.getTournamentType(), this.group.toString());
+	}
+
+
+
+	@Override
+	public TournamentElement getTournamentElement() {
+		return group;
 	}
 }

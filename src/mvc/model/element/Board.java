@@ -42,4 +42,9 @@ public class Board extends TournamentElement {
 
 		return sb.toString();
 	}
+
+	@Override
+	public ElementType getTournamentElementType() {
+		return ElementType.BOARD;
+	}
 }

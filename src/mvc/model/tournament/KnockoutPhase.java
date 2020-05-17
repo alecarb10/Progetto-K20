@@ -16,10 +16,6 @@ public class KnockoutPhase extends Tournament {
 		super(name);
 	}
 
-	public TournamentElement getBoard() {
-		return this.board;
-	}
-
 	@Override
 	public void initTournament(List<Team> teamsList) {
 		this.board = new Board("Board");
@@ -29,11 +25,6 @@ public class KnockoutPhase extends Tournament {
 
 	@Override
 	public boolean addTeamInTournament(Team team) {
-		return this.board.addTeam(team);
-	}
-
-	@Override
-	public boolean removeTeamFromTournament(Team team) {
 		return this.board.addTeam(team);
 	}
 
@@ -56,5 +47,10 @@ public class KnockoutPhase extends Tournament {
 	public String toString() {
 		return super.toString()
 				+ String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
+	}
+
+	@Override
+	public TournamentElement getTournamentElement() {
+		return board;
 	}
 }

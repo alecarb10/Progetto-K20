@@ -68,4 +68,9 @@ public class Group extends TournamentElement {
 
 		return sb.toString();
 	}
+
+	@Override
+	public ElementType getTournamentElementType() {
+		return ElementType.GROUP;
+	}
 }

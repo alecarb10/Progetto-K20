@@ -5,6 +5,8 @@ import java.util.List;
 import mvc.model.team.Team;
 
 public interface IElement {
+	
+	public ElementType getTournamentElementType();
 
 	public void initTournamentElement();
 	
