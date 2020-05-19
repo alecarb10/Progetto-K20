@@ -1,7 +1,7 @@
 package mvc.view.manager.gui.controller;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import database.dao.impl.FacadeImpl;
@@ -97,10 +97,10 @@ public class HomeController implements Initializable {
 	
 	private ObservableList<String> getTournamentsList(String username){
 		ObservableList<String> tournaments= FXCollections.observableArrayList();
-		List<Tournament> tournamentsList=null;
+		Map<Integer,Tournament> tournamentsMap=null;
 		try {
-			tournamentsList=new FacadeImpl().getAllTournamentsByManager(username);
-			for(Tournament t: tournamentsList) 
+			tournamentsMap=new FacadeImpl().getAllTournamentsByManager(username);
+			for(Tournament t: tournamentsMap.values()) 
 				tournaments.add(t.getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
