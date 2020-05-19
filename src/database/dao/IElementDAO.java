@@ -1,7 +1,11 @@
 package database.dao;
 
-public interface ITournamentElementDAO {
+import java.sql.SQLException;
+
+public interface IElementDAO {
 	
-	// day, board, group
+	public boolean storeGroup(int IDTournament) throws SQLException;
+	
+	public boolean storeBoard(int IDTournament) throws SQLException;
 
 }

@@ -1,7 +1,7 @@
 package database.dao.impl;
 
 import java.sql.SQLException;
-
+import java.util.List;
 import java.util.Map;
 
 import database.dao.*;
@@ -85,14 +85,32 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public boolean removeTeam(Team t) throws SQLException {
-		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.removeTeam(t);
-	}
-
-	@Override
 	public boolean removePlayer(Player p, Team t, int IDTournament) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
 		return tmd.removePlayer(p, t, IDTournament);
+	}
+
+	@Override
+	public List<Player> getPlayersByTeam(Team t, int IDTournament) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.getPlayersByTeam(t, IDTournament);
+	}
+
+	@Override
+	public List<Team> getTeamsByTournament(int IDTournament) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.getTeamsByTournament(IDTournament);
+	}
+	
+	@Override
+	public boolean storeGroup(int IDTournament) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.storeGroup(IDTournament);
+	}
+
+	@Override
+	public boolean storeBoard(int IDTournament) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.storeBoard(IDTournament);
 	}
 }
