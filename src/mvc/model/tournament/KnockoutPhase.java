@@ -18,7 +18,7 @@ public class KnockoutPhase extends Tournament {
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.board = new Board("Board");
+		this.board = new Board();
 		addTeams(teamsList);
 		this.board.initTournamentElement();
 	}

@@ -19,7 +19,7 @@ public class League extends Tournament {
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.group = new Group("League");
+		this.group = new Group();
 		addTeams(teamsList);
 		this.group.initTournamentElement();
 	}

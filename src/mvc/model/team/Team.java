@@ -91,6 +91,6 @@ public class Team {
 
 	@Override
 	public String toString() {
-		return "Team: " + this.name + "\n\tStadium: " + this.stadium;
+		return "Team: " + this.name + "\n" + this.stadium;
 	}
 }

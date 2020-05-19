@@ -9,9 +9,7 @@ import mvc.model.util.ScheduleGenerator;
 
 public class Group extends TournamentElement {
 
-	public Group(String name) {
-		super(name);
-	}
+	public Group() {}
 
 	@Override
 	public void initTournamentElement() {

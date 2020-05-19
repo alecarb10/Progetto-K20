@@ -8,20 +8,14 @@ import mvc.model.team.Team;
 
 public abstract class TournamentElement implements IElement {
 
-	protected String name;
 	protected List<Team> teamsList;
 	protected List<Day> schedule;
 	protected boolean completed;
 	
 
-	public TournamentElement(String name) {
+	public TournamentElement() {
 		this.teamsList = new ArrayList<>();
 		this.completed = false;
-		this.name=name;
-	}
-
-	public String getName() {
-		return name;
 	}
 	
 	public List<Team> getTeamsList() {
