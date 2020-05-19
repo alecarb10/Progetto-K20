@@ -54,7 +54,6 @@ CREATE TABLE `tournament` (
 
 CREATE TABLE `board` (
   `IDBoard` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(20) DEFAULT NULL,
   `IDTournament` int(11) DEFAULT NULL,
   `Completed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`IDBoard`),
@@ -64,7 +63,6 @@ CREATE TABLE `board` (
 
 CREATE TABLE `group` (
   `IDGroup` int(11) NOT NULL AUTO_INCREMENT,
-  `Name` varchar(20) DEFAULT NULL,
   `IDTournament` int(11) DEFAULT NULL,
   `Completed` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`IDGroup`),
