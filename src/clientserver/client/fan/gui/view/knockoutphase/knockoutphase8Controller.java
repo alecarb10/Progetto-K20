@@ -1,4 +1,4 @@
-package clientserver.client.fan.gui.view;
+package clientserver.client.fan.gui.view.knockoutphase;
 
 import java.io.IOException;
 
@@ -8,23 +8,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javafx.stage.Stage;
 
-public class tournamentResultViewController {
+public class knockoutphase8Controller {
 	@FXML
-	private Button goBackButton;
-
-	public void goBack(ActionEvent event) throws IOException {
+	Button backButton;
+	
+	public void backButtonClicked(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(
-				getClass().getClassLoader().getResource("it/unipv/ingsw/k20/view/gui/fan/view/fanView.fxml"));
+		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Fan view");
+		primaryStage.setTitle("Fan menu");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
+		
 	}
 
 }

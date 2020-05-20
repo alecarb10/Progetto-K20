@@ -7,17 +7,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class fanMain extends Application {
+public class FanMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("it/unipv/ingsw/k20/view/gui/fan/view/fanView.fxml"));
+		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
 		Scene scene = new Scene(loader.load());
-		primaryStage.setTitle("Fan view");
+		primaryStage.setTitle("Fan menu");
 		primaryStage.setScene(scene);
-		primaryStage.show();
-		
+		primaryStage.show();	
 	}
 
 	public static void main(String[] args) {

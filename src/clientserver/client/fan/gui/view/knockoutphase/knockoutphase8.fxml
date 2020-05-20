@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientserver.client.fan.gui.view.knockoutphase.knockoutphase8Controller">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="125.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="173.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="170.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="215.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="493.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="448.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="125.0" AnchorPane.rightAnchor="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="402.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="154.0" layoutY="355.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="215.0" AnchorPane.rightAnchor="500.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="320.0" layoutY="173.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="170.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="320.0" layoutY="218.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="215.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="320.0" layoutY="402.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="170.0" AnchorPane.rightAnchor="330.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="320.0" layoutY="355.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="215.0" AnchorPane.rightAnchor="330.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="470.0" layoutY="315.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.bottomAnchor="250.0" AnchorPane.rightAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="470.0" layoutY="253.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="250.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="614.0" layoutY="285.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="30.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="150.0" layoutY="92.0" stroke="BLACK" strokeType="INSIDE" width="150.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="80.0" />
+      <AnchorPane layoutX="50.0" layoutY="80.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="61.0" layoutY="6.0" prefHeight="30.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="125.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="2.0" layoutY="2.0" prefHeight="32.0" prefWidth="152.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-8.0" layoutY="-1.0" prefHeight="31.0" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="215.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="4.0" layoutY="-15.0" prefHeight="30.0" prefWidth="154.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="355.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="7.0" layoutY="-2.0" prefHeight="30.0" prefWidth="161.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="400.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-4.0" layoutY="-3.0" prefHeight="30.0" prefWidth="157.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="445.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="17.0" layoutY="-6.0" prefHeight="30.0" prefWidth="174.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="490.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="27.0" layoutY="3.0" prefHeight="33.0" prefWidth="201.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="220.0" layoutY="400.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="18.0" layoutY="-3.0" prefHeight="30.0" prefWidth="219.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="220.0" layoutY="355.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-18.0" layoutY="2.0" prefHeight="32.0" prefWidth="201.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="220.0" layoutY="215.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-11.0" layoutY="-3.0" prefHeight="30.0" prefWidth="216.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="220.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-2.0" layoutY="-1.0" prefHeight="31.0" prefWidth="199.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="370.0" layoutY="250.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-31.0" prefHeight="31.0" prefWidth="168.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="370.0" layoutY="320.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-12.0" layoutY="7.0" prefHeight="38.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="520.0" layoutY="285.0" prefHeight="30.0" prefWidth="150.0">
+         <children>
+            <Label layoutX="-5.0" layoutY="-5.0" prefHeight="33.0" prefWidth="182.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="backButton" layoutX="618.0" layoutY="549.0" mnemonicParsing="false" onAction="#backButtonClicked" text="Back" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+   </children>
+</AnchorPane>
