@@ -189,7 +189,7 @@ public class ManagerTextUI {
 		Team team = new Team(teamName);
 		teams.add(team);
 
-		this.tournament = new League(inputString, teams);
+		this.tournament = new MixedTournament(inputString);
 
 	}
 
@@ -206,7 +206,7 @@ public class ManagerTextUI {
 		Team team = new Team(teamName);
 		teams.add(team);
 
-		this.tournament = new League(inputString, teams);
+		this.tournament = new KnockoutPhase(inputString);
 
 	}
 
@@ -223,7 +223,7 @@ public class ManagerTextUI {
 		Team team = new Team(teamName);
 		teams.add(team);
 
-		this.tournament = new League(inputString, teams);
+		this.tournament = new League(inputString);
 
 	}
 
@@ -231,7 +231,7 @@ public class ManagerTextUI {
 		System.out.println("Team Name to remove: ");
 		String teamName = scanner.nextLine();
 		Team teamToRemove = new Team(teamName);
-		this.tournament.removeTeamFromTournament(teamToRemove);
+		// this.tournament.removeTeamFromTournament(teamToRemove);
 	}
 
 	private void addTeamInTournament() throws IllegalArgumentException {
