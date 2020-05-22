@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Match {
 
+	private int id;
 	private Date date;
 	private Team homeTeam;
 	private Team awayTeam;
@@ -23,6 +24,14 @@ public class Match {
 		awayScore = 0;
 		winner = null;
 		played = false;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
 	}
 
 	public Date getDate() {

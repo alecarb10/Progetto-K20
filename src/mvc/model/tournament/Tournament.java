@@ -6,10 +6,19 @@ import mvc.model.team.Team;
 
 public abstract class Tournament implements ITournament {
 	
+	private int id;
 	private String name;
 
 	public Tournament(String name) {
 		this.name = name;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
 	}
 
 	public String getName() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
+	
+	private int id;
 	private String name;
 	private int goalsScored;
 	private int goalsConceded;
@@ -18,7 +20,15 @@ public class Team {
 		this.goalsScored = 0;
 		this.goalsConceded = 0;
 	}
-
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
+	}
+	
 	public boolean insertPlayer(Player player) {
 		return players.add(player);
 	}

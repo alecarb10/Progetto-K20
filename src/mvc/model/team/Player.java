@@ -1,6 +1,8 @@
 package mvc.model.team;
 
 public class Player {
+	
+	private int id;
 	private String name;
 	private String surname;
 	private int number;
@@ -11,6 +13,14 @@ public class Player {
 		this.surname = surname;
 		this.number = number;
 		this.position = position;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
 	}
 
 	public PlayerPositionType getPosition() {
