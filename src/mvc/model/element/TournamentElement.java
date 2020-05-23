@@ -13,7 +13,6 @@ public abstract class TournamentElement implements IElement {
 	protected List<Day> schedule;
 	protected boolean completed;
 	
-
 	public TournamentElement() {
 		this.teamsList = new ArrayList<>();
 		this.completed = false;
@@ -55,7 +54,15 @@ public abstract class TournamentElement implements IElement {
 	}
 	
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
-		int index = getDayByNumber(dayNumber);
+		int index = 0;
+		
+		for (int i = 0; i < schedule.size(); i++)
+			if (schedule.get(i).getNumber() == dayNumber) {
+				index = i;
+				break;
+			}	
+			else
+				index = -1;
 		
 		if (index < 0)
 			return false;
@@ -69,19 +76,15 @@ public abstract class TournamentElement implements IElement {
 		return false;
 	}
 
-	// returns the day index in the schedule list
-	private int getDayByNumber(int number) {
-		int index = 0;
+	public Day getDayByNumber(int number) {
+		Day day = null;
 
-		for (int i = 0; i < schedule.size(); i++)
-			if (schedule.get(i).getNumber() == number) {
-				index = i;
+		for (Day d: schedule)
+			if (d.getNumber() == number) {
+				day = d;
 				break;
 			}
-				
-			else
-				index = -1;
 		
-		return index;
+		return day;
 	}
 }

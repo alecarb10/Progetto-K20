@@ -28,7 +28,6 @@ public class MixedTournament extends Tournament {
 		this.group.initTournamentElement();	
 	}
 
-	
 	private boolean isGroupCompleted() {
 		return group.isCompleted();
 	}
@@ -59,14 +58,14 @@ public class MixedTournament extends Tournament {
 	public TournamentType getTournamentType() {
 		return TournamentType.MIXED;
 	}
+	
+	@Override
+	public TournamentElement getTournamentElement() {
+		return group;
+	}
 
 	@Override
 	public String toString() {
 		return super.toString() + String.format("Tournament type: %s\n%s\n%s\n", this.getTournamentType(), this.group.toString(), this.board.toString());
-	}
-
-	@Override
-	public TournamentElement getTournamentElement() {
-		return group;
 	}
 }

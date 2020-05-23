@@ -42,15 +42,14 @@ public class KnockoutPhase extends Tournament {
 	public TournamentType getTournamentType() {
 		return TournamentType.KNOCKOUT_PHASE;
 	}
-
-	@Override
-	public String toString() {
-		return super.toString()
-				+ String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
-	}
-
+	
 	@Override
 	public TournamentElement getTournamentElement() {
 		return board;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + String.format("Tournament type: %s\n%s", this.getTournamentType(), this.board.toString());
 	}
 }
