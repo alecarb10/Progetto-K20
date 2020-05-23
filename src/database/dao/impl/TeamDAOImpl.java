@@ -176,20 +176,24 @@ public class TeamDAOImpl implements ITeamDAO {
 		ResultSet rs;
 
 		List<Player> players = new ArrayList<>();
+		Player p = null;
 		int IDTeam = t.getId();
 
-		String query = "SELECT Name, Surname, Number, Position from player p, player_position_type pp where IDTeam=? and p.PlayerPositionType=pp.IDPlayerPositionType";
+		String query = "SELECT IDPlayer, Name, Surname, Number, Position from player p, player_position_type pp where IDTeam=? and p.PlayerPositionType=pp.IDPlayerPositionType";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, IDTeam);
 
 		rs = ps.executeQuery();
 
 		while (rs.next()) {
-			String name = rs.getString(1);
-			String surname = rs.getString(2);
-			int number = rs.getInt(3);
-			PlayerPositionType type = PlayerPositionType.valueOf(rs.getString(4));
-			players.add(new Player(name, surname, number, type));
+			int ID = rs.getInt(1);
+			String name = rs.getString(2);
+			String surname = rs.getString(3);
+			int number = rs.getInt(4);
+			PlayerPositionType type = PlayerPositionType.valueOf(rs.getString(5));
+			p = new Player(name, surname, number, type);
+			p.setId(ID);
+			players.add(p);
 		}
 
 		DBConnection.closeConnection(conn);
@@ -207,21 +211,23 @@ public class TeamDAOImpl implements ITeamDAO {
 		List<Team> teams = new ArrayList<>();
 		Team team = null;
 
-		String query = "SELECT Name, Stadium, Points, GoalsScored, GoalsConceded from team where IDTournament=?";
+		String query = "SELECT IDTeam, Name, Stadium, Points, GoalsScored, GoalsConceded from team where IDTournament=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, t.getId());
 
 		rs = ps.executeQuery();
 
 		while (rs.next()) {
-			String name = rs.getString(1);
-			String stadium = rs.getString(2);
+			int ID = rs.getInt(1);
+			String name = rs.getString(2);
+			String stadium = rs.getString(3);
 
-			int points = rs.getInt(3);
-			int goalsScored = rs.getInt(4);
-			int goalsConceded = rs.getInt(5);
+			int points = rs.getInt(4);
+			int goalsScored = rs.getInt(5);
+			int goalsConceded = rs.getInt(6);
 			team = new Team(name);
 			
+			team.setId(ID);
 			team.setGoalsConceded(goalsConceded);
 			team.setGoalsScored(goalsScored);
 			team.setPoints(points);
