@@ -2,10 +2,10 @@ package database.dao;
 
 import java.sql.SQLException;
 
+import mvc.model.tournament.Tournament;
+
 public interface IElementDAO {
 	
-	public boolean storeGroup(int IDTournament) throws SQLException;
-	
-	public boolean storeBoard(int IDTournament) throws SQLException;
+	public boolean storeElement(Tournament t) throws SQLException;
 
 }

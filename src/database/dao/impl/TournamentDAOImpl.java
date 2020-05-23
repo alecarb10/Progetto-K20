@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Map;
-import java.util.HashMap;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import database.dao.ITournamentDAO;
 import database.util.DBConnection;
@@ -59,12 +60,37 @@ public class TournamentDAOImpl implements ITournamentDAO {
 	}
 	
 	@Override
-	public Map<Integer,Tournament> getAllTournaments() throws SQLException {
+	public boolean checkUnique(String name, String username) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		ResultSet rs;
+
+		String query = "SELECT count(*) from tournament where Name=? and Manager=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, name);
+		ps.setString(2, username);
+
+		rs = ps.executeQuery();
+
+		rs.next();
+		int count = rs.getInt(1);
+		
+		if (count == 0) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}
+			
+		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
+	@Override
+	public List<Tournament> getAllTournaments() throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		ResultSet rs;
 		
-		Map<Integer, Tournament> map = new HashMap<>();
+		List<Tournament> list = new ArrayList<>();
 		Tournament t = null;
 
 		String query = "SELECT t.IDTournament, t.Name, tp.Name from tournament t,tournament_type tp where t.TournamentType=tp.IDTournamentType";
@@ -79,32 +105,35 @@ public class TournamentDAOImpl implements ITournamentDAO {
 			switch(type) {
 				case LEAGUE:
 					t = new League(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 				
 				case MIXED:
 					t = new MixedTournament(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 					
 				case KNOCKOUT_PHASE:
 					t = new KnockoutPhase(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 			}
 		}
 			
 		DBConnection.closeConnection(conn);
-		return map;
+		return list;
 	}
 	
 	@Override
-	public Map<Integer, Tournament> getAllTournamentsByManager(String username) throws SQLException {
+	public List<Tournament> getAllTournamentsByManager(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		ResultSet rs;
 		
-		Map<Integer, Tournament> map = new HashMap<>();
+		List<Tournament> list = new ArrayList<>();
 		Tournament t = null;
 
 		String query = "SELECT t.IDTournament, t.Name, tp.Name from tournament t,tournament_type tp where Manager=? and t.TournamentType=tp.IDTournamentType";
@@ -120,22 +149,25 @@ public class TournamentDAOImpl implements ITournamentDAO {
 			switch(type) {
 				case LEAGUE:
 					t = new League(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 				
 				case MIXED:
 					t = new MixedTournament(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 					
 				case KNOCKOUT_PHASE:
 					t = new KnockoutPhase(name);
-					map.put(ID, t);
+					t.setId(ID);
+					list.add(t);
 					break;
 			}
 		}
 			
 		DBConnection.closeConnection(conn);
-		return map;
+		return list;
 	}
 }

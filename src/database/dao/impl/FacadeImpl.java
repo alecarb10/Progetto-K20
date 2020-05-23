@@ -2,7 +2,6 @@ package database.dao.impl;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 import database.dao.*;
 import mvc.model.team.Player;
@@ -49,33 +48,51 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
+	public boolean checkUnique(String name, String username) throws SQLException {
+		ITournamentDAO td = new TournamentDAOImpl();
+		return td.checkUnique(name, username);
+	}
+	
+	@Override
 	public int getLastTournamentID() throws SQLException {
 		ITournamentDAO td = new TournamentDAOImpl();
 		return td.getLastTournamentID();
 	}
 	
 	@Override
-	public Map<Integer, Tournament> getAllTournaments() throws SQLException {
+	public List<Tournament> getAllTournaments() throws SQLException {
 		ITournamentDAO td = new TournamentDAOImpl();
 		return td.getAllTournaments();
 	}
 	
 	@Override
-	public Map<Integer, Tournament> getAllTournamentsByManager(String username) throws SQLException {
+	public List<Tournament> getAllTournamentsByManager(String username) throws SQLException {
 		ITournamentDAO td = new TournamentDAOImpl();
 		return td.getAllTournamentsByManager(username);
 	}
 
 	@Override
-	public boolean storeTeam(Team team, Tournament t, int IDTournament) throws SQLException {
+	public boolean storeTeam(Team team, Tournament t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.storeTeam(team, t, IDTournament);
+		return tmd.storeTeam(team, t);
 	}
 
 	@Override
-	public boolean storePlayer(Player p, Team t, int IDTournament) throws SQLException {
+	public boolean storePlayer(Player p, Team t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.storePlayer(p, t, IDTournament);
+		return tmd.storePlayer(p, t);
+	}
+	
+	@Override
+	public int getLastTeamID() throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.getLastTeamID();
+	}
+
+	@Override
+	public int getLastPlayerID() throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.getLastPlayerID();
 	}
 
 	@Override
@@ -85,32 +102,26 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public boolean removePlayer(Player p, Team t, int IDTournament) throws SQLException {
+	public boolean removePlayer(Player p, Team t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.removePlayer(p, t, IDTournament);
+		return tmd.removePlayer(p, t);
 	}
 
 	@Override
-	public List<Player> getPlayersByTeam(Team t, int IDTournament) throws SQLException {
+	public List<Player> getPlayersByTeam(Team t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.getPlayersByTeam(t, IDTournament);
+		return tmd.getPlayersByTeam(t);
 	}
 
 	@Override
-	public List<Team> getTeamsByTournament(int IDTournament) throws SQLException {
+	public List<Team> getTeamsByTournament(Tournament t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.getTeamsByTournament(IDTournament);
+		return tmd.getTeamsByTournament(t);
 	}
 	
 	@Override
-	public boolean storeGroup(int IDTournament) throws SQLException {
+	public boolean storeElement(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.storeGroup(IDTournament);
-	}
-
-	@Override
-	public boolean storeBoard(int IDTournament) throws SQLException {
-		IElementDAO ed = new ElementDAOImpl();
-		return ed.storeBoard(IDTournament);
+		return ed.storeElement(t);
 	}
 }

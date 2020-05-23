@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class TeamDAOImpl implements ITeamDAO {
 	private Connection conn;
 
 	@Override
-	public boolean storeTeam(Team team, Tournament t, int IDTournament) throws SQLException {
+	public boolean storeTeam(Team team, Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
@@ -29,7 +30,7 @@ public class TeamDAOImpl implements ITeamDAO {
 		String query = "INSERT INTO team(Name, IDTournament, Stadium, Points, GoalsScored, GoalsConceded, team.Group, Board) VALUES(?,?,?,?,?,?,?,?)";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, team.getName());
-		ps.setInt(2, IDTournament);
+		ps.setInt(2, t.getId());
 		ps.setNull(3, Types.INTEGER);
 		ps.setInt(4, team.getPoints());
 		ps.setInt(5, team.getGoalsScored());
@@ -37,13 +38,13 @@ public class TeamDAOImpl implements ITeamDAO {
 
 		// group
 		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
-			ps.setInt(7, getIDGroup(IDTournament));
+			ps.setInt(7, t.getTournamentElement().getId());
 			ps.setNull(8, Types.INTEGER);
 		}
 		// board
 		else {
 			ps.setNull(7, Types.INTEGER);
-			ps.setInt(8, getIDBoard(IDTournament));
+			ps.setInt(8, t.getTournamentElement().getId());
 		}
 
 		rs = ps.execute();
@@ -56,45 +57,33 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
-	private int getIDGroup(int IDTournament) throws SQLException {
-		PreparedStatement ps;
+	@Override
+	public int getLastTeamID() throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		
 		ResultSet rs;
 
-		String query = "SELECT IDGroup from tournament.group where IDTournament=?";
-		ps = conn.prepareStatement(query);
-		ps.setInt(1, IDTournament);
+		String query = "SELECT MAX(IDTeam) FROM team";
 
-		rs = ps.executeQuery();
+		Statement st1;
+		
+		st1 = conn.createStatement();
+		rs = st1.executeQuery(query);
 
 		rs.next();
 		int ID = rs.getInt(1);
-
-		return ID;
-	}
-
-	private int getIDBoard(int IDTournament) throws SQLException {
-		PreparedStatement ps;
-		ResultSet rs;
-
-		String query = "SELECT IDBoard from tournament.board where IDTournament=?";
-		ps = conn.prepareStatement(query);
-		ps.setInt(1, IDTournament);
-
-		rs = ps.executeQuery();
-
-		rs.next();
-		int ID = rs.getInt(1);
-
+			
+		DBConnection.closeConnection(conn);
 		return ID;
 	}
 
 	@Override
-	public boolean storePlayer(Player p, Team t, int IDTournament) throws SQLException {
+	public boolean storePlayer(Player p, Team t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
 
-		int IDTeam = getIDTeam(t, IDTournament);
+		int IDTeam = t.getId();
 
 		String query = "INSERT INTO player(IDTeam, Number, Name, Surname, PlayerPositionType) VALUES(?,?,?,?,?)";
 		ps = conn.prepareStatement(query);
@@ -113,21 +102,24 @@ public class TeamDAOImpl implements ITeamDAO {
 		DBConnection.closeConnection(conn);
 		return false;
 	}
-
-	private int getIDTeam(Team t, int IDTournament) throws SQLException {
-		PreparedStatement ps;
+	
+	@Override
+	public int getLastPlayerID() throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		
 		ResultSet rs;
 
-		String query = "SELECT IDTeam from team where Name=? and IDTournament=?";
-		ps = conn.prepareStatement(query);
-		ps.setString(1, t.getName());
-		ps.setInt(2, IDTournament);
+		String query = "SELECT MAX(IDPlayer) FROM player";
 
-		rs = ps.executeQuery();
+		Statement st1;
+		
+		st1 = conn.createStatement();
+		rs = st1.executeQuery(query);
 
 		rs.next();
 		int ID = rs.getInt(1);
-
+			
+		DBConnection.closeConnection(conn);
 		return ID;
 	}
 
@@ -154,12 +146,12 @@ public class TeamDAOImpl implements ITeamDAO {
 	}
 
 	@Override
-	public boolean removePlayer(Player p, Team t, int IDTournament) throws SQLException {
+	public boolean removePlayer(Player p, Team t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
 
-		int IDTeam = getIDTeam(t, IDTournament);
+		int IDTeam = t.getId();
 
 		String query = "DELETE from player where Surname=? and Number=? and IDTeam=?";
 		ps = conn.prepareStatement(query);
@@ -178,13 +170,13 @@ public class TeamDAOImpl implements ITeamDAO {
 	}
 
 	@Override
-	public List<Player> getPlayersByTeam(Team t, int IDTournament) throws SQLException {
+	public List<Player> getPlayersByTeam(Team t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		ResultSet rs;
 
 		List<Player> players = new ArrayList<>();
-		int IDTeam = getIDTeam(t, IDTournament);
+		int IDTeam = t.getId();
 
 		String query = "SELECT Name, Surname, Number, Position from player p, player_position_type pp where IDTeam=? and p.PlayerPositionType=pp.IDPlayerPositionType";
 		ps = conn.prepareStatement(query);
@@ -205,7 +197,7 @@ public class TeamDAOImpl implements ITeamDAO {
 	}
 
 	@Override
-	public List<Team> getTeamsByTournament(int IDTournament) throws SQLException {
+	public List<Team> getTeamsByTournament(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		PreparedStatement ps2;
@@ -213,10 +205,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		ResultSet rs2;
 
 		List<Team> teams = new ArrayList<>();
-		Team t = null;
+		Team team = null;
 
-		String query = "SELECT Name, Stadium, Points, GoalsScored, GoalsConceded from team";
+		String query = "SELECT Name, Stadium, Points, GoalsScored, GoalsConceded from team where IDTournament=?";
 		ps = conn.prepareStatement(query);
+		ps.setInt(1, t.getId());
 
 		rs = ps.executeQuery();
 
@@ -227,11 +220,11 @@ public class TeamDAOImpl implements ITeamDAO {
 			int points = rs.getInt(3);
 			int goalsScored = rs.getInt(4);
 			int goalsConceded = rs.getInt(5);
-			t = new Team(name);
+			team = new Team(name);
 			
-			t.setGoalsConceded(goalsConceded);
-			t.setGoalsScored(goalsScored);
-			t.setPoints(points);
+			team.setGoalsConceded(goalsConceded);
+			team.setGoalsScored(goalsScored);
+			team.setPoints(points);
 			
 			if (stadium != null) {
 				String query2 = "SELECT City, Capacity from stadium where Name=?";
@@ -242,10 +235,10 @@ public class TeamDAOImpl implements ITeamDAO {
 				
 				String stadiumCity = rs2.getString(1);
 				int stadiumCapacity = rs2.getInt(2);
-				t.setStadium(new Stadium(stadium, stadiumCity, stadiumCapacity));
+				team.setStadium(new Stadium(stadium, stadiumCity, stadiumCapacity));
 			}
 	
-			teams.add(t);
+			teams.add(team);
 		}
 
 		DBConnection.closeConnection(conn);

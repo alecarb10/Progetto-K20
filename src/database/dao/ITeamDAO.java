@@ -10,16 +10,20 @@ import mvc.model.tournament.Tournament;
 
 public interface ITeamDAO {
 	
-	public boolean storeTeam(Team team, Tournament t, int IDTournament) throws SQLException;
+	public boolean storeTeam(Team team, Tournament t) throws SQLException;
 	
-	public boolean storePlayer(Player p, Team t, int IDTournament) throws SQLException;
+	public int getLastTeamID() throws SQLException;
+	
+	public boolean storePlayer(Player p, Team t) throws SQLException;
+	
+	public int getLastPlayerID() throws SQLException;
 	
 	public boolean storeStadium(Stadium s) throws SQLException;
 	
-	public boolean removePlayer(Player p, Team t, int IDTournament) throws SQLException;
+	public boolean removePlayer(Player p, Team t) throws SQLException;
 	
-	public List<Player> getPlayersByTeam(Team t, int IDTournament) throws SQLException;
+	public List<Player> getPlayersByTeam(Team t) throws SQLException;
 	
-	public List<Team> getTeamsByTournament(int IDTournament) throws SQLException;
+	public List<Team> getTeamsByTournament(Tournament t) throws SQLException;
 
 }
