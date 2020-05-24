@@ -2,7 +2,9 @@ package database.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import database.dao.IElementDAO;
 import database.util.DBConnection;
@@ -20,7 +22,7 @@ public class ElementDAOImpl implements IElementDAO {
 		
 		// group
 		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
-			String query = "INSERT INTO 'group'(IDTournament, Completed) VALUES(?,?)";
+			String query = "INSERT INTO tournament.group(IDTournament, Completed) VALUES(?,?)";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
 			ps.setInt(2, 0);
@@ -47,5 +49,45 @@ public class ElementDAOImpl implements IElementDAO {
 		
 		DBConnection.closeConnection(conn);
 		return false;
+	}
+
+	@Override
+	public int getLastGroupID() throws SQLException {
+		conn = DBConnection.startConnection(conn);
+
+		ResultSet rs;
+
+		String query = "SELECT MAX(IDGroup) FROM tournament.group";
+
+		Statement st1;
+
+		st1 = conn.createStatement();
+		rs = st1.executeQuery(query);
+
+		rs.next();
+		int ID = rs.getInt(1);
+
+		DBConnection.closeConnection(conn);
+		return ID;
+	}
+
+	@Override
+	public int getLastBoardID() throws SQLException {
+		conn = DBConnection.startConnection(conn);
+
+		ResultSet rs;
+
+		String query = "SELECT MAX(IDBoard) FROM board";
+
+		Statement st1;
+
+		st1 = conn.createStatement();
+		rs = st1.executeQuery(query);
+
+		rs.next();
+		int ID = rs.getInt(1);
+
+		DBConnection.closeConnection(conn);
+		return ID;
 	}
 }

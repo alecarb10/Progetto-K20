@@ -126,6 +126,18 @@ public class FacadeImpl implements IFacade {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.storeElement(t);
 	}
+	
+	@Override
+	public int getLastGroupID() throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.getLastGroupID();
+	}
+
+	@Override
+	public int getLastBoardID() throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.getLastBoardID();
+	}
 
 	@Override
 	public boolean storeMatch(Match m, Day d) throws SQLException {
