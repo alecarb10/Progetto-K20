@@ -1,13 +1,11 @@
 package mvc.view.manager.gui.controller;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import database.dao.impl.FacadeImpl;
-import database.dao.impl.TeamDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

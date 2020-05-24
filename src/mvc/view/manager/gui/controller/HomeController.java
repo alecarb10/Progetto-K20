@@ -2,7 +2,6 @@ package mvc.view.manager.gui.controller;
 
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import database.dao.impl.FacadeImpl;
@@ -46,7 +45,7 @@ public class HomeController implements Initializable {
 			Parent root=loader.load();
 			EditTeamController controller= loader.getController();
 			controller.setUsername(username);
-			controller.setTournamentsMap(tournamentsList);
+			controller.setTournamentsList(tournamentsList);
 			controller.populateCmbBoxTournament(this.getTournamentsList(username));			
 			this.borderPaneHome.setCenter(root);
 		}
