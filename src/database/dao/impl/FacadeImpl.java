@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import database.dao.*;
+import mvc.model.element.Day;
+import mvc.model.match.Match;
 import mvc.model.team.Player;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
@@ -123,5 +125,17 @@ public class FacadeImpl implements IFacade {
 	public boolean storeElement(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.storeElement(t);
+	}
+
+	@Override
+	public boolean storeMatch(Match m, Day d) throws SQLException {
+		IMatchDAO md = new MatchDAOImpl();
+		return md.storeMatch(m, d);
+	}
+
+	@Override
+	public int getLastMatchID() throws SQLException {
+		IMatchDAO md = new MatchDAOImpl();
+		return md.getLastMatchID();
 	}
 }

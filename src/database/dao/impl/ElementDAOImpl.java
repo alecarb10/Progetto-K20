@@ -20,7 +20,7 @@ public class ElementDAOImpl implements IElementDAO {
 		
 		// group
 		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
-			String query = "INSERT INTO group(IDTournament, Completed) VALUES(?,?)";
+			String query = "INSERT INTO 'group'(IDTournament, Completed) VALUES(?,?)";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
 			ps.setInt(2, 0);
