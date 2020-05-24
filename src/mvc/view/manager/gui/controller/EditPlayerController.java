@@ -14,7 +14,7 @@ public class EditPlayerController implements Initializable {
 	@FXML
 	private ComboBox<String> cmbBoxTournament;
 	
-	private String managerUsername;
+	private String username;
 	private ObservableList<String> tournaments = FXCollections.observableArrayList();
 	
 	@Override
@@ -23,7 +23,7 @@ public class EditPlayerController implements Initializable {
 	}
 	
 	public void setUsername(String username) {		
-		this.managerUsername=username;
+		this.username=username;
 	}
 	
 	public void populateCmbBoxTournament(ObservableList<String> tournaments) {

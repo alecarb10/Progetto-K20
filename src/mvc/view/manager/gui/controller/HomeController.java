@@ -1,6 +1,7 @@
 package mvc.view.manager.gui.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,9 @@ public class HomeController implements Initializable {
 	@FXML
 	private ComboBox<String> cmbBoxProfile;
 	
+	private String username;
+	private List<Tournament> tournamentsList;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.cmbBoxProfile.setItems(FXCollections.observableArrayList("Edit","Logout"));
@@ -41,8 +45,9 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditTeam.fxml");
 			Parent root=loader.load();
 			EditTeamController controller= loader.getController();
-			controller.populateCmbBoxTournament(this.getTournamentsList(this.cmbBoxProfile.getPromptText()));
-			controller.setUsername(this.cmbBoxProfile.getPromptText());
+			controller.setUsername(username);
+			controller.setTournamentsMap(tournamentsList);
+			controller.populateCmbBoxTournament(this.getTournamentsList(username));			
 			this.borderPaneHome.setCenter(root);
 		}
 		catch (Exception ex) {
@@ -55,8 +60,8 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditPlayer.fxml");
 			Parent root=loader.load();
 			EditPlayerController controller= loader.getController();
-			controller.populateCmbBoxTournament(this.getTournamentsList(this.cmbBoxProfile.getPromptText()));
-			controller.setUsername(this.cmbBoxProfile.getPromptText());
+			controller.populateCmbBoxTournament(this.getTournamentsList(username));
+			controller.setUsername(username);
 			this.borderPaneHome.setCenter(root);
 		}
 		catch (Exception ex) {
@@ -69,8 +74,8 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/InsertResult.fxml");
 			Parent root=loader.load();
 			InsertResultController controller= loader.getController();
-			controller.populateCmbBoxTournament(this.getTournamentsList(this.cmbBoxProfile.getPromptText()));
-			controller.setUsername(this.cmbBoxProfile.getPromptText());
+			controller.populateCmbBoxTournament(this.getTournamentsList(username));
+			controller.setUsername(username);
 			this.borderPaneHome.setCenter(root);
 		}
 		catch (Exception ex) {
@@ -83,7 +88,7 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/CreateTournament.fxml");
 			Parent root=loader.load();
 			CreateTournamentController controller= loader.getController();
-			controller.setUsername(this.cmbBoxProfile.getPromptText());
+			controller.setUsername(username);
 			this.borderPaneHome.setCenter(root);
 		}
 		catch (Exception ex) {
@@ -92,19 +97,25 @@ public class HomeController implements Initializable {
 	}
 	
 	public void setUsername(String username) {
-		this.cmbBoxProfile.setPromptText(username);
+		
+		try {
+			this.username=username;
+			this.cmbBoxProfile.setPromptText(username);
+			this.tournamentsList=new FacadeImpl().getAllTournamentsByManager(username);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	private ObservableList<String> getTournamentsList(String username){
 		ObservableList<String> tournaments= FXCollections.observableArrayList();
-		Map<Integer,Tournament> tournamentsMap=null;
 		try {
-			tournamentsMap=new FacadeImpl().getAllTournamentsByManager(username);
-			for(Tournament t: tournamentsMap.values()) 
+			for(Tournament t: tournamentsList) 
 				tournaments.add(t.getName());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}		
 		return tournaments;
 	}
+	
 }

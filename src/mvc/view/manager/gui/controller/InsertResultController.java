@@ -28,7 +28,7 @@ public class InsertResultController implements Initializable {
 	
 	private ObservableList<String> matches = FXCollections.observableArrayList("team1 vs team2", "team3 vs team4");
 	private Dialog<Pair<String, String>> dialog = new Dialog<>();
-	private String managerUsername;
+	private String username;
 	private ObservableList<String> tournaments = FXCollections.observableArrayList();
 	
 	@Override
@@ -69,7 +69,7 @@ public class InsertResultController implements Initializable {
 	}
 	
 	public void setUsername(String username) {		
-		this.managerUsername=username;
+		this.username=username;
 	}
 	
 	public void populateCmbBoxTournament(ObservableList<String> tournaments) {

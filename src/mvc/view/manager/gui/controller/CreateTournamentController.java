@@ -1,20 +1,25 @@
 package mvc.view.manager.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import database.dao.impl.FacadeImpl;
+import database.dao.impl.TeamDAOImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
 import mvc.model.team.Team;
 import mvc.model.tournament.KnockoutPhase;
@@ -41,7 +46,7 @@ public class CreateTournamentController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.cmbBoxType.setItems(FXCollections.observableArrayList("League","Knockout Phase","Mixed"));
 		this.cmbBoxType.setOnAction((ActionEvent)->{
-			this.cmbBoxSize.setItems(this.getSizeList());
+			this.cmbBoxSize.setItems(this.getSizesList());
 		});
 		this.listViewTeams.setItems(teams);
 		this.listViewTeams.setCellFactory(TextFieldListCell.forListView());
@@ -55,7 +60,7 @@ public class CreateTournamentController implements Initializable {
 		this.teams.remove(this.listViewTeams.getSelectionModel().getSelectedIndex());
 	}
 	
-	private ObservableList<String> getSizeList(){
+	private ObservableList<String> getSizesList(){
 		ObservableList<String> sizeList= FXCollections.observableArrayList();
 		for(int i=4,j=2;i<=16&&j<=4;) {
 			if(this.cmbBoxType.getSelectionModel().getSelectedIndex()==0) {
@@ -75,11 +80,27 @@ public class CreateTournamentController implements Initializable {
 	
 	public void createTournament(ActionEvent event) {		
 		Tournament tournament=null;
-		try {
-			tournament=getTournament();
-			//tournament.initTournament(getTeamsList());
-			new FacadeImpl().storeTournament(tournament, username);
-			restoreComponents();
+		FacadeImpl facadeImpl= new FacadeImpl();
+		List<Team> teamsList=getTeamsList();
+		String name=this.txtFldName.getText();
+		try {		
+			
+			if(facadeImpl.checkUnique(name, username)) {
+				tournament=getTournament(name);
+				if(facadeImpl.storeTournament(tournament, username)) {
+						int tournamentId=facadeImpl.getLastTournamentID();
+						tournament.setId(tournamentId);
+						tournament.initTournament(teamsList);
+						facadeImpl.storeElement(tournament);
+						int elementId=tournament.getTournamentElement().getTournamentElementType().ordinal()==0?facadeImpl.getLastBoardID():facadeImpl.getLastGroupID();
+						tournament.getTournamentElement().setId(elementId);
+						for(Team team:teamsList) {
+							facadeImpl.storeTeam(team, tournament);
+						}
+					}
+					restoreComponents();
+			}
+			else new Alert(AlertType.ERROR,"Tournament name already exists.",ButtonType.OK).show();
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
@@ -90,9 +111,8 @@ public class CreateTournamentController implements Initializable {
 		this.username=username;
 	}
 	
-	private Tournament getTournament() {
+	private Tournament getTournament(String name) {
 		Tournament tournament=null;
-		String name=this.txtFldName.getText();
 		switch(this.cmbBoxType.getSelectionModel().getSelectedIndex()) {
 			case 0: 
 				tournament= new League(name);
