@@ -49,6 +49,10 @@ public abstract class TournamentElement implements IElement {
 		return completed;
 	}
 	
+	public void setSchedule(List<Day> schedule) {
+		this.schedule = schedule;
+	}
+	
 	public List<Day> getSchedule() {
 		return schedule;
 	}
