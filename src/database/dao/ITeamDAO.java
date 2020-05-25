@@ -14,13 +14,19 @@ public interface ITeamDAO {
 	
 	public int getLastTeamID() throws SQLException;
 	
+	public boolean updateTeam(Team t) throws SQLException;
+	
 	public boolean storePlayer(Player p, Team t) throws SQLException;
 	
 	public int getLastPlayerID() throws SQLException;
 	
 	public boolean storeStadium(Stadium s) throws SQLException;
 	
-	public boolean removePlayer(Player p, Team t) throws SQLException;
+	public boolean updateStadium(Stadium s) throws SQLException;
+	
+	public boolean removePlayer(Player p) throws SQLException;
+	
+	public boolean updatePlayer(Player p) throws SQLException;
 	
 	public List<Player> getPlayersByTeam(Team t) throws SQLException;
 	

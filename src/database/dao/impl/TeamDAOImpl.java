@@ -31,7 +31,7 @@ public class TeamDAOImpl implements ITeamDAO {
 		ps = conn.prepareStatement(query);
 		ps.setString(1, team.getName());
 		ps.setInt(2, t.getId());
-		ps.setNull(3, Types.INTEGER);
+		ps.setNull(3, Types.VARCHAR);
 		ps.setInt(4, team.getPoints());
 		ps.setInt(5, team.getGoalsScored());
 		ps.setInt(6, team.getGoalsConceded());
@@ -75,6 +75,28 @@ public class TeamDAOImpl implements ITeamDAO {
 			
 		DBConnection.closeConnection(conn);
 		return ID;
+	}
+	
+	@Override
+	public boolean updateTeam(Team t) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		String query = "UPDATE team SET Name=?, Stadium=? WHERE IDTeam=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, t.getName());
+		ps.setString(2, t.getStadium().getName());
+		ps.setInt(3, t.getId());
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}	
+
+		DBConnection.closeConnection(conn);
+		return false;
 	}
 
 	@Override
@@ -144,26 +166,69 @@ public class TeamDAOImpl implements ITeamDAO {
 		DBConnection.closeConnection(conn);
 		return false;
 	}
+	
+	@Override
+	public boolean updateStadium(Stadium s) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		String query = "UPDATE stadium SET Name=?, City=?, Capacity=? WHERE Name=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, s.getName());
+		ps.setString(2, s.getCity());
+		ps.setInt(3, s.getCapacity());
+		ps.setString(4, s.getName());
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}	
+
+		DBConnection.closeConnection(conn);
+		return false;
+	}
 
 	@Override
-	public boolean removePlayer(Player p, Team t) throws SQLException {
+	public boolean removePlayer(Player p) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
 
-		int IDTeam = t.getId();
-
-		String query = "DELETE from player where Surname=? and Number=? and IDTeam=?";
+		String query = "DELETE from player where IDPlayer=?";
 		ps = conn.prepareStatement(query);
-		ps.setString(1, p.getSurname());
-		ps.setInt(2, p.getNumber());
-		ps.setInt(3, IDTeam);
+		ps.setInt(1, p.getId());
 		rs = ps.execute();
 
 		if (!rs) {
 			DBConnection.closeConnection(conn);
 			return true;
 		}
+
+		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
+	@Override
+	public boolean updatePlayer(Player p) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		String query = "UPDATE player SET Number=?, Name=?, Surname=?, PlayerPositionType=? WHERE IDPlayer=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, p.getNumber());
+		ps.setString(2, p.getName());
+		ps.setString(3, p.getSurname());
+		ps.setInt(4, p.getPosition().ordinal() + 1);
+		ps.setInt(5, p.getId());
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}	
 
 		DBConnection.closeConnection(conn);
 		return false;
