@@ -9,7 +9,6 @@ public class Match {
 	private Date date;
 	private Team homeTeam;
 	private Team awayTeam;
-	private Team winner;
 	private Stadium stadium;
 	private int homeScore;
 	private int awayScore;
@@ -22,7 +21,6 @@ public class Match {
 		this.stadium = homeTeam.getStadium();
 		homeScore = 0;
 		awayScore = 0;
-		winner = null;
 		played = false;
 	}
 	
@@ -72,25 +70,23 @@ public class Match {
 		awayTeam.setGoalsConceded(awayTeam.getGoalsConceded() + homeScore);
 
 		played = true;
-		setWinner();
-	}
-
-	private void setWinner() {
-		if (homeScore > awayScore) {
-			homeTeam.setPoints(homeTeam.getPoints() + 3);
-			winner = homeTeam;
-		} else if (homeScore < awayScore) {
-			awayTeam.setPoints(awayTeam.getPoints() + 3);
-			winner = awayTeam;
-		} else {
-			homeTeam.setPoints(homeTeam.getPoints() + 1);
-			awayTeam.setPoints(awayTeam.getPoints() + 1);
-			winner = null;
-		}
 	}
 
 	public Team getWinner() {
-		return this.winner;
+		if(played) {
+			if (homeScore > awayScore) {
+				homeTeam.setPoints(homeTeam.getPoints() + 3);
+				return homeTeam;
+			} else if (homeScore < awayScore) {
+				awayTeam.setPoints(awayTeam.getPoints() + 3);
+				return awayTeam;
+			} else {
+				homeTeam.setPoints(homeTeam.getPoints() + 1);
+				awayTeam.setPoints(awayTeam.getPoints() + 1);
+				return null;
+			}
+		}
+		return null;
 	}
 
 	@Override
