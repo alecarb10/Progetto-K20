@@ -2,35 +2,50 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.EditTeamController" >
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.EditTeamController">
    <children>
       <ComboBox fx:id="cmbBoxTournament" layoutX="30.0" layoutY="11.0" prefWidth="150.0" promptText="Select Tournament" />
       <ComboBox fx:id="cmbBoxTeam" layoutX="30.0" layoutY="50.0" prefWidth="150.0" promptText="Select Team" />
-      <TitledPane animated="false" collapsible="false" layoutX="30.0" layoutY="109.0" prefHeight="145.0" prefWidth="200.0" text="Team">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="192.0">
-               <children>
-                  <TextField fx:id="txtFldTeamName" layoutX="24.0" layoutY="8.0" promptText="Name" />
-                  <TextField fx:id="txtFldTeamCoach" layoutX="24.0" layoutY="40.0" promptText="Coach" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
-      <TitledPane animated="false" collapsible="false" layoutX="30.0" layoutY="275.0" prefHeight="172.0" prefWidth="200.0" text="Stadium">
+      <TitledPane animated="false" collapsible="false" layoutX="366.0" layoutY="87.0" prefHeight="172.0" prefWidth="200.0" text="Stadium">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="230.0">
                <children> 
                   <TextField fx:id="txtFldStadiumName" layoutX="16.0" layoutY="9.0" promptText="Name" />
                   <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="41.0" promptText="City" />
                   <TextField fx:id="txtFldStadiumCapacity" layoutX="16.0" layoutY="74.0" promptText="Capacity" />
+                  <Button fx:id="btnAddStadium" layoutX="16.0" layoutY="105.0" mnemonicParsing="false" onAction="#addStadium" prefHeight="25.0" prefWidth="60.0" text="Add" />
+                  <Button fx:id="btnEditStadium" layoutX="105.0" layoutY="105.0" mnemonicParsing="false" onAction="#editStadium" prefHeight="25.0" prefWidth="60.0" text="Edit" />
                </children>
             </AnchorPane>
         </content>
       </TitledPane>
-      <Button fx:id="btnSave" layoutX="490.0" layoutY="498.0" onAction="#saveTeam" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Save" />
+      <TableView layoutX="15.0" layoutY="84.0" prefHeight="436.0" prefWidth="330.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <TitledPane animated="false" collapsible="false" layoutX="361.0" layoutY="272.0" prefHeight="245.0" prefWidth="215.0" text="Player">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField layoutX="8.0" layoutY="12.0" promptText="Name" />
+                  <TextField layoutX="8.0" layoutY="51.0" promptText="Surname" />
+                  <TextField layoutX="8.0" layoutY="94.0" promptText="Number" />
+                  <ComboBox layoutX="8.0" layoutY="134.0" prefWidth="150.0" promptText="Player Position" />
+                  <Button layoutX="84.0" layoutY="181.0" mnemonicParsing="false" text="Edit" />
+                  <Button layoutX="139.0" layoutY="181.0" mnemonicParsing="false" text="Delete" />
+                  <Button layoutX="14.0" layoutY="181.0" mnemonicParsing="false" text="Add" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      
    </children>
 </AnchorPane>

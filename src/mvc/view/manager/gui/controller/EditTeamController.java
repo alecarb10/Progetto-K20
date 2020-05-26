@@ -25,9 +25,9 @@ public class EditTeamController implements Initializable {
 	private ComboBox<String> cmbBoxTournament,cmbBoxTeam;
 	
 	@FXML
-	private TextField txtFldTeamName,txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity,txtFldTeamCoach;
+	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity;
 	@FXML
-	private Button btnSave;
+	private Button btnAddStadium,btnEditStadium;
 	
 	private String username;
 	private ObservableList<String> tournaments,teams;	
@@ -48,13 +48,18 @@ public class EditTeamController implements Initializable {
 			Team team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
 			Stadium stadium=null;
 			if(team!=null) {
-				txtFldTeamName.setText(team.getName());
 				stadium=team.getStadium();	
-			}
-			if(stadium!=null) {				
-				txtFldStadiumName.setText(stadium.getName());
-				txtFldStadiumCity.setText(stadium.getCity());
-				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+				if(stadium!=null) {			
+					btnEditStadium.setDisable(false);
+					btnAddStadium.setDisable(true);
+					txtFldStadiumName.setText(stadium.getName());
+					txtFldStadiumCity.setText(stadium.getCity());
+					txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+				}
+				else {
+					btnEditStadium.setDisable(true);
+					btnAddStadium.setDisable(false);
+				}
 			}
 		});
 
@@ -102,7 +107,7 @@ public class EditTeamController implements Initializable {
 		
 	}
 	
-	public void saveTeam(ActionEvent event) {
+	public void addStadium(ActionEvent event) {
 		try {
 			Stadium stadium= new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(),Integer.parseInt(txtFldStadiumCapacity.getText()));
 			facadeImpl.storeStadium(stadium);
@@ -114,14 +119,26 @@ public class EditTeamController implements Initializable {
 		
 	}
 	
+	public void editStadium(ActionEvent event) {
+		try {
+			Stadium stadium= new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(),Integer.parseInt(txtFldStadiumCapacity.getText()));
+			facadeImpl.updateStadium(stadium);
+			restoreComponents();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
 	private void restoreComponents() {
 		GraphicControlsHandler.resetComboBox(this.cmbBoxTournament, "Select Tournament");
 		GraphicControlsHandler.resetComboBox(this.cmbBoxTeam, "Select Team");
-		GraphicControlsHandler.resetTextField(this.txtFldTeamName, "Name");
-		GraphicControlsHandler.resetTextField(this.txtFldTeamCoach, "Coach");
+		GraphicControlsHandler.resetObservableList(this.teams);
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCapacity, "Capacity");
-		GraphicControlsHandler.resetObservableList(this.teams);
+		btnAddStadium.setDisable(false);
+		btnEditStadium.setDisable(false);
 	}
 }
