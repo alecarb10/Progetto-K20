@@ -27,13 +27,15 @@ public class EditTeamController implements Initializable {
 	@FXML
 	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity;
 	@FXML
-	private Button btnAddStadium,btnEditStadium;
+	private Button btnAddStadium,btnEditStadium,btnAddPlayer;
 	
 	private String username;
 	private ObservableList<String> tournaments,teams;	
 	private FacadeImpl facadeImpl;
 	private List<Tournament> tournamentsList;
 	private List<Team> teamsList;
+	private Tournament tournament;
+	private Team team;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -45,20 +47,14 @@ public class EditTeamController implements Initializable {
 				this.cmbBoxTeam.setItems(teams);
 		});
 		this.cmbBoxTeam.setOnAction((ActionEvent)->{
-			Team team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
+			team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
 			Stadium stadium=null;
 			if(team!=null) {
 				stadium=team.getStadium();	
 				if(stadium!=null) {			
-					btnEditStadium.setDisable(false);
-					btnAddStadium.setDisable(true);
 					txtFldStadiumName.setText(stadium.getName());
 					txtFldStadiumCity.setText(stadium.getCity());
 					txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
-				}
-				else {
-					btnEditStadium.setDisable(true);
-					btnAddStadium.setDisable(false);
 				}
 			}
 		});
@@ -81,8 +77,10 @@ public class EditTeamController implements Initializable {
 	private ObservableList<String> getTeamsList(){
 		ObservableList<String> teams=FXCollections.observableArrayList();
 		try {
-			if(cmbBoxTournament.getValue()!=null)
-				teamsList=facadeImpl.getTeamsByTournament(getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem()));
+			if(cmbBoxTournament.getValue()!=null) {
+				tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
+				teamsList=facadeImpl.getTeamsByTournament(tournament);
+				}
 			for(Team t: teamsList) 
 				teams.add(t.getName());
 		} catch (Exception ex) {
@@ -110,7 +108,9 @@ public class EditTeamController implements Initializable {
 	public void addStadium(ActionEvent event) {
 		try {
 			Stadium stadium= new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(),Integer.parseInt(txtFldStadiumCapacity.getText()));
+			team.setStadium(stadium);
 			facadeImpl.storeStadium(stadium);
+			facadeImpl.updateTeam(team);
 			restoreComponents();
 		}
 		catch (Exception ex) {
@@ -138,7 +138,5 @@ public class EditTeamController implements Initializable {
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCapacity, "Capacity");
-		btnAddStadium.setDisable(false);
-		btnEditStadium.setDisable(false);
 	}
 }
