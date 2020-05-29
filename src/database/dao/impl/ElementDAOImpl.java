@@ -1,6 +1,7 @@
 package database.dao.impl;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.util.List;
 import database.dao.IElementDAO;
 import database.util.DBConnection;
 import mvc.model.element.Day;
+
 import mvc.model.match.Match;
 import mvc.model.tournament.Tournament;
 
@@ -108,10 +110,10 @@ public class ElementDAOImpl implements IElementDAO {
 		PreparedStatement ps;
 		boolean rs, stored = false;
 
-		String query = "INSERT INTO day(Number, Date, Group, Board) VALUES(?,?,?,?)";
+		String query = "INSERT INTO day(Number, Date, day.Group, Board) VALUES(?,?,?,?)";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, d.getNumber());
-		ps.setString(2, d.getDate().toString());
+		ps.setDate(2, new java.sql.Date(d.getDate().getTime()));
 
 		// group
 		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
@@ -143,10 +145,10 @@ public class ElementDAOImpl implements IElementDAO {
 		PreparedStatement ps;
 		boolean rs;
 
-		String query = "INSERT INTO match(Day, Date, Stadium, HomeTeam, AwayTeam, HomeScore, AwayScore, Played) VALUES(?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO tournament.match(Day, Date, Stadium, HomeTeam, AwayTeam, HomeScore, AwayScore, Played) VALUES(?,?,?,?,?,?,?,?)";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, d.getNumber());
-		ps.setString(2, d.getDate().toString());
+		ps.setDate(2, new java.sql.Date(d.getDate().getTime()));
 		
 		if (m.getStadium() == null)
 			ps.setNull(3, Types.VARCHAR);
