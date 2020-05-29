@@ -21,7 +21,6 @@
                   <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="41.0" promptText="City" />
                   <TextField fx:id="txtFldStadiumCapacity" layoutX="16.0" layoutY="74.0" promptText="Capacity" />
                   <Button fx:id="btnAddStadium" layoutX="16.0" layoutY="105.0" mnemonicParsing="false" onAction="#addStadium" prefHeight="25.0" prefWidth="60.0" text="Add" />
-                  <Button fx:id="btnEditStadium" layoutX="105.0" layoutY="105.0" mnemonicParsing="false" onAction="#editStadium" prefHeight="25.0" prefWidth="60.0" text="Edit" />
                </children>
             </AnchorPane>
         </content>
@@ -38,13 +37,13 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField layoutX="8.0" layoutY="12.0" promptText="Name" />
-                  <TextField layoutX="8.0" layoutY="51.0" promptText="Surname" />
-                  <Spinner layoutX="8.0" layoutY="85.0" />
-                  <ComboBox layoutX="8.0" layoutY="134.0" prefWidth="150.0" promptText="Position" />
+                  <TextField fx:id="txtFldPlayerName" layoutX="8.0" layoutY="12.0" promptText="Name" />
+                  <TextField fx:id="txtFldPlayerSurname" layoutX="8.0" layoutY="51.0" promptText="Surname" />
+                  <Spinner fx:id="spinnerPlayerNumber" layoutX="8.0" layoutY="85.0" />
+                  <ComboBox fx:id="cmbBoxPlayerPosition" layoutX="8.0" layoutY="134.0" prefWidth="150.0" promptText="Position" />
                   <Button layoutX="84.0" layoutY="181.0" mnemonicParsing="false" text="Edit" />
                   <Button layoutX="139.0" layoutY="181.0" mnemonicParsing="false" text="Delete" />
-                  <Button fx:id="btnAddPlayer" layoutX="14.0" layoutY="181.0" mnemonicParsing="false" onAction="#addPlayer" text="Add" />
+                  <Button fx:id="btnAddPlayer" layoutX="14.0" layoutY="181.0" onAction="#addPlayer" mnemonicParsing="false" text="Add" />
                </children>
             </AnchorPane>
         </content>
