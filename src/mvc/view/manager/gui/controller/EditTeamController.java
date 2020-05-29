@@ -12,7 +12,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import mvc.model.team.Player;
+import mvc.model.team.PlayerPositionType;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
 import mvc.model.tournament.Tournament;
@@ -22,15 +26,17 @@ public class EditTeamController implements Initializable {
 
 	
 	@FXML
-	private ComboBox<String> cmbBoxTournament,cmbBoxTeam;
-	
+	private ComboBox<String> cmbBoxTournament,cmbBoxTeam,cmbBoxPlayerPosition;
 	@FXML
-	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity;
+	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity,txtFldPlayerName,txtFldPlayerSurname;
 	@FXML
-	private Button btnAddStadium,btnEditStadium,btnAddPlayer;
+	private Button btnAddStadium,btnAddPlayer;
+	@FXML
+	private Spinner<Integer> spinnerPlayerNumber;
 	
 	private String username;
-	private ObservableList<String> tournaments,teams;	
+	private ObservableList<String> tournaments,teams;
+	private SpinnerValueFactory<Integer> numbers;
 	private FacadeImpl facadeImpl;
 	private List<Tournament> tournamentsList;
 	private List<Team> teamsList;
@@ -40,6 +46,10 @@ public class EditTeamController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tournaments= FXCollections.observableArrayList();
+		numbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
+		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));
+		spinnerPlayerNumber.setValueFactory(numbers);
+		spinnerPlayerNumber.setEditable(true);
 		facadeImpl= new FacadeImpl();
 		this.cmbBoxTournament.setOnAction((ActionEvent)->{
 			teams=getTeamsList();
@@ -119,16 +129,39 @@ public class EditTeamController implements Initializable {
 		
 	}
 	
-	public void editStadium(ActionEvent event) {
+	public void addPlayer(ActionEvent event) {
 		try {
-			Stadium stadium= new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(),Integer.parseInt(txtFldStadiumCapacity.getText()));
-			facadeImpl.updateStadium(stadium);
+			PlayerPositionType position=getPlayerPosition();
+			Player player= new Player(txtFldPlayerName.getText(), txtFldPlayerSurname.getText(),spinnerPlayerNumber.getValue(),position);
+			facadeImpl.storePlayer(player, team);
 			restoreComponents();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
+	}
+	
+	private PlayerPositionType getPlayerPosition() {
+		PlayerPositionType position=null;
+		switch (cmbBoxPlayerPosition.getSelectionModel().getSelectedIndex()) {
+		case 0:
+			position=PlayerPositionType.GK;
+			break;
+		case 1:
+			position=PlayerPositionType.CB;
+			break;
+		case 2:
+			position=PlayerPositionType.MF;
+			break;
+		case 3:
+			position=PlayerPositionType.CF;
+			break;
+		default:
+			position=null;
+			break;
+		}
+		return position;
 	}
 	
 	private void restoreComponents() {
@@ -138,5 +171,8 @@ public class EditTeamController implements Initializable {
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCapacity, "Capacity");
+		GraphicControlsHandler.resetTextField(this.txtFldPlayerName, "Name");
+		GraphicControlsHandler.resetTextField(this.txtFldPlayerSurname, "Surname");
+		GraphicControlsHandler.resetSpinner(this.spinnerPlayerNumber);
 	}
 }
