@@ -127,15 +127,15 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public List<Player> getPlayersByTeam(Team t) throws SQLException {
-		ITeamDAO tmd = new TeamDAOImpl();
-		return tmd.getPlayersByTeam(t);
-	}
-
-	@Override
 	public List<Team> getTeamsByTournament(Tournament t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
 		return tmd.getTeamsByTournament(t);
+	}
+	
+	@Override
+	public List<Stadium> getStadiums() throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.getStadiums();
 	}
 	
 	@Override

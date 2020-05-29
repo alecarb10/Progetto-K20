@@ -234,9 +234,7 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
-	@Override
-	public List<Player> getPlayersByTeam(Team t) throws SQLException {
-		conn = DBConnection.startConnection(conn);
+	private List<Player> getPlayersByTeam(Team t) throws SQLException {
 		PreparedStatement ps;
 		ResultSet rs;
 
@@ -261,7 +259,6 @@ public class TeamDAOImpl implements ITeamDAO {
 			players.add(p);
 		}
 
-		DBConnection.closeConnection(conn);
 		return players;
 	}
 
@@ -308,11 +305,42 @@ public class TeamDAOImpl implements ITeamDAO {
 				int stadiumCapacity = rs2.getInt(2);
 				team.setStadium(new Stadium(stadium, stadiumCity, stadiumCapacity));
 			}
+			
+			for (Player p: getPlayersByTeam(team))
+				team.insertPlayer(p);
 	
 			teams.add(team);
 		}
 
 		DBConnection.closeConnection(conn);
 		return teams;
+	}
+
+	@Override
+	public List<Stadium> getStadiums() throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		ResultSet rs;
+
+		List<Stadium> stadiums = new ArrayList<>();
+		Stadium stadium = null;
+
+		String query = "SELECT Name, City, Capacity from stadium";
+		ps = conn.prepareStatement(query);
+
+		rs = ps.executeQuery();
+
+		while (rs.next()) {
+			String name = rs.getString(1);
+			String city = rs.getString(2);
+			int capacity = rs.getInt(3);
+
+			stadium = new Stadium(name, city, capacity);
+			
+			stadiums.add(stadium);
+		}
+
+		DBConnection.closeConnection(conn);
+		return stadiums;
 	}
 }

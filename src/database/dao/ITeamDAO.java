@@ -28,7 +28,7 @@ public interface ITeamDAO {
 	
 	public boolean updatePlayer(Player p) throws SQLException;
 	
-	public List<Player> getPlayersByTeam(Team t) throws SQLException;
+	public List<Stadium> getStadiums() throws SQLException;
 	
 	public List<Team> getTeamsByTournament(Tournament t) throws SQLException;
 
