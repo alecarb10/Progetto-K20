@@ -12,7 +12,7 @@ import java.util.List;
 import database.dao.IElementDAO;
 import database.util.DBConnection;
 import mvc.model.element.Day;
-
+import mvc.model.element.TournamentElement;
 import mvc.model.match.Match;
 import mvc.model.tournament.Tournament;
 
@@ -58,43 +58,35 @@ public class ElementDAOImpl implements IElementDAO {
 	}
 
 	@Override
-	public int getLastGroupID() throws SQLException {
+	public int getLastElementID(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
-
 		ResultSet rs;
-
-		String query = "SELECT MAX(IDGroup) FROM tournament.group";
-
 		Statement st1;
+		
+		// group
+		if (t.getTournamentElementType().ordinal() == 1) {
+			String query = "SELECT MAX(IDGroup) FROM tournament.group";
+			st1 = conn.createStatement();
+			rs = st1.executeQuery(query);
 
-		st1 = conn.createStatement();
-		rs = st1.executeQuery(query);
+			rs.next();
+			int ID = rs.getInt(1);
 
-		rs.next();
-		int ID = rs.getInt(1);
+			DBConnection.closeConnection(conn);
+			return ID;
+		}
+		// board
+		else {
+			String query = "SELECT MAX(IDBoard) FROM board";
+			st1 = conn.createStatement();
+			rs = st1.executeQuery(query);
 
-		DBConnection.closeConnection(conn);
-		return ID;
-	}
+			rs.next();
+			int ID = rs.getInt(1);
 
-	@Override
-	public int getLastBoardID() throws SQLException {
-		conn = DBConnection.startConnection(conn);
-
-		ResultSet rs;
-
-		String query = "SELECT MAX(IDBoard) FROM board";
-
-		Statement st1;
-
-		st1 = conn.createStatement();
-		rs = st1.executeQuery(query);
-
-		rs.next();
-		int ID = rs.getInt(1);
-
-		DBConnection.closeConnection(conn);
-		return ID;
+			DBConnection.closeConnection(conn);
+			return ID;
+		}
 	}
 
 	@Override

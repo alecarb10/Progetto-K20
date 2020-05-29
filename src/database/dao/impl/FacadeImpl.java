@@ -5,6 +5,7 @@ import java.util.List;
 
 import database.dao.*;
 import mvc.model.element.Day;
+import mvc.model.element.TournamentElement;
 import mvc.model.team.Player;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
@@ -145,16 +146,11 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
-	public int getLastGroupID() throws SQLException {
+	public int getLastElementID(TournamentElement t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.getLastGroupID();
+		return ed.getLastElementID(t);
 	}
 
-	@Override
-	public int getLastBoardID() throws SQLException {
-		IElementDAO ed = new ElementDAOImpl();
-		return ed.getLastBoardID();
-	}
 
 	@Override
 	public boolean storeSchedule(List<Day> schedule, Tournament t) throws SQLException {
