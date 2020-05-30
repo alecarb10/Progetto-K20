@@ -6,6 +6,7 @@ import java.util.List;
 import database.dao.*;
 import mvc.model.element.Day;
 import mvc.model.element.TournamentElement;
+import mvc.model.match.Match;
 import mvc.model.team.Player;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
@@ -162,5 +163,11 @@ public class FacadeImpl implements IFacade {
 	public List<Day> getSchedule(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.getSchedule(t);
+	}
+
+	@Override
+	public boolean updateMatch(Match oldMatch, Match newMatch) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.updateMatch(oldMatch, newMatch);
 	}
 }
