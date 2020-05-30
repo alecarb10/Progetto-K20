@@ -7,6 +7,7 @@ import mvc.model.match.Match;
 
 public class Day {
 	
+	private int id;
 	private int number;
 	private List<Match> matchesList;
 	private Date date;
@@ -15,6 +16,14 @@ public class Day {
 		this.number = number;
 		this.matchesList = matchesList;
 		this.date = date;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public int getNumber() {

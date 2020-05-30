@@ -36,6 +36,10 @@ public class Match {
 		return date;
 	}
 	
+	public void setPlayed(boolean played) {
+		this.played = played;
+	}
+	
 	public boolean isPlayed() {
 		return played;
 	}
