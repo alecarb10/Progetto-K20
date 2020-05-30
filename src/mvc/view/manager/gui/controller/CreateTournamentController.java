@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
+import mvc.model.element.TournamentElement;
 import mvc.model.team.Team;
 import mvc.model.tournament.KnockoutPhase;
 import mvc.model.tournament.League;
@@ -90,11 +91,14 @@ public class CreateTournamentController implements Initializable {
 						tournament.setId(tournamentId);
 						tournament.initTournament(teamsList);
 						facadeImpl.storeElement(tournament);
-						int elementId=tournament.getTournamentElement().getTournamentElementType().ordinal()==0?facadeImpl.getLastBoardID():facadeImpl.getLastGroupID();
+						int elementId=facadeImpl.getLastElementID(tournament.getTournamentElement());
 						tournament.getTournamentElement().setId(elementId);
 						for(Team team:teamsList) {
 							facadeImpl.storeTeam(team, tournament);
+							int teamId=facadeImpl.getLastTeamID();
+							team.setId(teamId);
 						}
+						//facadeImpl.storeSchedule(tournament.getSchedule(), tournament);
 					}
 					restoreComponents();
 			}

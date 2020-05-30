@@ -44,10 +44,11 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditTeam.fxml");
 			Parent root=loader.load();
 			EditTeamController controller= loader.getController();
+			this.borderPaneHome.setCenter(root);
 			controller.setUsername(username);
 			controller.setTournamentsList(tournamentsList);
 			controller.populateCmbBoxTournament(this.getTournamentsList(username));			
-			this.borderPaneHome.setCenter(root);
+			
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -100,17 +101,18 @@ public class HomeController implements Initializable {
 		try {
 			this.username=username;
 			this.cmbBoxProfile.setPromptText(username);
-			this.tournamentsList=new FacadeImpl().getAllTournamentsByManager(username);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
 	private ObservableList<String> getTournamentsList(String username){
-		ObservableList<String> tournaments= FXCollections.observableArrayList();
+		ObservableList<String> tournaments= FXCollections.observableArrayList();	
 		try {
-			for(Tournament t: tournamentsList) 
+			this.tournamentsList=new FacadeImpl().getAllTournamentsByManager(username);
+			for(Tournament t: tournamentsList) {
 				tournaments.add(t.getName());
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}		
