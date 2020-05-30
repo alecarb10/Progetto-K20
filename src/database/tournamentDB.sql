@@ -71,11 +71,12 @@ CREATE TABLE `group` (
 );
 
 CREATE TABLE `day` (
+  `IDDay` int(11) NOT NULL AUTO_INCREMENT,
   `Number` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Group` int(11) DEFAULT NULL,
   `Board` int(11) DEFAULT NULL,
-  PRIMARY KEY (`Number`,`Date`),
+  PRIMARY KEY (`IDDay`),
   KEY `group_idx` (`Group`),
   KEY `board_idx` (`Board`),
   CONSTRAINT `board` FOREIGN KEY (`Board`) REFERENCES `board` (`IDBoard`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -106,7 +107,6 @@ CREATE TABLE `team` (
 CREATE TABLE `match` (
   `IDMatch` int(11) NOT NULL AUTO_INCREMENT,
   `Day` int(11) DEFAULT NULL,
-  `Date` date DEFAULT NULL,
   `Stadium` varchar(20) DEFAULT NULL,
   `HomeTeam` int(11) DEFAULT NULL,
   `AwayTeam` int(11) DEFAULT NULL,
@@ -116,9 +116,9 @@ CREATE TABLE `match` (
   PRIMARY KEY (`IDMatch`),
   KEY `match_team1_idx` (`HomeTeam`),
   KEY `match_team2_idx` (`AwayTeam`),
-  KEY `match_day_idx` (`Day`,`Date`),
   KEY `match_stadium_idx` (`Stadium`),
-  CONSTRAINT `match_day` FOREIGN KEY (`Day`, `Date`) REFERENCES `day` (`Number`, `Date`) ON UPDATE CASCADE,
+  KEY `day_match_idx` (`Day`),
+  CONSTRAINT `day_match` FOREIGN KEY (`Day`) REFERENCES `day` (`IDDay`) ON UPDATE CASCADE,
   CONSTRAINT `match_stadium` FOREIGN KEY (`Stadium`) REFERENCES `stadium` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `match_team1` FOREIGN KEY (`HomeTeam`) REFERENCES `team` (`IDTeam`) ON UPDATE CASCADE,
   CONSTRAINT `match_team2` FOREIGN KEY (`AwayTeam`) REFERENCES `team` (`IDTeam`) ON UPDATE CASCADE
