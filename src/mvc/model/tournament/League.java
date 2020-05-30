@@ -13,11 +13,11 @@ public class League extends Tournament {
 
 	public League(String name) {
 		super(name);
+		this.group = new Group();
 	}
 	
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.group = new Group();
 		addTeams(teamsList);
 		this.group.initTournamentElement();
 	}

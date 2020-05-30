@@ -15,6 +15,8 @@ public class MixedTournament extends Tournament {
 
 	public MixedTournament(String name) {
 		super(name);
+		this.group= new Group();
+		this.board= new Board();
 	}
 
 	public TournamentElement getBoard() {
@@ -23,7 +25,6 @@ public class MixedTournament extends Tournament {
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.group= new Group();
 		addTeams(teamsList);
 		this.group.initTournamentElement();	
 	}
@@ -39,7 +40,6 @@ public class MixedTournament extends Tournament {
 	
 	public void initKnockoutPhase() {
 		if (this.isGroupCompleted()) {
-			this.board= new Board();
 			this.board.initTournamentElement();
 		}
 	}

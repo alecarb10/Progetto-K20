@@ -14,11 +14,11 @@ public class KnockoutPhase extends Tournament {
 
 	public KnockoutPhase(String name) {
 		super(name);
+		this.board = new Board();
 	}
 
 	@Override
 	public void initTournament(List<Team> teamsList) {
-		this.board = new Board();
 		addTeams(teamsList);
 		this.board.initTournamentElement();
 	}
