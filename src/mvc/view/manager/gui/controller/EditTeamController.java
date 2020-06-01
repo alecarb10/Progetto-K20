@@ -14,7 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import mvc.model.team.Player;
 import mvc.model.team.PlayerPositionType;
 import mvc.model.team.Stadium;
@@ -24,28 +27,38 @@ import mvc.view.manager.gui.util.GraphicControlsHandler;
 
 public class EditTeamController implements Initializable {
 
-	
 	@FXML
-	private ComboBox<String> cmbBoxTournament,cmbBoxTeam,cmbBoxPlayerPosition;
+	private ComboBox<String> cmbBoxTournament,cmbBoxTeam,cmbBoxPlayerPosition,cmbBoxStadium;
 	@FXML
 	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity,txtFldPlayerName,txtFldPlayerSurname;
 	@FXML
 	private Button btnAddStadium,btnAddPlayer;
 	@FXML
 	private Spinner<Integer> spinnerPlayerNumber;
+	@FXML
+	private TableView<Player> tblViewPlayer;
+	@FXML
+	private TableColumn<Player, String> tblClmnPlayerName,tblClmnPlayerSurname,tblClmnPlayerNumber,tblClmnPlayerPosition;
 	
 	private String username;
-	private ObservableList<String> tournaments,teams;
+	private ObservableList<String> tournaments,teams,stadiums;
+	private ObservableList<Player> players;
 	private SpinnerValueFactory<Integer> numbers;
 	private FacadeImpl facadeImpl;
 	private List<Tournament> tournamentsList;
 	private List<Team> teamsList;
+	private List<Player>playersList;
+	private List<Stadium> stadiumsList;
 	private Tournament tournament;
 	private Team team;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tournaments= FXCollections.observableArrayList();
+		players=FXCollections.observableArrayList();
+		txtFldStadiumName.setEditable(false);
+		txtFldStadiumCity.setEditable(false);
+		txtFldStadiumCapacity.setEditable(false);
 		numbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
 		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));
 		spinnerPlayerNumber.setValueFactory(numbers);
@@ -60,12 +73,39 @@ public class EditTeamController implements Initializable {
 			team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
 			Stadium stadium=null;
 			if(team!=null) {
+				stadiums=getStadiumsList();
+				cmbBoxStadium.setItems(stadiums);
 				stadium=team.getStadium();	
 				if(stadium!=null) {			
+					cmbBoxStadium.setValue(team.getStadium().getName());
 					txtFldStadiumName.setText(stadium.getName());
 					txtFldStadiumCity.setText(stadium.getCity());
 					txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
 				}
+				else if(stadium==null) {
+					GraphicControlsHandler.resetComboBox(cmbBoxStadium, "Select");
+					GraphicControlsHandler.resetTextField(txtFldStadiumName,"Name");
+					GraphicControlsHandler.resetTextField(txtFldStadiumCity,"City");
+					GraphicControlsHandler.resetTextField(txtFldStadiumCapacity,"Capacity");
+				}
+				players.clear();
+				playersList=team.getPlayers();
+				for(Player p:playersList) {
+					players.add(p);
+				}				
+				tblClmnPlayerName.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
+				tblClmnPlayerSurname.setCellValueFactory(new PropertyValueFactory<Player, String>("Surname"));
+				tblClmnPlayerNumber.setCellValueFactory(new PropertyValueFactory<Player, String>("Number"));
+				tblClmnPlayerPosition.setCellValueFactory(new PropertyValueFactory<Player, String>("Position"));
+				tblViewPlayer.setItems(players);
+			}
+		});
+		this.cmbBoxStadium.setOnAction((ActionEvent)->{
+			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
+			if(stadium!=null) {
+				txtFldStadiumName.setText(stadium.getName());
+				txtFldStadiumCity.setText(stadium.getCity());
+				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
 			}
 		});
 
@@ -115,11 +155,10 @@ public class EditTeamController implements Initializable {
 		
 	}
 	
-	public void addStadium(ActionEvent event) {
+	public void setStadium(ActionEvent event) {
 		try {
-			Stadium stadium= new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(),Integer.parseInt(txtFldStadiumCapacity.getText()));
+			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
 			team.setStadium(stadium);
-			facadeImpl.storeStadium(stadium);
 			facadeImpl.updateTeam(team);
 			restoreComponents();
 		}
@@ -133,7 +172,10 @@ public class EditTeamController implements Initializable {
 		try {
 			PlayerPositionType position=getPlayerPosition();
 			Player player= new Player(txtFldPlayerName.getText(), txtFldPlayerSurname.getText(),spinnerPlayerNumber.getValue(),position);
+			team.insertPlayer(player);
 			facadeImpl.storePlayer(player, team);
+			//players.add(player);
+			//tblViewPlayer.setItems(players);
 			restoreComponents();
 		}
 		catch (Exception ex) {
@@ -167,6 +209,7 @@ public class EditTeamController implements Initializable {
 	private void restoreComponents() {
 		GraphicControlsHandler.resetComboBox(this.cmbBoxTournament, "Select Tournament");
 		GraphicControlsHandler.resetComboBox(this.cmbBoxTeam, "Select Team");
+		GraphicControlsHandler.resetComboBox(this.cmbBoxStadium, "Select");
 		GraphicControlsHandler.resetObservableList(this.teams);
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
@@ -174,5 +217,26 @@ public class EditTeamController implements Initializable {
 		GraphicControlsHandler.resetTextField(this.txtFldPlayerName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldPlayerSurname, "Surname");
 		GraphicControlsHandler.resetSpinner(this.spinnerPlayerNumber);
+	}
+	
+	private ObservableList<String> getStadiumsList(){
+		ObservableList<String> stadiums=FXCollections.observableArrayList();
+		try {
+			if(cmbBoxTeam.getValue()!=null) {
+				stadiumsList=facadeImpl.getStadiums();
+				}
+			for(Stadium s: stadiumsList) 
+				stadiums.add(s.getName());
+		} catch (Exception ex) {
+			ex.printStackTrace();			
+		}
+		return stadiums;
+	}
+	
+	private Stadium getStadium(String name) {
+		for(Stadium s:stadiumsList)
+			if(s.getName().equals(name))
+				return s;
+		return null;
 	}
 }

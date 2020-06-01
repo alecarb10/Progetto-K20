@@ -16,21 +16,22 @@
       <TitledPane animated="false" collapsible="false" layoutX="348.0" layoutY="115.0" prefHeight="172.0" prefWidth="215.0" text="Stadium">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="230.0">
-               <children> 
-                  <TextField fx:id="txtFldStadiumName" layoutX="16.0" layoutY="9.0" promptText="Name" />
-                  <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="41.0" promptText="City" />
-                  <TextField fx:id="txtFldStadiumCapacity" layoutX="16.0" layoutY="74.0" promptText="Capacity" />
-                  <Button fx:id="btnAddStadium" layoutX="16.0" layoutY="105.0" mnemonicParsing="false" onAction="#addStadium" prefHeight="25.0" prefWidth="60.0" text="Add" />
+               <children>         
+                  <ComboBox fx:id="cmbBoxStadium" layoutX="16.0" layoutY="10.0" prefHeight="25.0" prefWidth="117.0" promptText="Select"  />
+                  <Button layoutX="143.0" layoutY="10.0" mnemonicParsing="false" onAction="#setStadium" prefHeight="25.0" prefWidth="60.0" text="Set" />
+                  <TextField fx:id="txtFldStadiumName" layoutX="16.0" layoutY="45.0" promptText="Name" />
+                  <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="77.0" promptText="City" />
+                  <TextField fx:id="txtFldStadiumCapacity" layoutX="16.0" layoutY="110.0" promptText="Capacity" />                
                </children>
             </AnchorPane>
         </content>
       </TitledPane>
-      <TableView layoutX="15.0" layoutY="104.0" prefHeight="436.0" prefWidth="303.0">
+      <TableView fx:id="tblViewPlayer" layoutX="15.0" layoutY="104.0" prefHeight="436.0" prefWidth="303.0">
         <columns>
-            <TableColumn prefWidth="75.0" text="Name" />
-          	<TableColumn prefWidth="75.0" text="Surname" />
-          	<TableColumn prefWidth="75.0" text="Number" />
-            <TableColumn prefWidth="75.0" text="Position" />
+            <TableColumn fx:id="tblClmnPlayerName" prefWidth="75.0" text="Name" />
+          	<TableColumn fx:id="tblClmnPlayerSurname" prefWidth="75.0" text="Surname" />
+          	<TableColumn fx:id="tblClmnPlayerNumber" prefWidth="75.0" text="Number" />
+            <TableColumn fx:id="tblClmnPlayerPosition" prefWidth="75.0" text="Position" />
         </columns>
       </TableView>
       <TitledPane animated="false" collapsible="false" layoutX="348.0" layoutY="294.0" prefHeight="245.0" prefWidth="215.0" text="Player">
@@ -43,7 +44,7 @@
                   <ComboBox fx:id="cmbBoxPlayerPosition" layoutX="8.0" layoutY="134.0" prefWidth="150.0" promptText="Position" />
                   <Button layoutX="84.0" layoutY="181.0" mnemonicParsing="false" text="Edit" />
                   <Button layoutX="139.0" layoutY="181.0" mnemonicParsing="false" text="Delete" />
-                  <Button fx:id="btnAddPlayer" layoutX="14.0" layoutY="181.0" onAction="#addPlayer" mnemonicParsing="false" text="Add" />
+                  <Button fx:id="btnAddPlayer" layoutX="14.0" layoutY="181.0" mnemonicParsing="false" onAction="#addPlayer" text="Add" />
                </children>
             </AnchorPane>
         </content>
