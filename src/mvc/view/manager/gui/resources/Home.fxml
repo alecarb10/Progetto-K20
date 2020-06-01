@@ -25,7 +25,7 @@
             <Button fx:id="btnCreateTournament" mnemonicParsing="false" onAction="#createTournament" prefHeight="54.0" prefWidth="150.0" text="Create Tournament" />
             <Button fx:id="btnInsertResult" mnemonicParsing="false" onAction="#insertResult" prefHeight="54.0" prefWidth="150.0" text="Insert Result" />
             <Button fx:id="btnEditTeam" mnemonicParsing="false" onAction="#editTeam" prefHeight="54.0" prefWidth="150.0" text="Edit Team" />
-            <Button fx:id="btnEditPlayer" mnemonicParsing="false" onAction="#editPlayer" prefHeight="54.0" prefWidth="150.0" text="Edit Player" />
+            <Button fx:id="btnEditPlayer" mnemonicParsing="false" onAction="#addStadium" prefHeight="54.0" prefWidth="150.0" text="Add Stadium" />
 
 
          </children>

@@ -46,8 +46,8 @@ public class HomeController implements Initializable {
 			EditTeamController controller= loader.getController();
 			this.borderPaneHome.setCenter(root);
 			controller.setUsername(username);
+			controller.populateCmbBoxTournament(this.getTournamentsList(username));	
 			controller.setTournamentsList(tournamentsList);
-			controller.populateCmbBoxTournament(this.getTournamentsList(username));			
 			
 		}
 		catch (Exception ex) {
@@ -55,14 +55,9 @@ public class HomeController implements Initializable {
 		}
 	}
 	
-	public void editPlayer(ActionEvent event) {
+	public void addStadium(ActionEvent event) {
 		try {
-			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditPlayer.fxml");
-			Parent root=loader.load();
-			EditPlayerController controller= loader.getController();
-			controller.populateCmbBoxTournament(this.getTournamentsList(username));
-			controller.setUsername(username);
-			this.borderPaneHome.setCenter(root);
+			this.borderPaneHome.setCenter(GraphicHandler.getParent(Constants.PATH_PREFIX+"/resources/AddStadium.fxml"));
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
