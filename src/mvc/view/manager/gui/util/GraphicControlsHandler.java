@@ -27,7 +27,7 @@ public class GraphicControlsHandler {
 	public static void resetObservableList(ObservableList<String> list) {
 		list.clear();
 	}
-	
+		
 	public static void resetTextField(TextField txtFld, String promptText) {
 		txtFld.clear();
 		txtFld.setPromptText(promptText);
