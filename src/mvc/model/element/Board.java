@@ -1,6 +1,8 @@
 package mvc.model.element;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import mvc.model.team.Team;
@@ -51,26 +53,28 @@ public class Board extends TournamentElement {
 	}
 	
 	public boolean addNextDay() {
-		int prevDayNumber=schedule.size()-1;
-		Day prevDay=schedule.get(prevDayNumber);
-		if(isDayCompleted(prevDay)) {
-			List<Team> prevDayWinnersList=getDayWinnersList(prevDay);			
-			List<Match> matchesList=new ArrayList<>();
-			for(int i=0;i<prevDayWinnersList.size();i+=2){
-				//matchesList.add(new Match(date, winnersList.get(i), winnersList.get(i+1)))
-			}
-			Day nextDay=null;//= new Day(prevDayNumber+1, matchesList, date);
-			return schedule.add(nextDay);
-				
+		int prevDayNumber = schedule.size() - 1;
+		Day prevDay = schedule.get(prevDayNumber);
+		Date date = incrementDate(prevDay.getDate()).getTime();
+		
+		if (prevDay.isCompleted()) {
+			List<Team> prevDayWinnersList = getDayWinnersList(prevDay);			
+			List<Match> matchesList = new ArrayList<>();
+			
+			for (int i = 0; i < prevDayWinnersList.size(); i += 2)
+				matchesList.add(new Match(date, prevDayWinnersList.get(i), prevDayWinnersList.get(i+1)));
+			
+			Day nextDay = new Day(prevDayNumber + 1, matchesList, date);
+			return schedule.add(nextDay);		
 		}
 		return false;
 	}
 	
-	private boolean isDayCompleted(Day day) {
-		int n=0;
-		for(Match m:day.getMatchesList())
-			if(m.isPlayed()) n++;
-		return n==day.getMatchesList().size()?true:false;
+	private Calendar incrementDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_YEAR, 7);
+		return calendar;
 	}
 	
 	private List<Team> getDayWinnersList(Day day){

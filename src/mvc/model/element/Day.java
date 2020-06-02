@@ -46,6 +46,16 @@ public class Day {
 		return date;
 	}
 	
+	public boolean isCompleted() {
+		int n = 0;
+		
+		for (Match m: matchesList)
+			if (m.isPlayed()) 
+				n++;
+		
+		return n == matchesList.size() ? true : false;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
