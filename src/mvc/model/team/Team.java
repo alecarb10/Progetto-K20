@@ -35,7 +35,6 @@ public class Team {
 	
 	public boolean removePlayer(Player player) {
 		for (Player p: players)
-			if (player.getSurname().equals(p.getSurname()) && player.getNumber() == p.getNumber())
 				return players.remove(p);
 		return false;
 	}
@@ -86,7 +85,7 @@ public class Team {
 
 	@Override
 	public int hashCode() {
-		return name.hashCode();
+		return ((Integer)id).hashCode();
 	}
 
 	@Override
@@ -96,7 +95,7 @@ public class Team {
 		if (obj == this)
 			return true;
 		Team team = (Team) obj;
-		return team.getName() == this.getName();
+		return team.getId() == this.getId();
 	}
 
 	@Override

@@ -51,4 +51,19 @@ public class Player {
 	public String toString() {
 		return "Player: " + this.name + " " + this.surname + "\n\tNumber: " + this.number + "\n\tPosition: " + this.position;
 	}
+	
+	@Override
+	public int hashCode() {
+		return ((Integer)id).hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		Player player = (Player) obj;
+		return player.getId() == this.getId();
+	}
 }
