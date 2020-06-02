@@ -1,8 +1,10 @@
 package mvc.model.element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mvc.model.team.Team;
+import mvc.model.match.Match;
 import mvc.model.util.ScheduleGenerator;
 
 public class Board extends TournamentElement {
@@ -46,5 +48,37 @@ public class Board extends TournamentElement {
 	@Override
 	public ElementType getTournamentElementType() {
 		return ElementType.BOARD;
+	}
+	
+	public boolean addNextDay() {
+		int prevDayNumber=schedule.size()-1;
+		Day prevDay=schedule.get(prevDayNumber);
+		if(isDayCompleted(prevDay)) {
+			List<Team> prevDayWinnersList=getDayWinnersList(prevDay);			
+			List<Match> matchesList=new ArrayList<>();
+			for(int i=0;i<prevDayWinnersList.size();i+=2){
+				//matchesList.add(new Match(date, winnersList.get(i), winnersList.get(i+1)))
+			}
+			Day nextDay=null;//= new Day(prevDayNumber+1, matchesList, date);
+			return schedule.add(nextDay);
+				
+		}
+		return false;
+	}
+	
+	private boolean isDayCompleted(Day day) {
+		int n=0;
+		for(Match m:day.getMatchesList())
+			if(m.isPlayed()) n++;
+		return n==day.getMatchesList().size()?true:false;
+	}
+	
+	private List<Team> getDayWinnersList(Day day){
+		List<Match> matchesList=day.getMatchesList();
+		List<Team> dayWinnersList=new ArrayList<>();
+		for(Match m: matchesList)
+			if(m.isPlayed())
+				dayWinnersList.add(m.getWinner());
+		return dayWinnersList;
 	}
 }
