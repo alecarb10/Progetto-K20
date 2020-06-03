@@ -14,8 +14,8 @@
          <children>
             <AnchorPane prefHeight="107.0" prefWidth="149.0">
                <children>
-                  <ComboBox fx:id="cmbBoxProfile" layoutX="55.0" layoutY="28.0" prefHeight="25.0" prefWidth="88.0" />
-                  <ImageView fx:id="imgViewProfile" fitHeight="33.0" fitWidth="38.0" layoutX="11.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                  <ComboBox fx:id="cmbBoxProfile" layoutX="34.0" layoutY="28.0" prefHeight="25.0" prefWidth="112.0" />
+                  <ImageView fx:id="imgViewProfile" fitHeight="25.0" fitWidth="25.0" layoutX="5.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@/mvc/view/manager/gui/images/profile.jpg" />
                      </image>
