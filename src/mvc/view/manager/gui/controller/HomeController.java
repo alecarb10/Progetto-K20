@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.sun.jdi.event.Event;
+
 import database.dao.impl.FacadeImpl;
 import mvc.model.tournament.Tournament;
 import mvc.view.manager.gui.util.Constants;
@@ -14,9 +16,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
 public class HomeController implements Initializable {
@@ -31,12 +36,6 @@ public class HomeController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.cmbBoxProfile.setItems(FXCollections.observableArrayList("Edit","Logout"));
-		this.cmbBoxProfile.setOnAction((ActionEvent)->{
-			if(this.cmbBoxProfile.getSelectionModel().getSelectedItem().equals("Edit")) {
-				this.borderPaneHome.setCenter(GraphicHandler.getParent(Constants.PATH_PREFIX+"/resources/Profile.fxml"));
-				this.cmbBoxProfile.getSelectionModel().clearSelection();
-			}
-		});
 	}
 	
 	public void editTeam(ActionEvent event) {
@@ -112,6 +111,25 @@ public class HomeController implements Initializable {
 			ex.printStackTrace();
 		}		
 		return tournaments;
+	}
+	
+	public void profile(ActionEvent event) {
+		if(this.cmbBoxProfile.getSelectionModel().getSelectedIndex()==0) {
+			try {
+				FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/Profile.fxml");
+				Parent root=loader.load();
+				ProfileController controller= loader.getController();
+				controller.setUsername(username);
+				this.borderPaneHome.setCenter(root);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		else if(this.cmbBoxProfile.getSelectionModel().getSelectedIndex()==1) {
+			Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
+			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			GraphicHandler.loadStage(scene, primaryStage);
+		}
 	}
 	
 }
