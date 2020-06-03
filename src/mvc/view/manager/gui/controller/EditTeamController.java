@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import database.dao.impl.FacadeImpl;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import mvc.model.team.Player;
 import mvc.model.team.PlayerPositionType;
 import mvc.model.team.Stadium;
@@ -28,11 +31,11 @@ import mvc.view.manager.gui.util.GraphicControlsHandler;
 public class EditTeamController implements Initializable {
 
 	@FXML
-	private ComboBox<String> cmbBoxTournament,cmbBoxTeam,cmbBoxPlayerPosition,cmbBoxStadium;
+	private ComboBox<String> cmbBoxTournament,cmbBoxTeam,cmbBoxStadium, cmbBoxPlayerPosition;
 	@FXML
 	private TextField txtFldStadiumName,txtFldStadiumCity,txtFldStadiumCapacity,txtFldPlayerName,txtFldPlayerSurname;
 	@FXML
-	private Button btnAddStadium,btnAddPlayer;
+	private Button btnAddStadium,btnAddPlayer,btnEditPlayer,btnDeletePlayer;
 	@FXML
 	private Spinner<Integer> spinnerPlayerNumber;
 	@FXML
@@ -60,7 +63,7 @@ public class EditTeamController implements Initializable {
 		txtFldStadiumCity.setEditable(false);
 		txtFldStadiumCapacity.setEditable(false);
 		numbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
-		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));
+		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));	
 		spinnerPlayerNumber.setValueFactory(numbers);
 		spinnerPlayerNumber.setEditable(true);
 		facadeImpl= new FacadeImpl();
@@ -106,6 +109,28 @@ public class EditTeamController implements Initializable {
 				txtFldStadiumName.setText(stadium.getName());
 				txtFldStadiumCity.setText(stadium.getCity());
 				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+			}
+		});
+//		tblViewPlayer.setOnMouseClicked((MouseEvent)->{
+//			Player player=tblViewPlayer.getSelectionModel().getSelectedItem();
+//			txtFldPlayerName.setText(player.getName());
+//			txtFldPlayerSurname.setText(player.getSurname());
+//			spinnerPlayerNumber.getValueFactory().setValue(player.getNumber());
+//			cmbBoxPlayerPosition.setValue(player.getPosition());
+//			
+//		});
+		tblViewPlayer.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Player>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Player> arg0, Player arg1, Player arg2) {
+				Player player=tblViewPlayer.getSelectionModel().getSelectedItem();
+				if(player!=null) {
+					txtFldPlayerName.setText(player.getName());
+					txtFldPlayerSurname.setText(player.getSurname());
+					spinnerPlayerNumber.getValueFactory().setValue(player.getNumber());
+					cmbBoxPlayerPosition.setValue(player.getPosition().name());
+				}
+				
 			}
 		});
 
@@ -160,7 +185,6 @@ public class EditTeamController implements Initializable {
 			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
 			team.setStadium(stadium);
 			facadeImpl.updateTeam(team);
-			restoreComponents();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
@@ -170,18 +194,52 @@ public class EditTeamController implements Initializable {
 	
 	public void addPlayer(ActionEvent event) {
 		try {
-			PlayerPositionType position=getPlayerPosition();
-			Player player= new Player(txtFldPlayerName.getText(), txtFldPlayerSurname.getText(),spinnerPlayerNumber.getValue(),position);
+			Player player= new Player(txtFldPlayerName.getText(), txtFldPlayerSurname.getText(),spinnerPlayerNumber.getValue(),getPlayerPosition());
 			team.insertPlayer(player);
+			players.add(player);
 			facadeImpl.storePlayer(player, team);
-			//players.add(player);
-			//tblViewPlayer.setItems(players);
 			restoreComponents();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
+	}
+	
+	public void deletePlayer(ActionEvent event) {
+		try {
+			Player player= tblViewPlayer.getSelectionModel().getSelectedItem();
+			team.removePlayer(player);
+			players.remove(player);
+			facadeImpl.removePlayer(player);
+			restoreComponents();
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+	}
+	
+	public void editPlayer(ActionEvent event) {
+		try {
+			Player player= tblViewPlayer.getSelectionModel().getSelectedItem();
+			player.setName(txtFldPlayerName.getText());
+			player.setSurname(txtFldPlayerSurname.getText());
+			player.setNumber(spinnerPlayerNumber.getValue());
+			player.setPosition(getPlayerPosition());
+			facadeImpl.updatePlayer(player);
+			players.clear();
+			playersList=team.getPlayers();
+			for(Player p:playersList) {
+				players.add(p);
+			}
+			tblViewPlayer.setItems(players);
+			restoreComponents();
+			
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	private PlayerPositionType getPlayerPosition() {
@@ -207,18 +265,17 @@ public class EditTeamController implements Initializable {
 	}
 	
 	private void restoreComponents() {
-		GraphicControlsHandler.resetComboBox(this.cmbBoxTournament, "Select Tournament");
-		GraphicControlsHandler.resetComboBox(this.cmbBoxTeam, "Select Team");
-		GraphicControlsHandler.resetComboBox(this.cmbBoxStadium, "Select");
-		GraphicControlsHandler.resetObservableList(this.teams);
-		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
-		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
-		GraphicControlsHandler.resetTextField(this.txtFldStadiumCapacity, "Capacity");
+//		GraphicControlsHandler.resetComboBox(this.cmbBoxStadium, "Select");
+//		GraphicControlsHandler.resetObservableList(this.teams);
+//		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
+//		GraphicControlsHandler.resetTextField(this.txtFldStadiumCity, "City");
+//		GraphicControlsHandler.resetTextField(this.txtFldStadiumCapacity, "Capacity");
 		GraphicControlsHandler.resetTextField(this.txtFldPlayerName, "Name");
 		GraphicControlsHandler.resetTextField(this.txtFldPlayerSurname, "Surname");
 		GraphicControlsHandler.resetSpinner(this.spinnerPlayerNumber);
+		GraphicControlsHandler.resetComboBox(cmbBoxPlayerPosition, "Position");
 	}
-	
+		
 	private ObservableList<String> getStadiumsList(){
 		ObservableList<String> stadiums=FXCollections.observableArrayList();
 		try {
@@ -239,4 +296,5 @@ public class EditTeamController implements Initializable {
 				return s;
 		return null;
 	}
+	
 }

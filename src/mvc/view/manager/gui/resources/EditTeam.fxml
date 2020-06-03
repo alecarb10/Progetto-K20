@@ -17,7 +17,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="230.0">
                <children>         
-                  <ComboBox fx:id="cmbBoxStadium" layoutX="16.0" layoutY="10.0" prefHeight="25.0" prefWidth="117.0" promptText="Select"  />
+                  <ComboBox fx:id="cmbBoxStadium" layoutX="16.0" layoutY="10.0" prefHeight="25.0" prefWidth="117.0" promptText="Select" />
                   <Button layoutX="143.0" layoutY="10.0" mnemonicParsing="false" onAction="#setStadium" prefHeight="25.0" prefWidth="60.0" text="Set" />
                   <TextField fx:id="txtFldStadiumName" layoutX="16.0" layoutY="45.0" promptText="Name" />
                   <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="77.0" promptText="City" />
@@ -41,9 +41,9 @@
                   <TextField fx:id="txtFldPlayerName" layoutX="8.0" layoutY="12.0" promptText="Name" />
                   <TextField fx:id="txtFldPlayerSurname" layoutX="8.0" layoutY="51.0" promptText="Surname" />
                   <Spinner fx:id="spinnerPlayerNumber" layoutX="8.0" layoutY="85.0" />
-                  <ComboBox fx:id="cmbBoxPlayerPosition" layoutX="8.0" layoutY="134.0" prefWidth="150.0" promptText="Position" />
-                  <Button layoutX="84.0" layoutY="181.0" mnemonicParsing="false" text="Edit" />
-                  <Button layoutX="139.0" layoutY="181.0" mnemonicParsing="false" text="Delete" />
+                  <ComboBox fx:id="cmbBoxPlayerPosition" layoutX="8.0" layoutY="123.0" prefWidth="150.0" promptText="Position" />
+                  <Button fx:id="btnEditPlayer" layoutX="84.0" layoutY="181.0" mnemonicParsing="false" onAction="#editPlayer" text="Edit" />
+                  <Button fx:id="btnDeletePlayer" layoutX="139.0" layoutY="181.0" mnemonicParsing="false" onAction="#deletePlayer" text="Delete" />
                   <Button fx:id="btnAddPlayer" layoutX="14.0" layoutY="181.0" mnemonicParsing="false" onAction="#addPlayer" text="Add" />
                </children>
             </AnchorPane>
