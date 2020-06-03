@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.dao.IManagerDAO;
 import database.util.DBConnection;
@@ -130,5 +132,32 @@ public class ManagerDAOImpl implements IManagerDAO {
 			
 		DBConnection.closeConnection(conn);
 		return false;
+	}
+
+	@Override
+	public List<String> getManagerByID(String username) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		ResultSet rs;
+		List<String> info = new ArrayList<>();
+
+		String query = "SELECT * from manager where Username=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, username);
+
+		rs = ps.executeQuery();
+
+		if (rs.next()) {
+			String name = rs.getString(1);
+			String surname = rs.getString(2);
+			String pass = rs.getString(3);
+			
+			info.add(name);
+			info.add(surname);
+			info.add(pass);
+		}
+			
+		DBConnection.closeConnection(conn);
+		return info;
 	}
 }

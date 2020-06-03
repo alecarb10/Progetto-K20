@@ -1,6 +1,7 @@
 package database.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface IManagerDAO {
 
@@ -13,4 +14,6 @@ public interface IManagerDAO {
 	public boolean checkUnique(String username) throws SQLException;
 	
 	public boolean checkManagerLogin(String username, String password) throws SQLException;	
+	
+	public List<String> getManagerByID(String username) throws SQLException;
 }

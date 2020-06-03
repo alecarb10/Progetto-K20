@@ -43,6 +43,12 @@ public class FacadeImpl implements IFacade {
 		IManagerDAO md = new ManagerDAOImpl();
 		return md.checkUnique(username);
 	}
+	
+	@Override
+	public List<String> getManagerByID(String username) throws SQLException {
+		IManagerDAO md = new ManagerDAOImpl();
+		return md.getManagerByID(username);
+	}
 
 	@Override
 	public boolean storeTournament(Tournament t, String username) throws SQLException {
