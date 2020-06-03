@@ -16,7 +16,6 @@ public class Group extends TournamentElement {
 		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, teamsList.size() - 1);
 	}
 
-	@Override
 	public List<Team> getRanking() {
 		List<Team> ranking = teamsList;
 

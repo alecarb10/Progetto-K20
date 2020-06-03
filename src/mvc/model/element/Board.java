@@ -19,18 +19,6 @@ public class Board extends TournamentElement {
 	}
 	
 	@Override
-	public List<Team> getRanking() {
-		List<Team> ranking = teamsList;
-		
-		// prendo le squadre che si trovano nell'indice pari (chi passa il turno)
-		for (int i = 0; i < teamsList.size(); i++)
-			if (i % 2 == 0)
-				ranking.add(teamsList.get(i));
-		
-		return ranking;
-	}
-	
-	@Override
 	public void endTournamentElement() {
 		completed = true;
 	}
