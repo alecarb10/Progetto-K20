@@ -48,12 +48,12 @@ public class Board extends TournamentElement {
 		if (prevDay.isCompleted()) {
 			List<Team> prevDayWinnersList = getDayWinnersList(prevDay);			
 			List<Match> matchesList = new ArrayList<>();
-			
-			for (int i = 0; i < prevDayWinnersList.size(); i += 2)
-				matchesList.add(new Match(date, prevDayWinnersList.get(i), prevDayWinnersList.get(i+1)));
-			
-			Day nextDay = new Day(prevDayNumber + 1, matchesList, date);
-			return schedule.add(nextDay);		
+			if(prevDayWinnersList.size()>1) {
+				for (int i = 0; i < prevDayWinnersList.size(); i += 2)
+					matchesList.add(new Match(date, prevDayWinnersList.get(i), prevDayWinnersList.get(i+1)));				
+				Day nextDay = new Day(prevDayNumber + 2, matchesList, date);					
+				return schedule.add(nextDay);	
+			}
 		}
 		return false;
 	}
