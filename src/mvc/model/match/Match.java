@@ -74,19 +74,29 @@ public class Match {
 		awayTeam.setGoalsConceded(awayTeam.getGoalsConceded() + homeScore);
 
 		played = true;
+		setPoints();
 	}
 
+	private void setPoints() {
+		if(played) {
+			if (homeScore > awayScore) 
+				homeTeam.setPoints(homeTeam.getPoints() + 3);
+			 else if (homeScore < awayScore) 
+				awayTeam.setPoints(awayTeam.getPoints() + 3);
+			 else {
+				homeTeam.setPoints(homeTeam.getPoints() + 1);
+				awayTeam.setPoints(awayTeam.getPoints() + 1);
+			}
+		}
+	}
+	
 	public Team getWinner() {
 		if(played) {
 			if (homeScore > awayScore) {
-				homeTeam.setPoints(homeTeam.getPoints() + 3);
 				return homeTeam;
 			} else if (homeScore < awayScore) {
-				awayTeam.setPoints(awayTeam.getPoints() + 3);
 				return awayTeam;
 			} else {
-				homeTeam.setPoints(homeTeam.getPoints() + 1);
-				awayTeam.setPoints(awayTeam.getPoints() + 1);
 				return null;
 			}
 		}
