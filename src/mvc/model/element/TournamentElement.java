@@ -39,13 +39,11 @@ public abstract class TournamentElement implements IElement {
 	}
 
 	public boolean isCompleted() {
+		int counter=0;
 		for (Day d: schedule)
-			for(Match m: d.getMatchesList())
-				if(m.isPlayed())
-					completed = true;
-				else
-					completed = false;
-		
+			if(d.isCompleted())
+					counter++;
+		completed=counter==schedule.size()?true:false;
 		return completed;
 	}
 	
@@ -71,8 +69,11 @@ public abstract class TournamentElement implements IElement {
 		if (index < 0)
 			return false;
 		
+		if(dayNumber>=2&&!schedule.get(dayNumber-2).isCompleted())
+			return false;
+		
 		for (Match m: schedule.get(index).getMatchesList())
-			if (m.equals(match)) {
+			if (m.equals(match)&&!m.isPlayed()) {
 				m.setScore(homeScore, awayScore);
 				return true;
 			}
