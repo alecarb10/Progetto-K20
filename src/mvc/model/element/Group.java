@@ -15,11 +15,16 @@ public class Group extends TournamentElement {
 	public void initTournamentElement() {
 		schedule = ScheduleGenerator.getInstance().generateSchedule(teamsList, teamsList.size() - 1);
 	}
+	
+	@Override
+	public List<Team> getTeamsList() {
+		sortTeamsList();
+		return teamsList;
+	}
 
-	public List<Team> getRanking() {
-		List<Team> ranking = teamsList;
+	private void sortTeamsList() {
 
-		Collections.sort(ranking, new Comparator<Team>() {
+		Collections.sort(teamsList, new Comparator<Team>() {
 			@Override
 			public int compare(Team t1, Team t2) {
 
@@ -45,7 +50,6 @@ public class Group extends TournamentElement {
 			}
 		});
 
-		return ranking;
 	}
 
 	@Override
@@ -55,11 +59,10 @@ public class Group extends TournamentElement {
 
 	@Override
 	public String toString() {
-		List<Team> ranking = getRanking();
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Team Name" + "\t" + " Points" + "\n");
-		for (Team team : ranking) {
+		for (Team team : getTeamsList()) {
 			sb.append(team.getName() + "\t" + team.getPoints() + "\n");
 		}
 
