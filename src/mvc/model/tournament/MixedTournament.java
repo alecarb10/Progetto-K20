@@ -29,7 +29,7 @@ public class MixedTournament extends Tournament {
 		this.group.initTournamentElement();	
 	}
 
-	private boolean isGroupCompleted() {
+	public boolean isGroupCompleted() {
 		return group.isCompleted();
 	}
 
@@ -40,8 +40,15 @@ public class MixedTournament extends Tournament {
 	
 	public void initKnockoutPhase() {
 		if (this.isGroupCompleted()) {
+			List<Team> teamsList=getTeamsList();
+			for(int i=0;i<teamsList.size()/2;i++)
+				addTeamInBoard(teamsList.get(i));
 			this.board.initTournamentElement();
 		}
+	}
+	
+	private boolean addTeamInBoard(Team team) {
+			return board.addTeam(team);
 	}
 
 	@Override
@@ -51,7 +58,11 @@ public class MixedTournament extends Tournament {
 
 	@Override
 	public List<Day> getSchedule() {
-		return isGroupCompleted()?board.getSchedule():group.getSchedule();
+		return group.getSchedule();
+	}
+	
+	public List<Day> getBoardSchedule(){
+		return board.getSchedule();
 	}
 	
 	@Override
