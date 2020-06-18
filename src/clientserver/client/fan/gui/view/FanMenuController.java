@@ -58,10 +58,11 @@ public class FanMenuController implements Initializable {
 		if(tSelect.getTournamentType() == TournamentType.LEAGUE) {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
+			Parent root=loader.load();
 			LeagueRankingController lrc = loader.getController();
 			League league = (League) tournamentList.get(idx);
 			lrc.passingData(league);
-			Scene scene = new Scene(loader.load());
+			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			primaryStage.setTitle("ranking");
 			primaryStage.setScene(scene);
