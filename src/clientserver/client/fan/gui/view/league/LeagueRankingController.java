@@ -2,6 +2,7 @@ package clientserver.client.fan.gui.view.league;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -16,17 +17,13 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import mvc.model.element.Day;
-//===============
 import mvc.model.element.Group;
-import mvc.model.element.TournamentElement;
-import mvc.model.match.Match;
 import mvc.model.team.Team;
 import mvc.model.tournament.League;
 import mvc.model.tournament.Tournament;
+//===============
+import mvc.model.tournament.TournamentType;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class LeagueRankingController implements Initializable {
 	@FXML
@@ -37,7 +34,60 @@ public class LeagueRankingController implements Initializable {
 	private ListView<String> ranking;
 	@FXML
 	private ComboBox dayComboBox;
+	
+	
+	
+	public void menuButtonClicked(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
+		Scene scene = new Scene(loader.load());
+		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		primaryStage.setTitle("Fan menu");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub	
+	}
+	
+	public void passingData(League league) {
+		Group group = (Group) league.getTournamentElement();
+		List<Team> rankingTmp = group.getTeamsList(); // sono gia ordinate in base alla classifica
+		for(Team team : rankingTmp) {
+			ranking.getItems().add(team.getName()+"        " +team.getPoints());
+		}
+			
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/*
 	// parte della simulazione
 	List<Day> days = new ArrayList<>();
 	
@@ -79,17 +129,12 @@ public class LeagueRankingController implements Initializable {
 			}
 		}
 	}
+	*/
 
-	public void backButtonClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
-		Scene scene = new Scene(loader.load());
-		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Fan menu");
-		primaryStage.setScene(scene);
-		primaryStage.show();
-	}
 
+	
+	
+	/*
 	public void teamSelected(ActionEvent event) throws IOException {
 		ObservableList<String> teamName;
 		teamName = ranking.getSelectionModel().getSelectedItems();
@@ -104,5 +149,6 @@ public class LeagueRankingController implements Initializable {
 			break;
 		}
 	}
+	*/
 
 }

@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.league.LeagueRankingController;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -57,6 +58,9 @@ public class FanMenuController implements Initializable {
 		if(tSelect.getTournamentType() == TournamentType.LEAGUE) {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
+			LeagueRankingController lrc = loader.getController();
+			League league = (League) tournamentList.get(idx);
+			lrc.passingData(league);
 			Scene scene = new Scene(loader.load());
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			primaryStage.setTitle("ranking");
