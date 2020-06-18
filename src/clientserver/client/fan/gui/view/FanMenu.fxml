@@ -13,7 +13,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <ListView fx:id="tournamentName" layoutX="40.0" layoutY="94.0" prefHeight="260.0" prefWidth="442.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="100.0" />
-      <Button fx:id="resultButton" layoutX="516.0" layoutY="335.0" mnemonicParsing="false" onAction="#textSelected" text="Tournament result" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="30.0" />
+      <ListView fx:id="tournamentNames" layoutX="40.0" layoutY="94.0" prefHeight="260.0" prefWidth="442.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="100.0" />
+      <Button fx:id="resultButton" layoutX="516.0" layoutY="335.0" mnemonicParsing="false" onAction="#tournamentSelected" text="Tournament result" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="30.0" />
    </children>
 </AnchorPane>
