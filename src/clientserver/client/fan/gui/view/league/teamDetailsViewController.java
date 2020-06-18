@@ -1,4 +1,4 @@
-package clientserver.client.fan.gui.view;
+package clientserver.client.fan.gui.view.league;
 
 import java.io.IOException;
 import java.net.URL;
