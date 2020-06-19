@@ -2,9 +2,12 @@ package clientserver.client.fan.gui.view.league;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +38,11 @@ public class LeagueRankingController implements Initializable {
 	@FXML
 	private ComboBox dayComboBox;
 	
+	FacadeImpl facade = new FacadeImpl();
+	League league;
 	
+	
+
 	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
@@ -46,20 +53,24 @@ public class LeagueRankingController implements Initializable {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-
-
+	
+	
+	public void passingData(League leagueTmp) throws SQLException {
+		league = leagueTmp;
+		List<Team> teams = facade.getTeamsByTournament(leagueTmp);
+		for(Team team : teams) {
+			league.addTeamInTournament(team);
+							}
+		for(Team team : league.getTeamsList()) {                                     //con league.getTeamList() avviene già l'oridnazione in base ai punti
+			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+							}
+		}
+	
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub	
-	}
-	
-	public void passingData(League league) {
-		Group group = (Group) league.getTournamentElement();
-		List<Team> rankingTmp = group.getTeamsList(); // sono gia ordinate in base alla classifica
-		for(Team team : rankingTmp) {
-			ranking.getItems().add(team.getName()+"        " +team.getPoints());
-		}
-			
 	}
 	
 	

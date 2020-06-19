@@ -52,7 +52,7 @@ public class FanMenuController implements Initializable {
 	}
 	
 	
-	public void tournamentSelected(ActionEvent event) throws IOException {
+	public void tournamentSelected(ActionEvent event) throws IOException, SQLException {
 		int idx = tournamentNames.getSelectionModel().getSelectedIndex();
 		Tournament tSelect = tournamentList.get(idx);
 		if(tSelect.getTournamentType() == TournamentType.LEAGUE) {
