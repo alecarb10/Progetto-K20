@@ -6,7 +6,12 @@ public class Tester {
 
 	public static void main(String[] args) {
 		ManagerTextUI m = new ManagerTextUI();
-		m.start();
+		try {
+			m.start();
+		} catch (SQLException e) {
+			System.err.println("DB problems have been encountered");
+			e.printStackTrace();
+		}
 	}
 
 }
