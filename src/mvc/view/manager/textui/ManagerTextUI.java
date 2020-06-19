@@ -24,7 +24,7 @@ public class ManagerTextUI {
 	public void start() throws SQLException {
 		while (true) {
 			System.out.println("** Welcome to the reserved area for managers. **");
-			System.out.println("Enter \"1\" to get login, \"2\" to get registration.");
+			System.out.println("Enter \"1\" to sign up, \"2\" to sign in.");
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
 
 			System.out.println("Input: ");
@@ -59,18 +59,25 @@ public class ManagerTextUI {
 
 	private void login() throws SQLException {
 		while (true) {
+			System.out.println("\nSign up.");
 			System.out.println("Username: ");
 			String usernameString = scanner.nextLine();
 			System.out.println("Password: ");
 			String passwordString = scanner.nextLine();
 
-			facade.checkManagerLogin(usernameString, passwordString);
-			this.menu();
+			if (facade.checkManagerLogin(usernameString, passwordString)) {
+				System.out.println("Signed up\n");
+				break;
+			}	
+			else
+				System.out.println("Invalid username or password");
 		}
+		this.menu();
 	}
 
 	private void registration() throws SQLException {
 		while (true) {
+			System.out.println("\nSign in.");
 			System.out.println("Name: ");
 			String managerName = scanner.nextLine();
 			System.out.println("Surname: ");
@@ -82,19 +89,24 @@ public class ManagerTextUI {
 			System.out.println("Repeat password: ");
 			String managerRepeatPassword = scanner.nextLine();
 
-			if (!(managerPassword == managerRepeatPassword)) {
+			if (!(managerPassword.equals(managerRepeatPassword))) {
 				System.out.println("Passwords were different. Please retry. ");
-				break;
+				continue;
 			}
 
 			if (!this.facade.checkUnique(managerUsername)) {
 				System.out.println("Username already used. Please change it. ");
-				break;
+				continue;
 			}
 
-			this.facade.storeManager(managerUsername, managerName, managerSurname, managerPassword);
-			this.login();
+			if (this.facade.storeManager(managerUsername, managerName, managerSurname, managerPassword)) {
+				System.out.println("Signed in\n");
+				break;
+			}
+			else
+				System.out.println("Registration failed.");
 		}
+		this.login();
 	}
 
 	private void menu() {
@@ -102,7 +114,7 @@ public class ManagerTextUI {
 			System.out.println("** Main menu. Enter the number relate to your preference. **\n");
 			System.out.println("1 - Get tournaments list.");
 			System.out.println("2 - Create tournament.");
-			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			System.out.println("Enter \"e\" to exit, \"l\" to log out.\n");
 
 			System.out.print("Input: ");
 			inputString = scanner.nextLine();
@@ -111,7 +123,7 @@ public class ManagerTextUI {
 				System.out.println("Closing app...");
 				System.exit(0);
 			}
-			if (inputString.contentEquals("b"))
+			if (inputString.contentEquals("l"))
 				break;
 
 			try {
@@ -136,7 +148,6 @@ public class ManagerTextUI {
 	}
 
 	private void createTournament() {
-
 		while (true) {
 			System.out.println("Choose tounament type: \n");
 			System.out.println("1 - LEAGUE");
@@ -216,8 +227,7 @@ public class ManagerTextUI {
 
 		ArrayList<Team> teams = new ArrayList<>();
 
-		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
-		// limite in sospeso)
+		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero limite in sospeso)
 		System.out.println("Enter team name: ");
 		String teamName = scanner.nextLine();
 		Team team = new Team(teamName);
@@ -226,19 +236,4 @@ public class ManagerTextUI {
 		this.tournament = new League(inputString);
 
 	}
-
-	private void removeTeamFromTournament() throws IllegalArgumentException {
-		System.out.println("Team Name to remove: ");
-		String teamName = scanner.nextLine();
-		Team teamToRemove = new Team(teamName);
-		// this.tournament.removeTeamFromTournament(teamToRemove);
-	}
-
-	private void addTeamInTournament() throws IllegalArgumentException {
-		System.out.println("Team Name to add: ");
-		String teamName = scanner.nextLine();
-		Team TeamToAdd = new Team(teamName);
-		this.tournament.addTeamInTournament(TeamToAdd);
-	}
-
 }
