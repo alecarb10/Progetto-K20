@@ -2,6 +2,7 @@ package mvc.view.manager.textui;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
@@ -13,6 +14,7 @@ public class ManagerTextUI {
 	private Scanner scanner;
 	private String inputString;
 	private Tournament tournament;
+	private String username;
 	FacadeImpl facade;
 
 	public ManagerTextUI() {
@@ -54,18 +56,17 @@ public class ManagerTextUI {
 				System.out.println("Invalid input.\n");
 			}
 		}
-
 	}
 
 	private void login() throws SQLException {
 		while (true) {
 			System.out.println("\nSign up.");
 			System.out.println("Username: ");
-			String usernameString = scanner.nextLine();
+			username = scanner.nextLine();
 			System.out.println("Password: ");
-			String passwordString = scanner.nextLine();
+			String password = scanner.nextLine();
 
-			if (facade.checkManagerLogin(usernameString, passwordString)) {
+			if (facade.checkManagerLogin(username, password)) {
 				System.out.println("Signed up\n");
 				break;
 			}	
@@ -109,8 +110,9 @@ public class ManagerTextUI {
 		this.login();
 	}
 
-	private void menu() {
+	private void menu() throws SQLException {
 		while (true) {
+			System.out.println("Welcome " + username + "\n");
 			System.out.println("** Main menu. Enter the number relate to your preference. **\n");
 			System.out.println("1 - Get tournaments list.");
 			System.out.println("2 - Create tournament.");
@@ -147,8 +149,9 @@ public class ManagerTextUI {
 		// lista ...
 	}
 
-	private void createTournament() {
-		while (true) {
+	private void createTournament() throws SQLException {
+		boolean condition = true;
+		while (condition) {
 			System.out.println("Choose tounament type: \n");
 			System.out.println("1 - LEAGUE");
 			System.out.println("2 - KNOCKOUT PHASE");
@@ -166,16 +169,18 @@ public class ManagerTextUI {
 				break;
 
 			try {
-
 				switch (Integer.parseInt(inputString)) {
 				case 1:
 					createLeagueTournament();
+					condition = false;
 					break;
 				case 2:
 					createKnockoutPhaseTournament();
+					condition = false;
 					break;
 				case 3:
 					createMixedTournament();
+					condition = false;
 					break;
 				default:
 					System.out.println("Unavailable input.\n");
@@ -184,56 +189,124 @@ public class ManagerTextUI {
 				System.out.println("Invalid input.\n");
 			}
 		}
+	}
+
+	private void createMixedTournament() throws SQLException {
+		System.out.println("Enter tournament name: ");
+		String name = scanner.nextLine();
+
+		int size = 0;
+		while(true) {
+			System.out.println("Enter tournament size (4, 8, 16): ");
+			inputString = scanner.nextLine();
+			try {
+				size = Integer.parseInt(inputString);
+				if (size == 4 || size == 8 || size == 16)
+					break;
+				else
+					System.out.println("This size is not accepted\n");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+		
+		List<Team> teams = insertTeams(size);
+		this.tournament = new MixedTournament(name);
+		if (storeTournament(teams))
+			System.out.println("Tournament created\n");
+		else
+			System.out.println("Tournament not created\n");
 
 	}
 
-	private void createMixedTournament() {
+	private void createKnockoutPhaseTournament() throws SQLException {
 		System.out.println("Enter tournament name: ");
-		inputString = scanner.nextLine();
+		String name = scanner.nextLine();
 
-		ArrayList<Team> teams = new ArrayList<>();
-
-		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
-		// limite in sospeso)
-		System.out.println("Enter team name: ");
-		String teamName = scanner.nextLine();
-		Team team = new Team(teamName);
-		teams.add(team);
-
-		this.tournament = new MixedTournament(inputString);
-
+		int size = 0;
+		while(true) {
+			System.out.println("Enter tournament size (4, 8, 16): ");
+			inputString = scanner.nextLine();
+			try {
+				size = Integer.parseInt(inputString);
+				if (size == 4 || size == 8 || size == 16)
+					break;
+				else
+					System.out.println("This size is not accepted\n");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+		
+		List<Team> teams = insertTeams(size);
+		this.tournament = new KnockoutPhase(name);
+		if (storeTournament(teams))
+			System.out.println("Tournament created\n");
+		else
+			System.out.println("Tournament not created\n");
 	}
 
-	private void createKnockoutPhaseTournament() {
+	private void createLeagueTournament() throws SQLException {
 		System.out.println("Enter tournament name: ");
-		inputString = scanner.nextLine();
-
-		ArrayList<Team> teams = new ArrayList<>();
-
-		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero
-		// limite in sospeso)
-		System.out.println("Enter team name: ");
-		String teamName = scanner.nextLine();
-		Team team = new Team(teamName);
-		teams.add(team);
-
-		this.tournament = new KnockoutPhase(inputString);
-
+		String name = scanner.nextLine();
+		
+		int size = 0;
+		while(true) {
+			System.out.println("Enter tournament size (4, 6, 8, 10, 12, 14, 16): ");
+			inputString = scanner.nextLine();
+			try {
+				size = Integer.parseInt(inputString);
+				if (size % 2 == 0 && size >= 4 && size <= 16)
+					break;
+				else
+					System.out.println("This size is not accepted\n");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+		
+		List<Team> teams = insertTeams(size);
+		this.tournament = new League(name);
+		if (storeTournament(teams))
+			System.out.println("Tournament created\n");
+		else
+			System.out.println("Tournament not created\n");
 	}
-
-	private void createLeagueTournament() {
-		System.out.println("Enter tournament name: ");
-		inputString = scanner.nextLine();
-
-		ArrayList<Team> teams = new ArrayList<>();
-
-		// poi andrà creato un ciclo per inserire tutte le squadre (questione del numero limite in sospeso)
-		System.out.println("Enter team name: ");
-		String teamName = scanner.nextLine();
-		Team team = new Team(teamName);
-		teams.add(team);
-
-		this.tournament = new League(inputString);
-
+	
+	private boolean storeTournament(List<Team> teamsList) throws SQLException {
+		if (facade.checkUnique(tournament.getName(), username)) {
+			if (facade.storeTournament(tournament, username)) {
+				int tournamentId = facade.getLastTournamentID();
+				tournament.setId(tournamentId);
+				tournament.initTournament(teamsList);
+				facade.storeElement(tournament);
+				int elementId = facade.getLastElementID(tournament.getTournamentElement());
+				tournament.getTournamentElement().setId(elementId);
+				for (Team team:teamsList) {
+					facade.storeTeam(team, tournament);
+					int teamId = facade.getLastTeamID();
+					team.setId(teamId);
+				}
+				facade.storeSchedule(tournament.getSchedule(), tournament);
+				return true;
+			}
+		}
+		else
+			System.out.println("Tournament name already exists\n");
+		
+		return false;
+	}
+	
+	private List<Team> insertTeams(int size) {
+		List<Team> teams = new ArrayList<>();
+		
+		for (int i = 0; i < size; i++) {
+			System.out.println("Enter team name: ");
+			String teamName = scanner.nextLine();
+			Team team = new Team(teamName);
+			teams.add(team);
+		}
+		
+		return teams;
 	}
 }
