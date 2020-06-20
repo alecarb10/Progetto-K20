@@ -82,6 +82,7 @@ public class FanMenuController implements Initializable {
 		
 		
 	}
+
 	
 	
 	

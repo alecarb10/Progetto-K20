@@ -48,11 +48,9 @@ public class LeagueRankingController implements Initializable {
 	League league;
 	
 	List<Team> teams;
-	List<Day> days; // lo rendo accessibile a tutti
+	List<Day> days; 
 	Day day;
 	
-	
-
 	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
@@ -79,11 +77,9 @@ public class LeagueRankingController implements Initializable {
 		for(Day day : days) {
 			dayComboBox.getItems().add(day.getNumber());
 				}
-		
-		
-		
 			
 		}
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -109,95 +105,24 @@ public class LeagueRankingController implements Initializable {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*
-	// parte della simulazione
-	List<Day> days = new ArrayList<>();
-	
-	//implementazione con db
-	List<Team> rankingList = new ArrayList<>();
-	
-
-	
-	public void populateRanking(List<Team> rankingTmp) {
-		rankingList = rankingTmp;
-		for(Team team : rankingList) {
-			ranking.getItems().add(team.getName() + "        " + team.getPoints());
-		}
-		
-	}
-	
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		populateRanking(rankingList);
-		
-	}
-
-	
-	
-	
-	
-	public void selectedDay(ActionEvent event) {
-		for (int i = 0; i < dayComboBox.getItems().size(); i++) {
-			int daySelected = (int) dayComboBox.getSelectionModel().getSelectedItem();
-			for (Day day : days) {
-				if (day.getNumber() == daySelected)
-					ranking.getItems().clear();
-				List<Match> matchesDay = day.getMatchesList();
-				for (Match md : matchesDay) {
-					ranking.getItems().add(md.toString());
+	public void teamSelected(ActionEvent event) {
+		int index = ranking.getSelectionModel().getSelectedIndex();
+		ranking.getItems().clear();
+		text.setText(league.getTeamsList().get(index).getName());
+		for(Day day: days) {
+			for(Match match : day.getMatchesList()) {
+				if(match.getHomeTeam().getId() == league.getTeamsList().get(index).getId() || match.getAwayTeam().getId() == league.getTeamsList().get(index).getId()) {
+					ranking.getItems().add(match.toString());		
 				}
-			}
+					}
+							}		
 		}
-	}
-	*/
-
-
+		
+		
 	
 	
-	/*
-	public void teamSelected(ActionEvent event) throws IOException {
-		ObservableList<String> teamName;
-		teamName = ranking.getSelectionModel().getSelectedItems();
-		for (String name : teamName) {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/teamDetailsView.fxml"));
-			Scene scene = new Scene(loader.load());
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			primaryStage.setTitle("Team details");
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			break;
-		}
-	}
-	*/
+	
+	
+
 
 }
