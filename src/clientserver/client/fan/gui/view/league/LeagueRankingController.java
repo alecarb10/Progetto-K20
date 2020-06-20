@@ -17,10 +17,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import mvc.model.element.Day;
 import mvc.model.element.Group;
+import mvc.model.match.Match;
 import mvc.model.team.Team;
 import mvc.model.tournament.League;
 import mvc.model.tournament.Tournament;
@@ -37,9 +39,17 @@ public class LeagueRankingController implements Initializable {
 	private ListView<String> ranking;
 	@FXML
 	private ComboBox dayComboBox;
+	@FXML
+	private Text text;
+	@FXML
+	private Button rankingButton;
 	
 	FacadeImpl facade = new FacadeImpl();
 	League league;
+	
+	List<Team> teams;
+	List<Day> days; // lo rendo accessibile a tutti
+	Day day;
 	
 	
 
@@ -55,23 +65,51 @@ public class LeagueRankingController implements Initializable {
 	}
 	
 	
-	public void passingData(League leagueTmp) throws SQLException {
+	public void passingData(League leagueTmp) throws SQLException {  // popolazione List<View> e comboBox
 		league = leagueTmp;
-		List<Team> teams = facade.getTeamsByTournament(leagueTmp);
+		teams = facade.getTeamsByTournament(leagueTmp);
 		for(Team team : teams) {
 			league.addTeamInTournament(team);
 							}
 		for(Team team : league.getTeamsList()) {                                     //con league.getTeamList() avviene già l'oridnazione in base ai punti
 			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
-							}
+							}	
+		
+		days = facade.getSchedule(leagueTmp);
+		for(Day day : days) {
+			dayComboBox.getItems().add(day.getNumber());
+				}
+		
+		
+		
+			
 		}
-	
-	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub	
 	}
+	
+	public void rankingButtonClicked(ActionEvent event) {
+		ranking.getItems().clear();
+		text.setText("RANKING");
+		for(Team team : league.getTeamsList()) {                                     
+			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+							}	
+	}
+	
+	public void daySelected(ActionEvent event) {
+		int indx = (int) dayComboBox.getSelectionModel().getSelectedIndex();
+		ranking.getItems().clear();
+		text.setText("DAY  " + (indx+1));
+		day = days.get(indx);
+	    for(Match match : day.getMatchesList()) {
+	    	ranking.getItems().add(match.toString());
+	    }
+		
+	}
+	
+	
 	
 	
 	

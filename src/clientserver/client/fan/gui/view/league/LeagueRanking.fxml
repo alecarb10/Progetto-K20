@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientserver.client.fan.gui.view.league.LeagueRankingController">
    <children>
-      <Text layoutX="83.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANKING" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
+      <Text fx:id="text" layoutX="83.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RANKING" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -17,6 +17,7 @@
       <ListView fx:id="ranking" layoutX="111.0" layoutY="151.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="100.0" />
       <Button fx:id="teamDetailsButton" layoutX="499.0" layoutY="313.0" mnemonicParsing="false" text="Team details" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="30.0" />
       <Button fx:id="menuButton" layoutX="499.0" layoutY="267.0" mnemonicParsing="false" onAction="#menuButtonClicked" text="Menu" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="30.0" />
-      <ComboBox fx:id="dayComboBox" layoutX="480.0" layoutY="100.0" prefHeight="25.0" prefWidth="70.0" promptText="Day" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
+      <ComboBox fx:id="dayComboBox" layoutX="480.0" layoutY="100.0" onAction="#daySelected" prefHeight="25.0" prefWidth="70.0" promptText="Day" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
+      <Button fx:id="rankingButton" layoutX="521.0" layoutY="139.0" mnemonicParsing="false" onAction="#rankingButtonClicked" text="Ranking" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0" />
    </children>
 </AnchorPane>
