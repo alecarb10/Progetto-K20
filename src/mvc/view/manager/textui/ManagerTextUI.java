@@ -180,7 +180,54 @@ public class ManagerTextUI {
 	}
 	
 	private void manageTournament() {
+		while(true) {
+			System.out.println("\nTournament: " + tournament.getName() + "\n");
+			
+			System.out.println("Enter \"1\" to insert results");
+			System.out.println("Enter \"2\" to add stadiums");
+			System.out.println("Enter \"3\" to edit teams");
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+
+			try {
+				switch (Integer.parseInt(inputString)) {
+				case 1:
+					insertResult();
+					break;
+				case 2:
+					addStadium();
+					break;
+				case 3:
+					editTeam();
+					break;
+				default:
+					System.out.println("Unavailable input.\n");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.");
+			}
+		}
+	}
+	
+	private void editTeam() {
+
+	}
+
+	private void addStadium() {
 		
+	}
+
+	private void insertResult() {
+				
 	}
 
 	private void createTournament() throws SQLException {
