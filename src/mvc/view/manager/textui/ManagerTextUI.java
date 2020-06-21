@@ -145,8 +145,42 @@ public class ManagerTextUI {
 		}
 	}
 
-	private void getTournamentsList() {
-		// lista ...
+	private void getTournamentsList() throws SQLException {
+		List<Tournament> tournaments = facade.getAllTournamentsByManager(username);
+		
+		while(true) {
+			System.out.println("\nChoose a tournament: \n");
+			for (int i = 0; i < tournaments.size(); i++) 
+				System.out.println((i + 1) + ") " + tournaments.get(i).getName());
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+
+			try {
+				if (Integer.parseInt(inputString) < 1 || Integer.parseInt(inputString) > tournaments.size())
+					System.out.println("Wrong number - tournament doesn't exist");
+				else {
+					tournament = tournaments.get(Integer.parseInt(inputString) - 1);
+					manageTournament();
+				}
+					
+				
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+	}
+	
+	private void manageTournament() {
+		
 	}
 
 	private void createTournament() throws SQLException {
