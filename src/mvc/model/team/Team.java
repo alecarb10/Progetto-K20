@@ -34,9 +34,7 @@ public class Team {
 	}
 	
 	public boolean removePlayer(Player player) {
-		for (Player p: players)
-				return players.remove(p);
-		return false;
+		return players.remove(player);
 	}
 	
 	public List<Player> getPlayers(){
