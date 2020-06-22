@@ -1,11 +1,14 @@
 package mvc.view.manager.textui;
 
 import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
+import mvc.model.team.Player;
+import mvc.model.team.PlayerPositionType;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
 import mvc.model.tournament.*;
@@ -23,7 +26,8 @@ public class ManagerTextUI {
 		this.facade = new FacadeImpl();
 	}
 
-	/* Metodo di avvio. */
+	/* -------------------------------- Home ----------------------------------------------------------------*/
+	
 	public void start() throws SQLException {
 		while (true) {
 			System.out.println("** Welcome to the reserved area for managers. **");
@@ -59,6 +63,8 @@ public class ManagerTextUI {
 		}
 	}
 
+	/* -------------------------------- Sign Up + Sign In ----------------------------------------------------------------*/
+	
 	private void login() throws SQLException {
 		while (true) {
 			System.out.println("\nSign up.");
@@ -111,6 +117,8 @@ public class ManagerTextUI {
 		this.login();
 	}
 
+	/* -------------------------------- Main Menù ----------------------------------------------------------------*/
+	
 	private void menu() throws SQLException {
 		while (true) {
 			System.out.println("Welcome " + username + "\n");
@@ -145,11 +153,13 @@ public class ManagerTextUI {
 			}
 		}
 	}
+	
+	/* -------------------------------- Visualizzazione Tornei ----------------------------------------------------------------*/
 
 	private void getTournamentsList() throws SQLException {
-		List<Tournament> tournaments = facade.getAllTournamentsByManager(username);
-		
 		while(true) {
+			List<Tournament> tournaments = facade.getAllTournamentsByManager(username);
+			
 			System.out.println("\nChoose a tournament: \n");
 			for (int i = 0; i < tournaments.size(); i++) 
 				System.out.println((i + 1) + ") " + tournaments.get(i).getName());
@@ -217,6 +227,40 @@ public class ManagerTextUI {
 		}
 	}
 	
+	private void insertResult() {
+		/* TODO */
+	}
+	
+	private void addStadium() throws SQLException {
+		while (true) {
+			System.out.println("Add a stadium.");
+			System.out.println("Name: ");
+			String name = scanner.nextLine();
+			System.out.println("City: ");
+			String city = scanner.nextLine();
+			System.out.println("Capacity: ");
+			int capacity = 0;
+			try {
+				capacity = Integer.parseInt(scanner.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+				continue;
+			}
+			
+			Stadium s = new Stadium(name, city, capacity);
+			if (facade.checkUniqueStadium(s)) {
+				if (facade.storeStadium(s)) {
+					System.out.println("\nStadium added");
+					break;
+				}
+				else
+					System.out.println("\nStadium not added");
+			}
+			else
+				System.out.println("\nStadium name already exists.\n");		
+		}
+	}
+	
 	private void editTeam() throws SQLException {
 		tournament.addTeams(facade.getTeamsByTournament(tournament));
 		
@@ -274,13 +318,13 @@ public class ManagerTextUI {
 					selectStadium(index);
 					break;
 				case 2:
-					addPlayer();
+					addPlayer(index);
 					break;
 				case 3:
-					editPlayer();
+					editPlayer(index);
 					break;
 				case 4:
-					removePlayer();
+					removePlayer(index);
 					break;
 				default:
 					System.out.println("Unavailable input.\n");
@@ -328,52 +372,149 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void addPlayer() {
-		
-	}
-	
-	private void editPlayer() {
-		
-	}
-	
-	private void removePlayer() {
-		
-	}
-
-	private void addStadium() throws SQLException {
+	private void addPlayer(int index) throws SQLException {
 		while (true) {
-			System.out.println("Add a stadium.");
+			System.out.println("\nAdd a player.");
 			System.out.println("Name: ");
 			String name = scanner.nextLine();
-			System.out.println("City: ");
-			String city = scanner.nextLine();
-			System.out.println("Capacity: ");
-			int capacity = 0;
+			System.out.println("Surname: ");
+			String surname = scanner.nextLine();
+			System.out.println("Number: ");
+			int number = 0;
 			try {
-				capacity = Integer.parseInt(scanner.nextLine());
+				number = Integer.parseInt(scanner.nextLine());
 			} catch (NumberFormatException e) {
-				System.out.println("Invalid input.\n");
+				System.out.println("\nInvalid input.");
+				continue;
+			}
+			System.out.println("Position (GK, CB, MF, CF): ");
+			PlayerPositionType position = null;
+			try {
+				position = PlayerPositionType.valueOf(scanner.nextLine());
+			}
+			catch (IllegalArgumentException e) {
+				System.out.println("\nPosition not valid");
 				continue;
 			}
 			
-			Stadium s = new Stadium(name, city, capacity);
-			if (facade.checkUniqueStadium(s)) {
-				if (facade.storeStadium(s)) {
-					System.out.println("\nStadium added");
-					break;
-				}
-				else
-					System.out.println("\nStadium not added");
+			Player p = new Player(name, surname, number, position);
+			if (facade.storePlayer(p, tournament.getTeamsList().get(index))) {
+				p.setId(facade.getLastPlayerID());
+				tournament.getTeamsList().get(index).insertPlayer(p);
+				System.out.println("\nPlayer added");
+				break;
 			}
 			else
-				System.out.println("\nStadium name already exists.\n");		
+				System.out.println("\nPlayer not added");
+		}	
+	}
+	
+	private void editPlayer(int index) throws SQLException {
+		while (true) {
+			System.out.println("\nChoose a player: \n");
+			for (int i = 0; i < tournament.getTeamsList().get(index).getPlayers().size(); i++) 
+				System.out.println((i + 1) + ") " + tournament.getTeamsList().get(index).getPlayers().get(i).getSurname() + 
+								   ". N° " + tournament.getTeamsList().get(index).getPlayers().get(i).getNumber());
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+			
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			try {
+				int indexPlayer = Integer.parseInt(inputString);
+				if (indexPlayer < 1 || indexPlayer > tournament.getTeamsList().get(index).getPlayers().size())
+					System.out.println("Wrong number - player doesn't exist");
+				else {
+					System.out.println();
+					System.out.println(tournament.getTeamsList().get(index).getPlayers().get(indexPlayer - 1));
+					int id = tournament.getTeamsList().get(index).getPlayers().get(indexPlayer - 1).getId();
+					tournament.getTeamsList().get(index).removePlayer(tournament.getTeamsList().get(index).getPlayers().get(indexPlayer - 1));
+					
+					System.out.println("\nNew Name: ");
+					String name = scanner.nextLine();
+					System.out.println("New Surname: ");
+					String surname = scanner.nextLine();
+					System.out.println("New Number: ");
+					int number = 0;
+					try {
+						number = Integer.parseInt(scanner.nextLine());
+					} catch (NumberFormatException e) {
+						System.out.println("\nInvalid input.");
+						continue;
+					}
+					System.out.println("New Position (GK, CB, MF, CF): ");
+					PlayerPositionType position = null;
+					try {
+						position = PlayerPositionType.valueOf(scanner.nextLine());
+					}
+					catch (IllegalArgumentException e) {
+						System.out.println("\nPosition not valid");
+						continue;
+					}
+					Player p = new Player(name, surname, number, position);
+					p.setId(id);
+					
+					tournament.getTeamsList().get(index).insertPlayer(p);
+					if (facade.updatePlayer(p)) {
+						System.out.println("\nPlayer updated");
+						break;
+					}
+					else
+						System.out.println("\nPlayer not updated");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+	}
+	
+	private void removePlayer(int index) throws SQLException {
+		while (true) {
+			System.out.println("\nChoose a player: \n");
+			for (int i = 0; i < tournament.getTeamsList().get(index).getPlayers().size(); i++) 
+				System.out.println((i + 1) + ") " + tournament.getTeamsList().get(index).getPlayers().get(i).getSurname() + 
+								   ". N° " + tournament.getTeamsList().get(index).getPlayers().get(i).getNumber());
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+			
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			try {
+				int indexPlayer = Integer.parseInt(inputString);
+				if (indexPlayer < 1 || indexPlayer > tournament.getTeamsList().get(index).getPlayers().size())
+					System.out.println("Wrong number - player doesn't exist");
+				else {
+					Player p = tournament.getTeamsList().get(index).getPlayers().get(indexPlayer - 1);
+					if (facade.removePlayer(p)) {
+						tournament.getTeamsList().get(index).removePlayer(p);
+						System.out.println("\nPlayer removed");
+						break;
+					}
+					else
+						System.out.println("\nPlayer not removed");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
 		}
 	}
 
-	private void insertResult() {
-				
-	}
-
+	/* -------------------------------- Creazione Torneo ----------------------------------------------------------------*/
+	
 	private void createTournament() throws SQLException {
 		boolean condition = true;
 		while (condition) {
