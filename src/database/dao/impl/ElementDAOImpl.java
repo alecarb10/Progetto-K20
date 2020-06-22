@@ -18,6 +18,7 @@ import mvc.model.match.Match;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
 import mvc.model.tournament.Tournament;
+import mvc.model.tournament.TournamentType;
 
 public class ElementDAOImpl implements IElementDAO {
 
@@ -187,9 +188,9 @@ public class ElementDAOImpl implements IElementDAO {
 	}
 	
 	@Override
-	public List<Day> getSchedule(Tournament t) throws SQLException {
+	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException {
 		conn = DBConnection.startConnection(conn);
-		PreparedStatement ps;
+		PreparedStatement ps = null;
 		PreparedStatement ps2;
 		ResultSet rs;
 		ResultSet rs2;
@@ -218,7 +219,8 @@ public class ElementDAOImpl implements IElementDAO {
 			ps.setInt(1, idGroup);
 		}
 		// board
-		else {
+		else if (t.getTournamentElement().getTournamentElementType().ordinal() == 0 ||
+				(t.getTournamentType() == TournamentType.MIXED && wantsBoard)) {
 			query = "SELECT IDBoard from board where IDTournament=?";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());

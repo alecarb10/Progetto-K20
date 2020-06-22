@@ -172,9 +172,9 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public List<Day> getSchedule(Tournament t) throws SQLException {
+	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.getSchedule(t);
+		return ed.getSchedule(t, wantsBoard);
 	}
 
 	@Override

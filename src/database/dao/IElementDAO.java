@@ -16,7 +16,7 @@ public interface IElementDAO {
 	
 	public boolean storeSchedule(List<Day> schedule, Tournament t) throws SQLException;
 	
-	public List<Day> getSchedule(Tournament t) throws SQLException;
+	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException;
 	
 	public boolean updateMatch(Match oldMatch, Match newMatch) throws SQLException;
 
