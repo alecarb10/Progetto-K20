@@ -19,5 +19,7 @@ public interface ITournament {
 	
 	public List<Day> getSchedule();
 	
+	public void setSchedule(List<Day> schedule);
+	
 	public TournamentElement getTournamentElement();
 }

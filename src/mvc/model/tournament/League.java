@@ -38,6 +38,11 @@ public class League extends Tournament {
 	}
 	
 	@Override
+	public void setSchedule(List<Day> schedule) {
+		this.group.setSchedule(schedule);
+	}
+	
+	@Override
 	public TournamentType getTournamentType() {
 		return TournamentType.LEAGUE;
 	}

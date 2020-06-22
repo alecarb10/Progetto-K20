@@ -61,6 +61,15 @@ public class MixedTournament extends Tournament {
 		return group.getSchedule();
 	}
 	
+	@Override
+	public void setSchedule(List<Day> schedule) {
+		this.group.setSchedule(schedule);
+	}
+	
+	public void setBoardSchedule(List<Day> schedule) {
+		this.board.setSchedule(schedule);
+	}
+	
 	public List<Day> getBoardSchedule(){
 		return board.getSchedule();
 	}

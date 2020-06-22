@@ -39,6 +39,11 @@ public class KnockoutPhase extends Tournament {
 	}
 	
 	@Override
+	public void setSchedule(List<Day> schedule) {
+		this.board.setSchedule(schedule);
+	}
+	
+	@Override
 	public TournamentType getTournamentType() {
 		return TournamentType.KNOCKOUT_PHASE;
 	}
