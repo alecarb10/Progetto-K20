@@ -30,7 +30,7 @@ public abstract class Tournament implements ITournament {
 			this.name = name;
 	}
 	
-	protected void addTeams(List<Team> teamsList) {
+	public void addTeams(List<Team> teamsList) {
 		for (Team t: teamsList)
 			addTeamInTournament(t);
 	}
