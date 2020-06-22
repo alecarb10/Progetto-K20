@@ -221,7 +221,7 @@ public class ManagerTextUI {
 		tournament.addTeams(facade.getTeamsByTournament(tournament));
 		
 		while (true) {
-			System.out.println("\nChoose a team.");
+			System.out.println("\nChoose a team: \n");
 			for (int i = 0; i < tournament.getTeamsList().size(); i++) 
 				System.out.println((i + 1) + ") " + tournament.getTeamsList().get(i).getName());
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
@@ -240,7 +240,7 @@ public class ManagerTextUI {
 				if (Integer.parseInt(inputString) < 1 || Integer.parseInt(inputString) > tournament.getTeamsList().size())
 					System.out.println("Wrong number - team doesn't exist");
 				else {
-					manageTeam();
+					manageTeam(Integer.parseInt(inputString) - 1);
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid input.\n");
@@ -248,7 +248,54 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void manageTeam() {
+	private void manageTeam(int index) {
+		while(true) {
+			System.out.println("\nTeam: " + tournament.getTeamsList().get(index).getName() + "\n");
+			
+			System.out.println("Enter \"1\" to select a stadium");
+			System.out.println("Enter \"2\" to add players");
+			System.out.println("Enter \"3\" to edit players");
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			try {
+				switch (Integer.parseInt(inputString)) {
+				case 1:
+					selectStadium();
+					break;
+				case 2:
+					addPlayer();
+					break;
+				case 3:
+					editPlayer();
+					break;
+				default:
+					System.out.println("Unavailable input.\n");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+	}
+	
+	private void selectStadium() {
+		
+	}
+	
+	private void addPlayer() {
+		
+	}
+	
+	private void editPlayer() {
 		
 	}
 
