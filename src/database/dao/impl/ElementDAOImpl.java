@@ -62,6 +62,24 @@ public class ElementDAOImpl implements IElementDAO {
 	}
 
 	@Override
+	public int getBoardIDByTournament(Tournament t) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		ResultSet rs;
+		PreparedStatement ps;
+		
+		String query = "SELECT IDBoard FROM board where IDTournament=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, t.getId());
+		rs = ps.executeQuery();
+
+		rs.next();
+		int ID = rs.getInt(1);
+
+		DBConnection.closeConnection(conn);
+		return ID;
+	}
+	
+	@Override
 	public int getLastElementID(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		ResultSet rs;
@@ -120,7 +138,8 @@ public class ElementDAOImpl implements IElementDAO {
 		return stored;
 	}
 	
-	private boolean storeDay(Day d, Tournament t) throws SQLException {
+	@Override
+	public boolean storeDay(Day d, Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs, stored = false;
@@ -332,7 +351,7 @@ public class ElementDAOImpl implements IElementDAO {
 		PreparedStatement ps;
 		boolean rs;
 		
-		String query = "UPDATE match SET HomeScore=?, AwayScore=?, Played=? WHERE IDMatch=?";
+		String query = "UPDATE tournament.match SET HomeScore=?, AwayScore=?, Played=? WHERE IDMatch=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1,newMatch.getHomeScore());
 		ps.setInt(2, newMatch.getAwayScore());

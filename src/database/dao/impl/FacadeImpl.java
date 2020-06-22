@@ -159,16 +159,27 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
+	public int getBoardIDByTournament(Tournament t) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.getBoardIDByTournament(t);
+	}
+	
+	@Override
 	public int getLastElementID(TournamentElement t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.getLastElementID(t);
 	}
 
-
 	@Override
 	public boolean storeSchedule(List<Day> schedule, Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.storeSchedule(schedule, t);
+	}
+	
+	@Override
+	public boolean storeDay(Day d, Tournament t) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.storeDay(d, t);
 	}
 
 	@Override

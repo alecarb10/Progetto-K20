@@ -12,9 +12,13 @@ public interface IElementDAO {
 	
 	public boolean storeElement(Tournament t) throws SQLException;
 	
+	public int getBoardIDByTournament(Tournament t) throws SQLException;
+	
 	public int getLastElementID(TournamentElement t) throws SQLException;
 	
 	public boolean storeSchedule(List<Day> schedule, Tournament t) throws SQLException;
+	
+	public boolean storeDay(Day d, Tournament t) throws SQLException;
 	
 	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException;
 	
