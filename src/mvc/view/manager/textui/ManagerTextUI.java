@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
+import mvc.model.element.Board;
+import mvc.model.element.Day;
+import mvc.model.match.Match;
 import mvc.model.team.Player;
 import mvc.model.team.PlayerPositionType;
 import mvc.model.team.Stadium;
@@ -117,7 +120,7 @@ public class ManagerTextUI {
 		this.login();
 	}
 
-	/* -------------------------------- Main Menù ----------------------------------------------------------------*/
+	/* -------------------------------- Main Menu ----------------------------------------------------------------*/
 	
 	private void menu() throws SQLException {
 		while (true) {
@@ -154,7 +157,7 @@ public class ManagerTextUI {
 		}
 	}
 	
-	/* -------------------------------- Visualizzazione Tornei ----------------------------------------------------------------*/
+	/* --------------------- Visualizzazione Tornei + Gestione -------------------------------------------------------------------*/
 
 	private void getTournamentsList() throws SQLException {
 		while(true) {
@@ -210,7 +213,10 @@ public class ManagerTextUI {
 			try {
 				switch (Integer.parseInt(inputString)) {
 				case 1:
-					insertResult();
+					if (tournament.getTournamentType() == TournamentType.MIXED)
+						insertResultForMixed();
+					else
+						insertResult();
 					break;
 				case 2:
 					addStadium();
@@ -227,7 +233,105 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void insertResult() {
+	private void insertResult() throws SQLException {
+		boolean knock = false;
+		if (tournament.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			tournament.getTournamentElement().setId(facade.getBoardIDByTournament(tournament));
+			knock = true;
+		}
+		
+		tournament.setSchedule(facade.getSchedule(tournament, false));
+		
+		while(true) {
+			System.out.println("\nChoose a day: \n");
+			for (Day d: tournament.getSchedule())
+				System.out.println("Day " + d.getNumber() + " - " + d.getDate());
+			
+			if (knock)
+				System.out.println("Enter \"next\" to add a new day on the board\n");
+			
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			if (knock && inputString.contentEquals("next")) {
+				if (((Board)tournament.getTournamentElement()).addNextDay()) {
+					if (facade.storeDay(tournament.getSchedule().get(tournament.getSchedule().size() - 1), tournament)) {
+						System.out.println("\nDay added");
+						break;
+					}
+				}
+				else
+					System.out.println("\nCan't add a new day - maybe previous day is not completed");
+			}
+			else {
+				try {
+					int indexDay = Integer.parseInt(inputString);
+					if (indexDay < 1 || indexDay > tournament.getSchedule().size())
+						System.out.println("Wrong number - day doesn't exist");
+					else {
+						selectMatch(indexDay - 1);
+					}
+				} catch (NumberFormatException e) {
+					System.out.println("Invalid input.\n");
+				}
+			}
+		}
+	}
+	
+	private void selectMatch(int indexDay) throws SQLException {
+		while (true) {
+			System.out.println("\nDay " + (indexDay + 1) + ". Choose a match: \n");
+			for (int i = 0; i < tournament.getSchedule().get(indexDay).getMatchesList().size(); i++)
+				System.out.println((i + 1) + "° " + tournament.getSchedule().get(indexDay).getMatchesList().get(i));
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			try {
+				int indexMatch = Integer.parseInt(inputString);
+				if (indexMatch < 1 || indexMatch > tournament.getSchedule().get(indexDay).getMatchesList().size())
+					System.out.println("Wrong number - match doesn't exist");
+				else {
+					System.out.println(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1));
+					System.out.println("Enter Home Score: ");
+					int homeScore = Integer.parseInt(scanner.nextLine());
+					System.out.println("Enter Away Score: ");
+					int awayScore = Integer.parseInt(scanner.nextLine());
+					
+					Match newMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
+					newMatch.setScore(homeScore, awayScore);
+					if (facade.updateMatch(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1), newMatch)) {
+						tournament.insertScore(indexDay + 1, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1), homeScore, awayScore);
+						System.out.println("\nResult entered");
+						break;
+					}
+					else
+						System.out.println("\nResult not entered");
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+	}
+	
+	private void insertResultForMixed() {
 		/* TODO */
 	}
 	
