@@ -22,6 +22,8 @@ public interface ITeamDAO {
 	
 	public boolean storeStadium(Stadium s) throws SQLException;
 	
+	public boolean checkUniqueStadium(Stadium s) throws SQLException;
+	
 	public boolean updateStadium(Stadium s) throws SQLException;
 	
 	public boolean removePlayer(Player p) throws SQLException;

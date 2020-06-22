@@ -168,6 +168,30 @@ public class TeamDAOImpl implements ITeamDAO {
 	}
 	
 	@Override
+	public boolean checkUniqueStadium(Stadium s) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		ResultSet rs;
+
+		String query = "SELECT count(*) from stadium where Name=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, s.getName());
+
+		rs = ps.executeQuery();
+
+		rs.next();
+		int count = rs.getInt(1);
+		
+		if (count == 0) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}
+			
+		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
+	@Override
 	public boolean updateStadium(Stadium s) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;

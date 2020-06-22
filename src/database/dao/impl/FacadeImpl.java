@@ -117,6 +117,12 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
+	public boolean checkUniqueStadium(Stadium s) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.checkUniqueStadium(s);
+	}
+	
+	@Override
 	public boolean updateStadium(Stadium s) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
 		return tmd.updateStadium(s);
