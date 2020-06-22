@@ -217,8 +217,39 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void editTeam() {
-
+	private void editTeam() throws SQLException {
+		tournament.addTeams(facade.getTeamsByTournament(tournament));
+		
+		while (true) {
+			System.out.println("\nChoose a team.");
+			for (int i = 0; i < tournament.getTeamsList().size(); i++) 
+				System.out.println((i + 1) + ") " + tournament.getTeamsList().get(i).getName());
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+			
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			
+			try {
+				if (Integer.parseInt(inputString) < 1 || Integer.parseInt(inputString) > tournament.getTeamsList().size())
+					System.out.println("Wrong number - team doesn't exist");
+				else {
+					manageTeam();
+				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
+	}
+	
+	private void manageTeam() {
+		
 	}
 
 	private void addStadium() throws SQLException {
