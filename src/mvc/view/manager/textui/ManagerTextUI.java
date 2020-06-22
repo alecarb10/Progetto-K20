@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
+import mvc.model.team.Stadium;
 import mvc.model.team.Team;
 import mvc.model.tournament.*;
 
@@ -171,15 +172,13 @@ public class ManagerTextUI {
 					tournament = tournaments.get(Integer.parseInt(inputString) - 1);
 					manageTournament();
 				}
-					
-				
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid input.\n");
 			}
 		}
 	}
 	
-	private void manageTournament() {
+	private void manageTournament() throws SQLException {
 		while(true) {
 			System.out.println("\nTournament: " + tournament.getName() + "\n");
 			
@@ -222,8 +221,34 @@ public class ManagerTextUI {
 
 	}
 
-	private void addStadium() {
-		
+	private void addStadium() throws SQLException {
+		while (true) {
+			System.out.println("Add a stadium.");
+			System.out.println("Name: ");
+			String name = scanner.nextLine();
+			System.out.println("City: ");
+			String city = scanner.nextLine();
+			System.out.println("Capacity: ");
+			int capacity = 0;
+			try {
+				capacity = Integer.parseInt(scanner.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+				continue;
+			}
+			
+			Stadium s = new Stadium(name, city, capacity);
+			if (facade.checkUniqueStadium(s)) {
+				if (facade.storeStadium(s)) {
+					System.out.println("\nStadium added");
+					break;
+				}
+				else
+					System.out.println("\nStadium not added");
+			}
+			else
+				System.out.println("\nStadium name already exists.\n");		
+		}
 	}
 
 	private void insertResult() {
