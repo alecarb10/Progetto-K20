@@ -78,13 +78,16 @@ public class Match {
 	}
 
 	private void setPoints() {
-		if(played) {
-			Team winnerTeam=getWinner();
-			if(winnerTeam==null) {
+		if (played) {
+			Team winnerTeam = getWinner();
+			if (winnerTeam == null) {
 				homeTeam.setPoints(homeTeam.getPoints() + 1);
 				awayTeam.setPoints(awayTeam.getPoints() + 1);
 			}
-			else winnerTeam.setPoints(winnerTeam.getPoints() + 3);
+			else if (winnerTeam.equals(homeTeam))
+				homeTeam.setPoints(homeTeam.getPoints() + 3);
+			else if (winnerTeam.equals(awayTeam))
+				awayTeam.setPoints(awayTeam.getPoints() + 3);
 		}
 	}
 	
