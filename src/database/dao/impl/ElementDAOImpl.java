@@ -282,11 +282,8 @@ public class ElementDAOImpl implements IElementDAO {
 				Team awayTeam = getTeamByID(idAwayTeam);
 				match = new Match(date, homeTeam, awayTeam);
 				match.setId(idMatch);
-				match.setScore(homeScore, awayScore);
-				if (played == 0)
-					match.setPlayed(false);
-				else
-					match.setPlayed(true);
+				if (played == 1)
+					match.setScore(homeScore, awayScore);
 				
 				matches.add(match);
 			}
@@ -350,6 +347,8 @@ public class ElementDAOImpl implements IElementDAO {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
+		PreparedStatement ps2;
+		boolean rs2;
 		
 		String query = "UPDATE tournament.match SET HomeScore=?, AwayScore=?, Played=? WHERE IDMatch=?";
 		ps = conn.prepareStatement(query);
@@ -360,8 +359,27 @@ public class ElementDAOImpl implements IElementDAO {
 		rs = ps.execute();
 		
 		if (!rs) {
-			DBConnection.closeConnection(conn);
-			return true;
+			String query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
+			ps2 = conn.prepareStatement(query2);
+			ps2.setInt(1, newMatch.getHomeTeam().getPoints());
+			ps2.setInt(2, newMatch.getHomeTeam().getGoalsScored());
+			ps2.setInt(3, newMatch.getHomeTeam().getGoalsConceded());
+			ps2.setInt(4, newMatch.getHomeTeam().getId());
+			
+			rs2 = ps2.execute();
+			
+			query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
+			ps2.setInt(1, newMatch.getAwayTeam().getPoints());
+			ps2.setInt(2, newMatch.getAwayTeam().getGoalsScored());
+			ps2.setInt(3, newMatch.getAwayTeam().getGoalsConceded());
+			ps2.setInt(4, newMatch.getAwayTeam().getId());			
+			
+			rs2 = ps2.execute();
+			
+			if (!rs2) {
+				DBConnection.closeConnection(conn);
+				return true;
+			}
 		}	
 
 		DBConnection.closeConnection(conn);
