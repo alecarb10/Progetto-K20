@@ -33,6 +33,14 @@ public class ScheduleGenerator {
 		
 		if (teamsList.size() < 2)			// schedule not generated
 			return null;
+		
+		/* Only two teams -> only one match*/
+		
+		if (teamsList.size() == 2) {
+			matches.add(new Match(calendar.getTime(), teamsList.get(0), teamsList.get(1)));
+			schedule.add(new Day(1, matches, calendar.getTime()));
+			return schedule;
+		}
 
 		/* Berger's Algorithm */
 		
