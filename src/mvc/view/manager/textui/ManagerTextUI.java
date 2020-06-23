@@ -183,6 +183,7 @@ public class ManagerTextUI {
 					System.out.println("Wrong number - tournament doesn't exist");
 				else {
 					tournament = tournaments.get(Integer.parseInt(inputString) - 1);
+					tournament.addTeams(facade.getTeamsByTournament(tournament));
 					manageTournament();
 				}
 			} catch (NumberFormatException e) {
@@ -215,8 +216,10 @@ public class ManagerTextUI {
 				case 1:
 					if (tournament.getTournamentType() == TournamentType.MIXED)
 						insertResultForMixed();
-					else
+					else {
+						tournament.setSchedule(facade.getSchedule(tournament, false));
 						insertResult();
+					}
 					break;
 				case 2:
 					addStadium();
@@ -239,8 +242,6 @@ public class ManagerTextUI {
 			tournament.getTournamentElement().setId(facade.getBoardIDByTournament(tournament));
 			knock = true;
 		}
-		
-		tournament.setSchedule(facade.getSchedule(tournament, false));
 		
 		while(true) {
 			System.out.println("\nChoose a day: \n");
@@ -270,7 +271,7 @@ public class ManagerTextUI {
 					}
 				}
 				else
-					System.out.println("\nCan't add a new day - maybe previous day is not completed");
+					System.out.println("\nCan't add a new day - maybe previous day is not completed or tournament is finished");
 			}
 			else {
 				try {
@@ -309,21 +310,22 @@ public class ManagerTextUI {
 				if (indexMatch < 1 || indexMatch > tournament.getSchedule().get(indexDay).getMatchesList().size())
 					System.out.println("Wrong number - match doesn't exist");
 				else {
-					System.out.println(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1));
+					Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
+					System.out.println(oldMatch);
 					System.out.println("Enter Home Score: ");
 					int homeScore = Integer.parseInt(scanner.nextLine());
 					System.out.println("Enter Away Score: ");
 					int awayScore = Integer.parseInt(scanner.nextLine());
 					
-					Match newMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
-					newMatch.setScore(homeScore, awayScore);
-					if (facade.updateMatch(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1), newMatch)) {
-						tournament.insertScore(indexDay + 1, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1), homeScore, awayScore);
-						System.out.println("\nResult entered");
-						break;
-					}
-					else
-						System.out.println("\nResult not entered");
+					if (tournament.insertScore(indexDay + 1, oldMatch, homeScore, awayScore)) {
+						if (facade.updateMatch(oldMatch, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1))) {
+							System.out.println("\nResult entered");
+							tournament.setSchedule(facade.getSchedule(tournament, false));
+							break;
+						}
+					}	
+					else 
+						System.out.println("\nResult not entered - maybe previous day is not completed or match is already played");
 				}
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid input.\n");
@@ -331,8 +333,56 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void insertResultForMixed() {
-		/* TODO */
+	private void insertResultForMixed() throws SQLException {
+		while(true) {
+			System.out.println("\nChoose: \n");
+			System.out.println("1) Manage group");
+			System.out.println("2) Manage board");
+			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
+			
+			System.out.print("Input: ");
+			inputString = scanner.nextLine();
+
+			if (inputString.contentEquals("e")) {
+				System.out.println("Closing app...");
+				System.exit(0);
+			}
+			if (inputString.contentEquals("b"))
+				break;
+			try {				
+				int choose = Integer.parseInt(inputString);
+				
+				tournament.setSchedule(facade.getSchedule(tournament, false));
+				
+				if (choose == 1) {
+					if (tournament.getTournamentElement().isCompleted())
+						System.out.println("Group is already completed");
+					else
+					System.out.println(tournament.getTournamentElement());
+						insertResult();
+				}
+				else if (choose == 2) {
+					if (!tournament.getTournamentElement().isCompleted())
+						System.out.println("Group is not completed, board is not started yet");
+					else {
+						System.out.println("You can manage board");
+						
+						if (((MixedTournament)tournament).getBoardSchedule() == null) {
+							((MixedTournament)tournament).initKnockoutPhase();
+							for(Day day : ((MixedTournament)tournament).getBoardSchedule())
+								System.out.println(day);
+						}
+						else {
+							/* setSchedule da db */
+						}
+					}
+				}
+				else
+					System.out.println("Unavailable input.\n");
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
+			}
+		}
 	}
 	
 	private void addStadium() throws SQLException {
@@ -366,8 +416,6 @@ public class ManagerTextUI {
 	}
 	
 	private void editTeam() throws SQLException {
-		tournament.addTeams(facade.getTeamsByTournament(tournament));
-		
 		while (true) {
 			System.out.println("\nChoose a team: \n");
 			for (int i = 0; i < tournament.getTeamsList().size(); i++) 
