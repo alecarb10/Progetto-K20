@@ -66,7 +66,7 @@ public class EditTeamController implements Initializable {
 		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));	
 		spinnerPlayerNumber.setValueFactory(numbers);
 		spinnerPlayerNumber.setEditable(true);
-		facadeImpl= new FacadeImpl();
+		facadeImpl= FacadeImpl.getInstance();
 		this.cmbBoxTournament.setOnAction((ActionEvent)->{
 			teams=getTeamsList();
 			if(teams !=null)

@@ -26,7 +26,7 @@ public class ManagerTextUI {
 
 	public ManagerTextUI() {
 		scanner = new Scanner(System.in);
-		this.facade = new FacadeImpl();
+		this.facade = FacadeImpl.getInstance();
 	}
 
 	/* -------------------------------- Home ----------------------------------------------------------------*/
@@ -162,6 +162,11 @@ public class ManagerTextUI {
 	private void getTournamentsList() throws SQLException {
 		while(true) {
 			List<Tournament> tournaments = facade.getAllTournamentsByManager(username);
+			
+			if (tournaments.size() == 0) {
+				System.out.println("\nNo tournaments found\n");
+				break;
+			}
 			
 			System.out.println("\nChoose a tournament: \n");
 			for (int i = 0; i < tournaments.size(); i++) 

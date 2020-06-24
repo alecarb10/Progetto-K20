@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
 	public void login(ActionEvent event) {
 		try {
 
-			boolean checkLogin = new FacadeImpl().checkManagerLogin(this.txtFldUsername.getText(),this.pwdFldPassword.getText());
+			boolean checkLogin = FacadeImpl.getInstance().checkManagerLogin(this.txtFldUsername.getText(),this.pwdFldPassword.getText());
 			if (checkLogin) {
 				FXMLLoader loader=GraphicHandler.getLoader(Constants.PATH_PREFIX + "/resources/Home.fxml");
 				Parent root=loader.load();

@@ -30,7 +30,7 @@ public class RegistrationController implements Initializable {
 	private PasswordField pwdFldPassword,pwdFldRepeatPassword;
 	
 	public void registration(ActionEvent event) throws IOException {
-		FacadeImpl facadeImpl= new FacadeImpl();
+		FacadeImpl facadeImpl= FacadeImpl.getInstance();
 		try {
 			if(this.pwdMatching()&&this.isNotBlankControl()) {
 				if(facadeImpl.checkUnique(this.txtFldUsername.getText())) {

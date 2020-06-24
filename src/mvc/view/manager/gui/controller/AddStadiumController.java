@@ -43,7 +43,7 @@ public class AddStadiumController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		facadeImpl= new FacadeImpl();
+		facadeImpl= FacadeImpl.getInstance();
 		stadiums=FXCollections.observableArrayList();
 		stadiumsList=getStadiums();
 		for(Stadium s:stadiumsList)

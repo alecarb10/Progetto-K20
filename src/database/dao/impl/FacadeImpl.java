@@ -1,6 +1,7 @@
 package database.dao.impl;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 import database.dao.*;
@@ -14,6 +15,17 @@ import mvc.model.tournament.Tournament;
 
 public class FacadeImpl implements IFacade {
 
+	private static FacadeImpl facade;
+
+	private FacadeImpl() {
+	}
+
+	public static synchronized FacadeImpl getInstance() {
+		if (facade == null)
+			facade = new FacadeImpl();
+		return facade;
+	}
+	
 	@Override
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException {
 		IManagerDAO md = new ManagerDAOImpl();

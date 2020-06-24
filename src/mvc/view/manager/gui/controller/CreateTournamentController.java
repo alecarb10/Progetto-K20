@@ -78,7 +78,7 @@ public class CreateTournamentController implements Initializable {
 	
 	public void createTournament(ActionEvent event) {		
 		Tournament tournament=null;
-		FacadeImpl facadeImpl= new FacadeImpl();
+		FacadeImpl facadeImpl= FacadeImpl.getInstance();
 		List<Team> teamsList=getTeamsList();
 		String name=this.txtFldName.getText();
 		try {		

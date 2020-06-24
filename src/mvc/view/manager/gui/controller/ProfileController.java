@@ -25,7 +25,7 @@ public class ProfileController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		facadeImpl= new FacadeImpl();
+		facadeImpl= FacadeImpl.getInstance();
 	}
 	
 	public void setUsername(String username) {
