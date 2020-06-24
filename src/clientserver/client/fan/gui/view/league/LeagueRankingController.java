@@ -44,7 +44,7 @@ public class LeagueRankingController implements Initializable {
 	@FXML
 	private Button rankingButton;
 	
-	FacadeImpl facade = new FacadeImpl();
+	FacadeImpl facade = FacadeImpl.getInstance();
 	League league;
 	
 	List<Team> teams;
@@ -87,6 +87,7 @@ public class LeagueRankingController implements Initializable {
 	}
 	
 	public void rankingButtonClicked(ActionEvent event) {
+		teamDetailsButton.setDisable(false);
 		ranking.getItems().clear();
 		text.setText("RANKING");
 		for(Team team : league.getTeamsList()) {                                     
@@ -95,6 +96,7 @@ public class LeagueRankingController implements Initializable {
 	}
 	
 	public void daySelected(ActionEvent event) {
+		teamDetailsButton.setDisable(true);
 		int indx = (int) dayComboBox.getSelectionModel().getSelectedIndex();
 		ranking.getItems().clear();
 		text.setText("DAY  " + (indx+1));
