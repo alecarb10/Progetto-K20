@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import clientserver.client.fan.gui.view.league.LeagueRankingController;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
@@ -34,6 +35,7 @@ public class FanMenuController implements Initializable {
 
 	FacadeImpl facade = new FacadeImpl();
 	List<Tournament> tournamentList = new ArrayList<>();
+	List<Team> teams;
 
 	public void populateTournamentNames() throws SQLException {
 		tournamentList = facade.getAllTournaments();
@@ -71,9 +73,42 @@ public class FanMenuController implements Initializable {
 		
 		
 		
-		
 		if(tSelect.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-			System.out.println(tSelect.getName());
+			teams = facade.getTeamsByTournament(tSelect);
+			int c = teams.size();
+			switch(c) {
+				case 4:
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
+					Parent root=loader.load();
+					KnockoutPhase4Controller kp4c = loader.getController();
+					KnockoutPhase knockoutPhase4 = (KnockoutPhase) tournamentList.get(idx);
+					kp4c.passingDataToKnock4(knockoutPhase4);
+					Scene scene = new Scene(root);
+					Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					primaryStage.setTitle("Board");
+					primaryStage.setScene(scene);
+					primaryStage.show();		
+						
+					break;
+				case 8:
+					System.out.println("8");
+					break;
+				case 16:
+					System.out.println("16");
+					break;
+			
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		if(tSelect.getTournamentType() == TournamentType.MIXED) {
 			System.out.println(tSelect.getName());

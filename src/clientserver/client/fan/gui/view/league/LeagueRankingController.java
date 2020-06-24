@@ -73,7 +73,7 @@ public class LeagueRankingController implements Initializable {
 			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
 							}	
 		
-		days = facade.getSchedule(leagueTmp);
+		days = facade.getSchedule(leagueTmp,false);
 		for(Day day : days) {
 			dayComboBox.getItems().add(day.getNumber());
 				}
