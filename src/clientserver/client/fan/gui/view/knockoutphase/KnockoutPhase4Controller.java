@@ -47,7 +47,7 @@ public class KnockoutPhase4Controller implements Initializable{
 	List<Label> labelDay2c = new ArrayList<>();
 	List<Label> labelDay2f = new ArrayList<>();
 	
-	FacadeImpl facade = new FacadeImpl();
+	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days; 
 	
 	public void passingDataToKnock4(KnockoutPhase k4) throws SQLException {
@@ -59,13 +59,6 @@ public class KnockoutPhase4Controller implements Initializable{
 		labelDay1f.add(label4);
 		labelDay2c.add(label5);
 		labelDay2f.add(label6);
-		
-		for(Day day : days) {
-			for(Match match : day.getMatchesList()) {
-				System.out.println(match.toString());
-			}
-		}
-		
 		for(Label labelc : labelDay1c) {
 			for(Label labelf: labelDay1f) {
 				for(Day day : days) {

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import clientserver.client.fan.gui.view.league.LeagueRankingController;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class FanMenuController implements Initializable {
 	@FXML
 	private ListView<String> tournamentNames;
 
-	FacadeImpl facade = new FacadeImpl();
+	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Tournament> tournamentList = new ArrayList<>();
 	List<Team> teams;
 
@@ -78,21 +79,32 @@ public class FanMenuController implements Initializable {
 			int c = teams.size();
 			switch(c) {
 				case 4:
-					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
-					Parent root=loader.load();
-					KnockoutPhase4Controller kp4c = loader.getController();
+					FXMLLoader loader4 = new FXMLLoader();
+					loader4.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
+					Parent root4=loader4.load();
+					KnockoutPhase4Controller kp4c = loader4.getController();
 					KnockoutPhase knockoutPhase4 = (KnockoutPhase) tournamentList.get(idx);
 					kp4c.passingDataToKnock4(knockoutPhase4);
-					Scene scene = new Scene(root);
-					Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					primaryStage.setTitle("Board");
-					primaryStage.setScene(scene);
-					primaryStage.show();		
+					Scene scene4 = new Scene(root4);
+					Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					primaryStage4.setTitle("Board");
+					primaryStage4.setScene(scene4);
+					primaryStage4.show();		
 						
 					break;
 				case 8:
-					System.out.println("8");
+					FXMLLoader loader8 = new FXMLLoader();
+					loader8.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
+					Parent root8=loader8.load();
+					KnockoutPhase8Controller kp8c = loader8.getController();
+					KnockoutPhase knockoutPhase8 = (KnockoutPhase) tournamentList.get(idx);
+					kp8c.passingDataToKnock8(knockoutPhase8);
+					Scene scene8 = new Scene(root8);
+					Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					primaryStage8.setTitle("Board");
+					primaryStage8.setScene(scene8);
+					primaryStage8.show();	
+					
 					break;
 				case 16:
 					System.out.println("16");
