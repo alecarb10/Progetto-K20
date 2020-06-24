@@ -1,10 +1,14 @@
 package mvc.view.manager.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import database.dao.impl.FacadeImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,37 +18,83 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import mvc.model.element.Day;
+import mvc.model.team.Team;
+import mvc.model.tournament.Tournament;
+import mvc.model.tournament.TournamentType;
+import mvc.model.match.Match;
 
 public class InsertResultController implements Initializable {
 	
 	@FXML
-	private ComboBox<String> cmbBoxTournament;
+	private ComboBox<String> cmbBoxTournament,cmbBoxDay;
+	@FXML
+	private RadioButton radioBtnGroup,radioBtnBoard;
 	@FXML
 	private ListView<String> listViewMatches;
 	
-	private ObservableList<String> matches = FXCollections.observableArrayList("team1 vs team2", "team3 vs team4");
-	private Dialog<Pair<String, String>> dialog = new Dialog<>();
+	private ToggleGroup toggleGrp;
+	private ObservableList<String> tournaments,days,matches;
+	private Dialog<Pair<String, String>> dialog; //= new Dialog<>();
 	private String username;
-	private ObservableList<String> tournaments = FXCollections.observableArrayList();
+	private FacadeImpl facadeImpl;
+	private List<Tournament> tournamentsList;
+	private Tournament tournament;
+	//private List<Day> daysList;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.listViewMatches.setItems(matches);
-		this.listViewMatches.setCellFactory(TextFieldListCell.forListView());
-		this.listViewMatches.setOnMouseClicked(new EventHandler<MouseEvent>(){
-
-			@Override
-			public void handle(MouseEvent event) {
-				dialog.getDialogPane().setContent(getDialogGridPane());
-				dialog.showAndWait();
-				
+		toggleGrp= new ToggleGroup();
+		radioBtnGroup.setToggleGroup(toggleGrp);
+		radioBtnBoard.setToggleGroup(toggleGrp);
+		tournaments=FXCollections.observableArrayList();
+		days=FXCollections.observableArrayList();
+		matches=FXCollections.observableArrayList();
+		facadeImpl= FacadeImpl.getInstance();
+		cmbBoxTournament.setOnAction((ActionEvent)->{
+//			radioBtnGroup.setSelected(false);
+//			radioBtnBoard.setSelected(false);
+			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
+			radioBtnAutoSelection(tournament);
+			try {
+				days.clear();
+				tournament.setSchedule(facadeImpl.getSchedule(tournament, false));
+				for(Day d:tournament.getSchedule())
+					days.add(Integer.toString(d.getNumber()));
+				cmbBoxDay.setItems(days);
+			
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 			
 		});
+		cmbBoxDay.setOnAction((ActionEvent)->{
+			//dayNumber=cmbBoxDay.getSelectionModel().getSelectedItem()
+			matches.clear();
+			for(Match m: tournament.getSchedule().get(Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1).getMatchesList()){
+				matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
+			}
+			this.listViewMatches.setItems(matches);
+			this.listViewMatches.setCellFactory(TextFieldListCell.forListView());
+			this.listViewMatches.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+				@Override
+				public void handle(MouseEvent event) {
+					dialog= new Dialog<>();
+					dialog.getDialogPane().setContent(getDialogGridPane());
+					dialog.showAndWait();
+					
+				}
+				
+			});
+		});
+		
 	}
 	
 	private GridPane getDialogGridPane() {
@@ -72,8 +122,37 @@ public class InsertResultController implements Initializable {
 		this.username=username;
 	}
 	
+	public void setTournamentsList(List<Tournament> tournamentsList) {
+		this.tournamentsList=tournamentsList;
+	}
+	
 	public void populateCmbBoxTournament(ObservableList<String> tournaments) {
 		this.tournaments=tournaments;
 		this.cmbBoxTournament.setItems(tournaments);
 	}
+	
+	private Tournament getTournament(String name) {
+		for(Tournament tournament:tournamentsList) {
+			if(tournament.getName().equals(name))
+				return tournament;
+		}
+		return null;
+	}
+	
+	private void radioBtnAutoSelection(Tournament tournament) {
+		if(tournament.getTournamentType()==TournamentType.KNOCKOUT_PHASE) {
+			toggleGrp.selectToggle(radioBtnBoard);
+			radioButtonsSetDisable();
+		}
+		else if(tournament.getTournamentType()==TournamentType.LEAGUE) {
+			toggleGrp.selectToggle(radioBtnGroup);
+			radioButtonsSetDisable();
+		}
+	}
+	
+	private void radioButtonsSetDisable() {
+		radioBtnGroup.setDisable(true);
+		radioBtnBoard.setDisable(true);
+	}
+	
 }

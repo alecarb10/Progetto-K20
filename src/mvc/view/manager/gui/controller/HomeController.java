@@ -43,10 +43,10 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditTeam.fxml");
 			Parent root=loader.load();
 			EditTeamController controller= loader.getController();
-			this.borderPaneHome.setCenter(root);
 			controller.setUsername(username);
 			controller.populateCmbBoxTournament(this.getTournamentsList(username));	
 			controller.setTournamentsList(tournamentsList);
+			this.borderPaneHome.setCenter(root);
 			
 		}
 		catch (Exception ex) {
@@ -68,8 +68,9 @@ public class HomeController implements Initializable {
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/InsertResult.fxml");
 			Parent root=loader.load();
 			InsertResultController controller= loader.getController();
-			controller.populateCmbBoxTournament(this.getTournamentsList(username));
 			controller.setUsername(username);
+			controller.populateCmbBoxTournament(this.getTournamentsList(username));	
+			controller.setTournamentsList(tournamentsList);
 			this.borderPaneHome.setCenter(root);
 		}
 		catch (Exception ex) {
@@ -103,7 +104,7 @@ public class HomeController implements Initializable {
 	private ObservableList<String> getTournamentsList(String username){
 		ObservableList<String> tournaments= FXCollections.observableArrayList();	
 		try {
-			this.tournamentsList=new FacadeImpl().getAllTournamentsByManager(username);
+			this.tournamentsList=FacadeImpl.getInstance().getAllTournamentsByManager(username);
 			for(Tournament t: tournamentsList) {
 				tournaments.add(t.getName());
 			}
