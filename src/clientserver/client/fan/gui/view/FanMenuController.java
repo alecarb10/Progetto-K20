@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import clientserver.client.fan.gui.view.league.LeagueRankingController;
@@ -110,6 +111,9 @@ public class FanMenuController implements Initializable {
 					FXMLLoader loader16 = new FXMLLoader();
 					loader16.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
 					Parent root16 = loader16.load();
+					KnockoutPhase16Controller kp16c = loader16.getController();
+					KnockoutPhase knockoutPhase16 = (KnockoutPhase) tournamentList.get(idx);
+					kp16c.passingDataToKnock16(knockoutPhase16);
 					Scene scene16 = new Scene(root16);
 					Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
 					primaryStage16.setTitle("Board");

@@ -86,9 +86,10 @@ public class KnockoutPhase8Controller implements Initializable {
 		label7.setText(days.get(0).getMatchesList().get(3).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(3).getHomeScore());
 		label8.setText(days.get(0).getMatchesList().get(3).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(3).getAwayScore());
 		
-
+		if(days.get(1).getMatchesList().get(0) != null) {
 		label9.setText(days.get(1).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(0).getHomeScore());
 		label10.setText(days.get(1).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(0).getAwayScore());
+		
 
 		label11.setText(days.get(1).getMatchesList().get(1).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(1).getHomeScore());
 		label12.setText(days.get(1).getMatchesList().get(1).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(1).getAwayScore());
@@ -98,6 +99,19 @@ public class KnockoutPhase8Controller implements Initializable {
 		label14.setText(days.get(2).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(2).getMatchesList().get(0).getAwayScore());
 		
 		label15.setText(days.get(2).getMatchesList().get(0).getWinner().getName());
+		}
+		else {
+			label9.setText("da definire");
+			label10.setText("da definire");
+			label11.setText("da definire");
+			label12.setText("da definire");
+			label13.setText("da definire");
+			label14.setText("da definire");
+			label15.setText("da definire");
+			
+		}
+		
+		
 		
 		/*
 		labelDay1c.add(label1);
@@ -116,15 +130,9 @@ public class KnockoutPhase8Controller implements Initializable {
 		
 		labelDay3c.add(label13);
 		labelDay3f.add(label14);
-		
+				
 		*/
-		
-		
-		
-		
 	}
-	
-	
 	
 	
 	
@@ -139,11 +147,6 @@ public class KnockoutPhase8Controller implements Initializable {
 		primaryStage.show();
 		
 	}
-
-
-
-
-
 
 
 	@Override
