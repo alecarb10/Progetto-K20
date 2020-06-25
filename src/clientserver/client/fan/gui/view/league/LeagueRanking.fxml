@@ -19,5 +19,6 @@
       <Button fx:id="menuButton" layoutX="499.0" layoutY="267.0" mnemonicParsing="false" onAction="#menuButtonClicked" text="Menu" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="30.0" />
       <ComboBox fx:id="dayComboBox" layoutX="480.0" layoutY="100.0" onAction="#daySelected" prefHeight="25.0" prefWidth="70.0" promptText="Day" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
       <Button fx:id="rankingButton" layoutX="521.0" layoutY="139.0" mnemonicParsing="false" onAction="#rankingButtonClicked" text="Ranking" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0" />
+      <Button fx:id="boardButton" layoutX="521.0" layoutY="175.0" mnemonicParsing="false" text="Board" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="175.0" />
    </children>
 </AnchorPane>

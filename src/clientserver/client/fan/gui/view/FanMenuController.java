@@ -64,8 +64,7 @@ public class FanMenuController implements Initializable {
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
 			Parent root=loader.load();
 			LeagueRankingController lrc = loader.getController();
-			League league = (League) tournamentList.get(idx);
-			lrc.passingData(league);
+			lrc.passingData(tournamentList.get(idx));
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			primaryStage.setTitle("ranking");
@@ -122,19 +121,29 @@ public class FanMenuController implements Initializable {
 					break;
 			
 			}
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 		}
+		
+		
 		if(tSelect.getTournamentType() == TournamentType.MIXED) {
-			System.out.println(tSelect.getName());
+			
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
+			Parent root=loader.load();
+			LeagueRankingController lrc = loader.getController();
+			lrc.passingData(tournamentList.get(idx));
+			Scene scene = new Scene(root);
+			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			primaryStage.setTitle("mixed ranking");
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			
+			
+			
+			
+			
+			
+			
+			
 		}
 		
 		

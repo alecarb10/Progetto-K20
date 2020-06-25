@@ -25,6 +25,7 @@ import mvc.model.element.Group;
 import mvc.model.match.Match;
 import mvc.model.team.Team;
 import mvc.model.tournament.League;
+import mvc.model.tournament.MixedTournament;
 import mvc.model.tournament.Tournament;
 //===============
 import mvc.model.tournament.TournamentType;
@@ -43,13 +44,18 @@ public class LeagueRankingController implements Initializable {
 	private Text text;
 	@FXML
 	private Button rankingButton;
+	@FXML
+	private Button boardButton;
 	
 	FacadeImpl facade = FacadeImpl.getInstance();
 	League league;
+	MixedTournament mixed;
 	
+	List<Team> wTeams;
 	List<Team> teams;
 	List<Day> days; 
 	Day day;
+	
 	
 	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
@@ -63,22 +69,57 @@ public class LeagueRankingController implements Initializable {
 	}
 	
 	
-	public void passingData(League leagueTmp) throws SQLException {  // popolazione List<View> e comboBox
-		league = leagueTmp;
-		teams = facade.getTeamsByTournament(leagueTmp);
+	public void passingData(Tournament tournament) throws SQLException {  // popolazione List<View> e comboBox
+		
+		if(tournament.getTournamentType() == TournamentType.LEAGUE) {
+		boardButton.setVisible(false);	
+		league = (League) tournament;
+		teams = facade.getTeamsByTournament(tournament);
 		for(Team team : teams) {
 			league.addTeamInTournament(team);
 							}
 		for(Team team : league.getTeamsList()) {                                     //con league.getTeamList() avviene già l'oridnazione in base ai punti
 			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
 							}	
+		wTeams = league.getTeamsList();
 		
-		days = facade.getSchedule(leagueTmp,false);
+		days = facade.getSchedule((League)tournament,false);
 		for(Day day : days) {
 			dayComboBox.getItems().add(day.getNumber());
 				}
+	
+		}
+		
+		if(tournament.getTournamentType() == TournamentType.MIXED) {
+			boardButton.setVisible(true);
+			mixed = (MixedTournament) tournament;
+		/*	mixed.getTournamentElement().
+			
+			if(mixed.isGroupCompleted()) {
+				boardButton.setDisable(true);
+			}
+			else {
+				boardButton.setDisable(false);
+			}
+			*/
+			teams = facade.getTeamsByTournament(tournament);
+			for(Team team : teams) {
+				mixed.addTeamInTournament(team);
+			}
+			for(Team team : mixed.getTeamsList()) {
+				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+			}
+			wTeams = mixed.getTeamsList();
+			days = facade.getSchedule(tournament, false);
+			for(Day day : days) {
+				dayComboBox.getItems().add(day.getNumber());
+			}
 			
 		}
+		
+				
+		}
+	
 	
 	
 	@Override
@@ -90,7 +131,7 @@ public class LeagueRankingController implements Initializable {
 		teamDetailsButton.setDisable(false);
 		ranking.getItems().clear();
 		text.setText("RANKING");
-		for(Team team : league.getTeamsList()) {                                     
+		for(Team team : wTeams) {                                     
 			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
 							}	
 	}
@@ -110,10 +151,10 @@ public class LeagueRankingController implements Initializable {
 	public void teamSelected(ActionEvent event) {
 		int index = ranking.getSelectionModel().getSelectedIndex();
 		ranking.getItems().clear();
-		text.setText(league.getTeamsList().get(index).getName());
+		text.setText(wTeams.get(index).getName());
 		for(Day day: days) {
 			for(Match match : day.getMatchesList()) {
-				if(match.getHomeTeam().getId() == league.getTeamsList().get(index).getId() || match.getAwayTeam().getId() == league.getTeamsList().get(index).getId()) {
+				if(match.getHomeTeam().getId() == wTeams.get(index).getId() || match.getAwayTeam().getId() == wTeams.get(index).getId()) {
 					ranking.getItems().add(match.toString());		
 				}
 					}
