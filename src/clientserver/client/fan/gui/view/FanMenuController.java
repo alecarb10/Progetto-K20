@@ -107,7 +107,14 @@ public class FanMenuController implements Initializable {
 					
 					break;
 				case 16:
-					System.out.println("16");
+					FXMLLoader loader16 = new FXMLLoader();
+					loader16.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
+					Parent root16 = loader16.load();
+					Scene scene16 = new Scene(root16);
+					Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					primaryStage16.setTitle("Board");
+					primaryStage16.setScene(scene16);
+					primaryStage16.show();
 					break;
 			
 			}
