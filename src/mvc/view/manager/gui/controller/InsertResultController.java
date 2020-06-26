@@ -68,8 +68,7 @@ public class InsertResultController implements Initializable {
 			radioBtnAutoSelection(tournament);
 			try {
 				days.clear();
-				boolean wantsBoard=radioBtnBoard.isSelected()?true:false;
-				tournament.setSchedule(facadeImpl.getSchedule(tournament,wantsBoard));
+				tournament.setSchedule(facadeImpl.getSchedule(tournament,false));
 				for(Day d:tournament.getSchedule())
 					days.add(Integer.toString(d.getNumber()));
 				cmbBoxDay.setItems(days);
@@ -133,7 +132,7 @@ public class InsertResultController implements Initializable {
 		Text txtAwayTeamScore= new Text("Away team score:");
 		SpinnerValueFactory<Integer> awayNumbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
 		Spinner<Integer> spinnerAwayTeamScore= new Spinner<>(awayNumbers);
-		spinnerHomeTeamScore.setEditable(true);	
+		spinnerAwayTeamScore.setEditable(true);	
 		ButtonType btnTypeSaveResult= new ButtonType("Save",ButtonData.OK_DONE);
 
 		grid.add(txtHomeTeamScore, 0,0);
