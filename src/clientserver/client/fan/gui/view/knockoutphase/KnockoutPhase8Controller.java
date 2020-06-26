@@ -83,31 +83,72 @@ public class KnockoutPhase8Controller implements Initializable {
 		}
 		
 		
-		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
-		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());
+		List<Label> labelsList= new ArrayList<>();
+		labelsList.add(label1);
+		labelsList.add(label2);
+		labelsList.add(label3);
+		labelsList.add(label4);		
+		labelsList.add(label5);
+		labelsList.add(label6);
+		labelsList.add(label7);
+		labelsList.add(label8);
+		labelsList.add(label9);
+		labelsList.add(label10);
+		labelsList.add(label11);
+		labelsList.add(label12);
+		labelsList.add(label13);
+		labelsList.add(label14);
+		labelsList.add(label15);
 		
-		label3.setText(days.get(0).getMatchesList().get(1).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(1).getHomeScore());
-		label4.setText(days.get(0).getMatchesList().get(1).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(1).getAwayScore());
+		for(int i=0,j=0,k=0;i<labelsList.size();i++) { //i=label,j=day,k=match		
+			final double EIGHT=Math.pow(2, 3); 
+			if(i==EIGHT||i==EIGHT+Math.pow(2, 2)) {
+				k=0;
+				j++;
+			}
+			Match match=null;
+			if(i==labelsList.size()-1) {
+				k=0;
+				match=days.get(j).getMatchesList().get(k);
+				labelsList.get(i).setText(match.getWinner().getName());
+			}
+			else {
+				match=days.get(j).getMatchesList().get(k);
+				if(i%2==0)
+					labelsList.get(i).setText(match.getHomeTeam().getName() +"            "+ match.getHomeScore());
+				else {
+					labelsList.get(i).setText(match.getAwayTeam().getName() +"            "+ match.getAwayScore());
+					k++;
+				}
+			}
+		}
+	
 		
-		label5.setText(days.get(0).getMatchesList().get(2).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(2).getHomeScore());
-		label6.setText(days.get(0).getMatchesList().get(2).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(2).getAwayScore());
-		
-		label7.setText(days.get(0).getMatchesList().get(3).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(3).getHomeScore());
-		label8.setText(days.get(0).getMatchesList().get(3).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(3).getAwayScore());
-		
-		
-		label9.setText(days.get(1).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(0).getHomeScore());
-		label10.setText(days.get(1).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(0).getAwayScore());
-		
-
-		label11.setText(days.get(1).getMatchesList().get(1).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(1).getHomeScore());
-		label12.setText(days.get(1).getMatchesList().get(1).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(1).getAwayScore());
-		
-
-		label13.setText(days.get(2).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(2).getMatchesList().get(0).getHomeScore());
-		label14.setText(days.get(2).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(2).getMatchesList().get(0).getAwayScore());
-		
-		label15.setText(days.get(2).getMatchesList().get(0).getWinner().getName());
+//		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
+//		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());
+//		
+//		label3.setText(days.get(0).getMatchesList().get(1).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(1).getHomeScore());
+//		label4.setText(days.get(0).getMatchesList().get(1).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(1).getAwayScore());
+//		
+//		label5.setText(days.get(0).getMatchesList().get(2).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(2).getHomeScore());
+//		label6.setText(days.get(0).getMatchesList().get(2).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(2).getAwayScore());
+//		
+//		label7.setText(days.get(0).getMatchesList().get(3).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(3).getHomeScore());
+//		label8.setText(days.get(0).getMatchesList().get(3).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(3).getAwayScore());
+//		
+//		
+//		label9.setText(days.get(1).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(0).getHomeScore());
+//		label10.setText(days.get(1).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(0).getAwayScore());
+//		
+//
+//		label11.setText(days.get(1).getMatchesList().get(1).getHomeTeam().getName() +"            "+ days.get(1).getMatchesList().get(1).getHomeScore());
+//		label12.setText(days.get(1).getMatchesList().get(1).getAwayTeam().getName() +"            " +days.get(1).getMatchesList().get(1).getAwayScore());
+//		
+//
+//		label13.setText(days.get(2).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(2).getMatchesList().get(0).getHomeScore());
+//		label14.setText(days.get(2).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(2).getMatchesList().get(0).getAwayScore());
+//		
+//		label15.setText(days.get(2).getMatchesList().get(0).getWinner().getName());
 		
 		
 		

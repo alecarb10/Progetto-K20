@@ -3,6 +3,7 @@ package clientserver.client.fan.gui.view.knockoutphase;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -103,6 +104,63 @@ public class KnockoutPhase16Controller implements Initializable {
 			else if(k16.getTournamentType() == TournamentType.MIXED) {
 				days = facade.getSchedule(k16, true);
 			}
+		
+//		List<Label> labelsList= new ArrayList<>();
+//		labelsList.add(label1);
+//		labelsList.add(label2);
+//		labelsList.add(label3);
+//		labelsList.add(label4);		
+//		labelsList.add(label5);
+//		labelsList.add(label6);
+//		labelsList.add(label7);
+//		labelsList.add(label8);
+//		labelsList.add(label9);
+//		labelsList.add(label10);
+//		labelsList.add(label11);
+//		labelsList.add(label12);
+//		labelsList.add(label13);
+//		labelsList.add(label14);
+//		labelsList.add(label15);
+//		labelsList.add(label16);
+//		labelsList.add(label17);
+//		labelsList.add(label18);
+//		labelsList.add(label19);
+//		labelsList.add(label20);
+//		labelsList.add(label21);
+//		labelsList.add(label22);
+//		labelsList.add(label23);
+//		labelsList.add(label24);
+//		labelsList.add(label25);
+//		labelsList.add(label26);
+//		labelsList.add(label27);
+//		labelsList.add(label28);
+//		labelsList.add(label29);
+//		labelsList.add(label30);
+//		labelsList.add(label31);
+//		
+//		for(int i=0,j=0,k=0;i<labelsList.size();i++) { //i=label,j=day,k=match		
+//			final double SIXTEEN=Math.pow(2, 4); 
+//			final double EIGHT=Math.pow(2, 3);
+//			if(i==SIXTEEN||i==SIXTEEN+EIGHT||i==SIXTEEN+EIGHT+Math.pow(2, 2)) {
+//				k=0;
+//				j++;
+//			}
+//			Match match=null;
+//			if(i==labelsList.size()-1) {
+//				k=0;
+//				match=days.get(j).getMatchesList().get(k);
+//				labelsList.get(i).setText(match.getWinner().getName());
+//			}
+//			else {
+//				match=days.get(j).getMatchesList().get(k);
+//				if(i%2==0)
+//					labelsList.get(i).setText(match.getHomeTeam().getName() +"            "+ match.getHomeScore());
+//				else {
+//					labelsList.get(i).setText(match.getAwayTeam().getName() +"            "+ match.getAwayScore());
+//					k++;
+//				}
+//			}
+//		}
 
 		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
 		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());
