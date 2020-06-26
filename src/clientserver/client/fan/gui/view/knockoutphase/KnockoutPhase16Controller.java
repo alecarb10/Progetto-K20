@@ -23,6 +23,7 @@ import mvc.model.element.Day;
 import mvc.model.match.Match;
 import mvc.model.tournament.KnockoutPhase;
 import mvc.model.tournament.Tournament;
+import mvc.model.tournament.TournamentType;
 
 public class KnockoutPhase16Controller implements Initializable {
 	@FXML
@@ -96,7 +97,12 @@ public class KnockoutPhase16Controller implements Initializable {
 	
 	public void passingDataToKnock16(Tournament k16) throws SQLException {
 		textBoard.setText(k16.getName());
-		days = facade.getSchedule((KnockoutPhase)k16,false);
+		if(k16.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			days = facade.getSchedule((KnockoutPhase)k16,false);
+			}
+			else if(k16.getTournamentType() == TournamentType.MIXED) {
+				days = facade.getSchedule(k16, true);
+			}
 
 		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
 		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());

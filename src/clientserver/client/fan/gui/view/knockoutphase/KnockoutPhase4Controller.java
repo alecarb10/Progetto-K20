@@ -24,6 +24,7 @@ import mvc.model.element.Day;
 import mvc.model.match.Match;
 import mvc.model.tournament.KnockoutPhase;
 import mvc.model.tournament.Tournament;
+import mvc.model.tournament.TournamentType;
 
 public class KnockoutPhase4Controller implements Initializable{
 	@FXML
@@ -55,7 +56,12 @@ public class KnockoutPhase4Controller implements Initializable{
 	
 	public void passingDataToKnock4(Tournament k4) throws SQLException {
 		textBoard.setText(k4.getName());
-		days = facade.getSchedule((KnockoutPhase)k4,false);
+		if(k4.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			days = facade.getSchedule((KnockoutPhase)k4,false);
+			}
+			else if(k4.getTournamentType() == TournamentType.MIXED) {
+				days = facade.getSchedule(k4, true);
+			}
 		labelDay1c.add(label1);
 		labelDay1f.add(label2);
 		labelDay1c.add(label3);
