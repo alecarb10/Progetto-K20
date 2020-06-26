@@ -15,9 +15,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -54,155 +56,111 @@ public class FanMenuController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void tournamentSelected(ActionEvent event) throws IOException, SQLException {
 		int idx = tournamentNames.getSelectionModel().getSelectedIndex();
 		Tournament tSelect = tournamentList.get(idx);
-		if(tSelect.getTournamentType() == TournamentType.LEAGUE) {
+		if (tSelect.getTournamentType() == TournamentType.LEAGUE) {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
-			Parent root=loader.load();
+			Parent root = loader.load();
 			LeagueRankingController lrc = loader.getController();
 			lrc.passingData(tournamentList.get(idx));
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			primaryStage.setTitle("ranking");
 			primaryStage.setScene(scene);
-			primaryStage.show();			
+			primaryStage.setResizable(false);
+			Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+			primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+			primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+			primaryStage.show();
+
 		}
-		
-		
-		
-		if(tSelect.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+
+		if (tSelect.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
 			teams = facade.getTeamsByTournament(tSelect);
 			int c = teams.size();
-			switch(c) {
-				case 4:
-					FXMLLoader loader4 = new FXMLLoader();
-					loader4.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
-					Parent root4=loader4.load();
-					KnockoutPhase4Controller kp4c = loader4.getController();
-					KnockoutPhase knockoutPhase4 = (KnockoutPhase) tournamentList.get(idx);
-					kp4c.passingDataToKnock4(knockoutPhase4);
-					Scene scene4 = new Scene(root4);
-					Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					primaryStage4.setTitle("Board");
-					primaryStage4.setScene(scene4);
-					primaryStage4.show();		
-						
-					break;
-				case 8:
-					FXMLLoader loader8 = new FXMLLoader();
-					loader8.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
-					Parent root8=loader8.load();
-					KnockoutPhase8Controller kp8c = loader8.getController();
-					KnockoutPhase knockoutPhase8 = (KnockoutPhase) tournamentList.get(idx);
-					kp8c.passingDataToKnock8(knockoutPhase8);
-					Scene scene8 = new Scene(root8);
-					Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					primaryStage8.setTitle("Board");
-					primaryStage8.setScene(scene8);
-					primaryStage8.show();	
-					
-					break;
-				case 16:
-					FXMLLoader loader16 = new FXMLLoader();
-					loader16.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
-					Parent root16 = loader16.load();
-					KnockoutPhase16Controller kp16c = loader16.getController();
-					KnockoutPhase knockoutPhase16 = (KnockoutPhase) tournamentList.get(idx);
-					kp16c.passingDataToKnock16(knockoutPhase16);
-					Scene scene16 = new Scene(root16);
-					Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-					primaryStage16.setTitle("Board");
-					primaryStage16.setScene(scene16);
-					primaryStage16.show();
-					break;
-			
+			switch (c) {
+			case 4:
+				FXMLLoader loader4 = new FXMLLoader();
+				loader4.setLocation(
+						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
+				Parent root4 = loader4.load();
+				KnockoutPhase4Controller kp4c = loader4.getController();
+				KnockoutPhase knockoutPhase4 = (KnockoutPhase) tournamentList.get(idx);
+				kp4c.passingDataToKnock4(knockoutPhase4);
+				Scene scene4 = new Scene(root4);
+				Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				primaryStage4.setTitle("Board");
+				primaryStage4.setScene(scene4);
+				primaryStage4.setResizable(false);
+				Rectangle2D primScreenBounds4 = Screen.getPrimary().getVisualBounds();
+				primaryStage4.setX((primScreenBounds4.getWidth() - primaryStage4.getWidth()) / 2);
+				primaryStage4.setY((primScreenBounds4.getHeight() - primaryStage4.getHeight()) / 2);
+				primaryStage4.show();
+
+				break;
+			case 8:
+				FXMLLoader loader8 = new FXMLLoader();
+				loader8.setLocation(
+						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
+				Parent root8 = loader8.load();
+				KnockoutPhase8Controller kp8c = loader8.getController();
+				KnockoutPhase knockoutPhase8 = (KnockoutPhase) tournamentList.get(idx);
+				kp8c.passingDataToKnock8(knockoutPhase8);
+				Scene scene8 = new Scene(root8);
+				Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				primaryStage8.setTitle("Board");
+				primaryStage8.setScene(scene8);
+				primaryStage8.setResizable(false);
+				Rectangle2D primScreenBounds8 = Screen.getPrimary().getVisualBounds();
+				primaryStage8.setX((primScreenBounds8.getWidth() - primaryStage8.getWidth()) / 2);
+				primaryStage8.setY((primScreenBounds8.getHeight() - primaryStage8.getHeight()) / 2);
+				primaryStage8.show();
+
+				break;
+			case 16:
+				FXMLLoader loader16 = new FXMLLoader();
+				loader16.setLocation(
+						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
+				Parent root16 = loader16.load();
+				KnockoutPhase16Controller kp16c = loader16.getController();
+				KnockoutPhase knockoutPhase16 = (KnockoutPhase) tournamentList.get(idx);
+				kp16c.passingDataToKnock16(knockoutPhase16);
+				Scene scene16 = new Scene(root16);
+				Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				primaryStage16.setTitle("Board");
+				primaryStage16.setScene(scene16);
+				primaryStage16.setResizable(false);
+				Rectangle2D primScreenBounds16 = Screen.getPrimary().getVisualBounds();
+				primaryStage16.setX((primScreenBounds16.getWidth() - primaryStage16.getWidth()) / 2);
+				primaryStage16.setY((primScreenBounds16.getHeight() - primaryStage16.getHeight()) / 2);
+				primaryStage16.show();
+				break;
+
 			}
 		}
-		
-		
-		if(tSelect.getTournamentType() == TournamentType.MIXED) {
-			
+
+		if (tSelect.getTournamentType() == TournamentType.MIXED) {
+
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
-			Parent root=loader.load();
+			Parent root = loader.load();
 			LeagueRankingController lrc = loader.getController();
 			lrc.passingData(tournamentList.get(idx));
 			Scene scene = new Scene(root);
 			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 			primaryStage.setTitle("mixed ranking");
 			primaryStage.setScene(scene);
+			primaryStage.setResizable(false);
+			Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+			primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+			primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 			primaryStage.show();
-			
-			
-			
-			
-			
-			
-			
-			
-		}
-		
-		
-		
-	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*
-	public void tournamentSelected(ActionEvent event) throws IOException {
-		ObservableList<String> tournamentNameSelected;
-		tournamentNameSelected = tournamentNames.getSelectionModel().getSelectedItems();
-		
-			for(Tournament tournament : tournamentList) {
-				for(String tournamentNameSelectedTmp : tournamentNameSelected) {
-					
-					
-					if(tournamentNameSelectedTmp == tournament.getName() && tournament.getTournamentType() == TournamentType.LEAGUE) {
-						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/LeagueRanking.fxml"));
-		
-						LeagueRankingController LRC = loader.getController();
-						League leagueTmp = (League) tournament;
-						Group groupTmp = (Group)leagueTmp.getTournamentElement();
-						List<Team> rankingTmp = groupTmp.getRanking();		
-						LRC.populateRanking(rankingTmp);
-						
-						Scene scene = new Scene(loader.load());
-						Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-						primaryStage.setTitle("ranking");
-						primaryStage.setScene(scene);
-						primaryStage.show();
-						
-			
-					}
-					else System.out.println("altro");
-						break;
-					
-					
-					
-					
-				} //chiusura for interno
-			} // chiusura for esterno
-		
-		
+		}
+
 	}
-	*/
-	
 
 }

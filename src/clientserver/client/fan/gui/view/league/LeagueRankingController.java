@@ -13,11 +13,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 import mvc.model.element.Day;
@@ -65,12 +67,15 @@ public class LeagueRankingController implements Initializable {
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		primaryStage.setTitle("Fan menu");
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
 	}
 	
 	
-	public void passingData(Tournament tournament) throws SQLException {  // popolazione List<View> e comboBox
-		
+	public void passingData(Tournament tournament) throws SQLException {  
 		if(tournament.getTournamentType() == TournamentType.LEAGUE) {
 		boardButton.setVisible(false);	
 		league = (League) tournament;
@@ -78,7 +83,7 @@ public class LeagueRankingController implements Initializable {
 		for(Team team : teams) {
 			league.addTeamInTournament(team);
 							}
-		for(Team team : league.getTeamsList()) {                                     //con league.getTeamList() avviene già l'oridnazione in base ai punti
+		for(Team team : league.getTeamsList()) {       //con league.getTeamList() abbiamo l'ordinazione in base ai punti
 			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
 							}	
 		wTeams = league.getTeamsList();

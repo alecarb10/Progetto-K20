@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class FanMain extends Application {
@@ -16,7 +18,12 @@ public class FanMain extends Application {
 		Scene scene = new Scene(loader.load());
 		primaryStage.setTitle("Fan menu");
 		primaryStage.setScene(scene);
-		primaryStage.show();	
+		primaryStage.setResizable(false);
+		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+		primaryStage.show();
+
 	}
 
 	public static void main(String[] args) {
