@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import mvc.model.element.Day;
 import mvc.model.match.Match;
 import mvc.model.tournament.KnockoutPhase;
+import mvc.model.tournament.Tournament;
 
 public class KnockoutPhase16Controller implements Initializable {
 	@FXML
@@ -93,9 +94,9 @@ public class KnockoutPhase16Controller implements Initializable {
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
 	
-	public void passingDataToKnock16(KnockoutPhase k16) throws SQLException {
+	public void passingDataToKnock16(Tournament k16) throws SQLException {
 		textBoard.setText(k16.getName());
-		days = facade.getSchedule(k16,false);
+		days = facade.getSchedule((KnockoutPhase)k16,false);
 		for(Day day : days) {
 			for(Match match : day.getMatchesList()) {
 				System.out.println(match.toString());

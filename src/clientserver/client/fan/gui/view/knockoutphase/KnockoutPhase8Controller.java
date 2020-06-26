@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import mvc.model.element.Day;
 import mvc.model.match.Match;
 import mvc.model.tournament.KnockoutPhase;
+import mvc.model.tournament.Tournament;
 
 public class KnockoutPhase8Controller implements Initializable {
 	@FXML
@@ -71,9 +72,9 @@ public class KnockoutPhase8Controller implements Initializable {
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
 	
-	public void passingDataToKnock8(KnockoutPhase k8) throws SQLException {
+	public void passingDataToKnock8(Tournament k8) throws SQLException {
 		textBoard.setText(k8.getName());
-		days = facade.getSchedule(k8,false);
+		days = facade.getSchedule((KnockoutPhase)k8,false);
 		
 		
 		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());

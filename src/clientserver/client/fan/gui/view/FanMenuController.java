@@ -88,8 +88,7 @@ public class FanMenuController implements Initializable {
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
 				Parent root4 = loader4.load();
 				KnockoutPhase4Controller kp4c = loader4.getController();
-				KnockoutPhase knockoutPhase4 = (KnockoutPhase) tournamentList.get(idx);
-				kp4c.passingDataToKnock4(knockoutPhase4);
+				kp4c.passingDataToKnock4(tournamentList.get(idx));
 				Scene scene4 = new Scene(root4);
 				Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				primaryStage4.setTitle("Board");
@@ -107,8 +106,7 @@ public class FanMenuController implements Initializable {
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
 				Parent root8 = loader8.load();
 				KnockoutPhase8Controller kp8c = loader8.getController();
-				KnockoutPhase knockoutPhase8 = (KnockoutPhase) tournamentList.get(idx);
-				kp8c.passingDataToKnock8(knockoutPhase8);
+				kp8c.passingDataToKnock8(tournamentList.get(idx));
 				Scene scene8 = new Scene(root8);
 				Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				primaryStage8.setTitle("Board");
@@ -126,8 +124,7 @@ public class FanMenuController implements Initializable {
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
 				Parent root16 = loader16.load();
 				KnockoutPhase16Controller kp16c = loader16.getController();
-				KnockoutPhase knockoutPhase16 = (KnockoutPhase) tournamentList.get(idx);
-				kp16c.passingDataToKnock16(knockoutPhase16);
+				kp16c.passingDataToKnock16(tournamentList.get(idx));
 				Scene scene16 = new Scene(root16);
 				Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				primaryStage16.setTitle("Board");

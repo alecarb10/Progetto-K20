@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,10 +23,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import mvc.model.element.Day;
 import mvc.model.element.Group;
 import mvc.model.match.Match;
 import mvc.model.team.Team;
+import mvc.model.tournament.KnockoutPhase;
 import mvc.model.tournament.League;
 import mvc.model.tournament.MixedTournament;
 import mvc.model.tournament.Tournament;
@@ -50,14 +53,13 @@ public class LeagueRankingController implements Initializable {
 	private Button boardButton;
 	
 	FacadeImpl facade = FacadeImpl.getInstance();
-	League league;
 	MixedTournament mixed;
 	
 	List<Team> wTeams;
 	List<Team> teams;
 	List<Day> days; 
 	Day day;
-	
+	Tournament tournament;
 	
 	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
@@ -75,7 +77,50 @@ public class LeagueRankingController implements Initializable {
 	}
 	
 	
-	public void passingData(Tournament tournament) throws SQLException {  
+	public void passingData(Tournament tournamentPass) throws SQLException {  
+		
+		if(tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
+			boardButton.setVisible(false);
+			tournament = (League)tournamentPass;
+			teams = facade.getTeamsByTournament(tournamentPass);
+			for(Team team : teams) {
+				tournament.addTeamInTournament(team);
+			}
+			wTeams = tournament.getTeamsList();
+			for(Team team : wTeams) {
+				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+			}
+			
+			days = facade.getSchedule(tournamentPass, false);
+			for(Day day: days) {
+				dayComboBox.getItems().add(day.getNumber());
+			}
+			
+		}
+		
+		if(tournamentPass.getTournamentType() == TournamentType.MIXED) {
+			boardButton.setVisible(true);
+			tournament = (MixedTournament)tournamentPass;
+			teams = facade.getTeamsByTournament(tournamentPass);
+			for(Team team : teams) {
+				tournament.addTeamInTournament(team);
+			}
+			wTeams = tournament.getTeamsList();
+			for(Team team : wTeams) {
+				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+			}
+			days = facade.getSchedule(tournamentPass, false);
+			for(Day day: days) {
+				dayComboBox.getItems().add(day.getNumber());
+			}
+			
+			
+		}
+		
+		
+		
+		
+		/*
 		if(tournament.getTournamentType() == TournamentType.LEAGUE) {
 		boardButton.setVisible(false);	
 		league = (League) tournament;
@@ -98,15 +143,14 @@ public class LeagueRankingController implements Initializable {
 		if(tournament.getTournamentType() == TournamentType.MIXED) {
 			boardButton.setVisible(true);
 			mixed = (MixedTournament) tournament;
-		/*	mixed.getTournamentElement().
-			
-			if(mixed.isGroupCompleted()) {
+			mixed.setSchedule(facade.getSchedule(tournament, false));
+			if(mixed.getTournamentElement().isCompleted()) {
 				boardButton.setDisable(true);
 			}
 			else {
 				boardButton.setDisable(false);
 			}
-			*/
+			
 			teams = facade.getTeamsByTournament(tournament);
 			for(Team team : teams) {
 				mixed.addTeamInTournament(team);
@@ -121,7 +165,7 @@ public class LeagueRankingController implements Initializable {
 			}
 			
 		}
-		
+		*/
 				
 		}
 	
@@ -165,6 +209,14 @@ public class LeagueRankingController implements Initializable {
 					}
 							}		
 		}
+	
+	public void boardButtonCliccked(ActionEvent event) throws IOException {
+		int c = wTeams.size();
+
+		
+		
+		
+	}
 		
 		
 	
