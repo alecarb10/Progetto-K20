@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
+import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,7 +37,6 @@ import mvc.model.tournament.Tournament;
 //===============
 import mvc.model.tournament.TournamentType;
 
-
 public class LeagueRankingController implements Initializable {
 	@FXML
 	private Button menuButton;
@@ -51,17 +52,17 @@ public class LeagueRankingController implements Initializable {
 	private Button rankingButton;
 	@FXML
 	private Button boardButton;
-	
+
 	FacadeImpl facade = FacadeImpl.getInstance();
 	MixedTournament mixed;
-	
+
 	List<Team> wTeams;
 	List<Team> teams;
-	List<Day> days; 
+	List<Day> days;
+	List<Day> dayMixed;
 	Day day;
 	Tournament tournament;
-	
-	
+
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
@@ -71,158 +72,158 @@ public class LeagueRankingController implements Initializable {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
 	}
-	
-	
-	public void passingData(Tournament tournamentPass) throws SQLException {  
-		
-		if(tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
+
+	public void passingData(Tournament tournamentPass) throws SQLException {
+
+		if (tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
 			boardButton.setVisible(false);
-			tournament = (League)tournamentPass;
+			tournament = (League) tournamentPass;
 			teams = facade.getTeamsByTournament(tournamentPass);
-			for(Team team : teams) {
+			for (Team team : teams) {
 				tournament.addTeamInTournament(team);
 			}
 			wTeams = tournament.getTeamsList();
-			for(Team team : wTeams) {
-				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+			for (Team team : wTeams) {
+				ranking.getItems().add(team.getName() + "             " + team.getPoints());
 			}
-			
+
 			days = facade.getSchedule(tournamentPass, false);
-			for(Day day: days) {
+			for (Day day : days) {
 				dayComboBox.getItems().add(day.getNumber());
 			}
-			
+
 		}
-		
-		if(tournamentPass.getTournamentType() == TournamentType.MIXED) {
+
+		if (tournamentPass.getTournamentType() == TournamentType.MIXED) {
 			boardButton.setVisible(true);
-			tournament = (MixedTournament)tournamentPass;
+			tournament = (MixedTournament) tournamentPass;
 			teams = facade.getTeamsByTournament(tournamentPass);
-			for(Team team : teams) {
+			for (Team team : teams) {
 				tournament.addTeamInTournament(team);
 			}
 			wTeams = tournament.getTeamsList();
-			for(Team team : wTeams) {
-				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
+			for (Team team : wTeams) {
+				ranking.getItems().add(team.getName() + "             " + team.getPoints());
 			}
 			days = facade.getSchedule(tournamentPass, false);
-			for(Day day: days) {
+			for (Day day : days) {
 				dayComboBox.getItems().add(day.getNumber());
 			}
-			
-			
-		}
-		
-		
-		
-		
-		/*
-		if(tournament.getTournamentType() == TournamentType.LEAGUE) {
-		boardButton.setVisible(false);	
-		league = (League) tournament;
-		teams = facade.getTeamsByTournament(tournament);
-		for(Team team : teams) {
-			league.addTeamInTournament(team);
-							}
-		for(Team team : league.getTeamsList()) {       //con league.getTeamList() abbiamo l'ordinazione in base ai punti
-			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
-							}	
-		wTeams = league.getTeamsList();
-		
-		days = facade.getSchedule((League)tournament,false);
-		for(Day day : days) {
-			dayComboBox.getItems().add(day.getNumber());
-				}
-	
-		}
-		
-		if(tournament.getTournamentType() == TournamentType.MIXED) {
-			boardButton.setVisible(true);
-			mixed = (MixedTournament) tournament;
-			mixed.setSchedule(facade.getSchedule(tournament, false));
-			if(mixed.getTournamentElement().isCompleted()) {
+			dayMixed = facade.getSchedule(tournamentPass, true);
+			if (dayMixed.isEmpty()) {
+				boardButton.setDisable(false);
+			} else {
 				boardButton.setDisable(true);
 			}
-			else {
-				boardButton.setDisable(false);
-			}
-			
-			teams = facade.getTeamsByTournament(tournament);
-			for(Team team : teams) {
-				mixed.addTeamInTournament(team);
-			}
-			for(Team team : mixed.getTeamsList()) {
-				ranking.getItems().add(team.getName()+"             "+ team.getPoints());
-			}
-			wTeams = mixed.getTeamsList();
-			days = facade.getSchedule(tournament, false);
-			for(Day day : days) {
-				dayComboBox.getItems().add(day.getNumber());
-			}
-			
+
 		}
-		*/
-				
-		}
-	
-	
-	
+
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 	}
-	
+
 	public void rankingButtonClicked(ActionEvent event) {
 		teamDetailsButton.setDisable(false);
 		ranking.getItems().clear();
 		text.setText("RANKING");
-		for(Team team : wTeams) {                                     
-			ranking.getItems().add(team.getName()+"             "+ team.getPoints());
-							}	
+		for (Team team : wTeams) {
+			ranking.getItems().add(team.getName() + "             " + team.getPoints());
+		}
 	}
-	
+
 	public void daySelected(ActionEvent event) {
 		teamDetailsButton.setDisable(true);
 		int indx = (int) dayComboBox.getSelectionModel().getSelectedIndex();
 		ranking.getItems().clear();
-		text.setText("DAY  " + (indx+1));
+		text.setText("DAY  " + (indx + 1));
 		day = days.get(indx);
-	    for(Match match : day.getMatchesList()) {
-	    	ranking.getItems().add(match.toString());
-	    }
-		
+		for (Match match : day.getMatchesList()) {
+			ranking.getItems().add(match.toString());
+		}
+
 	}
-	
+
 	public void teamSelected(ActionEvent event) {
+		teamDetailsButton.setDisable(true);
 		int index = ranking.getSelectionModel().getSelectedIndex();
 		ranking.getItems().clear();
 		text.setText(wTeams.get(index).getName());
-		for(Day day: days) {
-			for(Match match : day.getMatchesList()) {
-				if(match.getHomeTeam().getId() == wTeams.get(index).getId() || match.getAwayTeam().getId() == wTeams.get(index).getId()) {
-					ranking.getItems().add(match.toString());		
+		for (Day day : days) {
+			for (Match match : day.getMatchesList()) {
+				if (match.getHomeTeam().getId() == wTeams.get(index).getId()
+						|| match.getAwayTeam().getId() == wTeams.get(index).getId()) {
+					ranking.getItems().add(match.toString());
 				}
-					}
-							}		
+			}
 		}
-	
-	public void boardButtonCliccked(ActionEvent event) throws IOException {
-		int c = wTeams.size();
-
-		
-		
-		
 	}
-		
-		
-	
-	
-	
-	
 
+	public void boardButtonCliccked(ActionEvent event) throws IOException, SQLException {
+		int c = wTeams.size();
+		switch (c) {
+		case 4:
+			FXMLLoader loader4 = new FXMLLoader();
+			loader4.setLocation(
+					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
+			Parent root4 = loader4.load();
+			KnockoutPhase4Controller kp4c = loader4.getController();
+			kp4c.passingDataToKnock4(tournament);
+			Scene scene4 = new Scene(root4);
+			Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			primaryStage4.setTitle("Board");
+			primaryStage4.setScene(scene4);
+			primaryStage4.setResizable(false);
+			Rectangle2D primScreenBounds4 = Screen.getPrimary().getVisualBounds();
+			primaryStage4.setX((primScreenBounds4.getWidth() - primaryStage4.getWidth()) / 2);
+			primaryStage4.setY((primScreenBounds4.getHeight() - primaryStage4.getHeight()) / 2);
+			primaryStage4.show();
+
+			break;
+		case 8:
+			FXMLLoader loader8 = new FXMLLoader();
+			loader8.setLocation(
+					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
+			Parent root8 = loader8.load();
+			KnockoutPhase8Controller kp8c = loader8.getController();
+			kp8c.passingDataToKnock8(tournament);
+			Scene scene8 = new Scene(root8);
+			Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			primaryStage8.setTitle("Board");
+			primaryStage8.setScene(scene8);
+			primaryStage8.setResizable(false);
+			Rectangle2D primScreenBounds8 = Screen.getPrimary().getVisualBounds();
+			primaryStage8.setX((primScreenBounds8.getWidth() - primaryStage8.getWidth()) / 2);
+			primaryStage8.setY((primScreenBounds8.getHeight() - primaryStage8.getHeight()) / 2);
+			primaryStage8.show();
+
+			break;
+		case 16:
+			FXMLLoader loader16 = new FXMLLoader();
+			loader16.setLocation(
+					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
+			Parent root16 = loader16.load();
+			KnockoutPhase16Controller kp16c = loader16.getController();
+			kp16c.passingDataToKnock16(tournament);
+			Scene scene16 = new Scene(root16);
+			Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+			primaryStage16.setTitle("Board");
+			primaryStage16.setScene(scene16);
+			primaryStage16.setResizable(false);
+			Rectangle2D primScreenBounds16 = Screen.getPrimary().getVisualBounds();
+			primaryStage16.setX((primScreenBounds16.getWidth() - primaryStage16.getWidth()) / 2);
+			primaryStage16.setY((primScreenBounds16.getHeight() - primaryStage16.getHeight()) / 2);
+			primaryStage16.show();
+			break;
+
+		}
+
+	}
 
 }

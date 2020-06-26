@@ -97,11 +97,7 @@ public class KnockoutPhase16Controller implements Initializable {
 	public void passingDataToKnock16(Tournament k16) throws SQLException {
 		textBoard.setText(k16.getName());
 		days = facade.getSchedule((KnockoutPhase)k16,false);
-		for(Day day : days) {
-			for(Match match : day.getMatchesList()) {
-				System.out.println(match.toString());
-			}
-		}
+
 		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
 		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());
 		
