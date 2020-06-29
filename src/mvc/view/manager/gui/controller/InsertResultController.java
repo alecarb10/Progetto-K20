@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -42,6 +43,10 @@ public class InsertResultController implements Initializable {
 	private RadioButton radioBtnGroup,radioBtnBoard;
 	@FXML
 	private ListView<String> listViewMatches;
+	@FXML
+	private Button btnAddNextDay;
+	@FXML
+	private CheckBox checkBoxPlayed;
 	
 	private ToggleGroup toggleGrp;
 	private ObservableList<String> tournaments,days,matches;
@@ -61,9 +66,8 @@ public class InsertResultController implements Initializable {
 		days=FXCollections.observableArrayList();
 		matches=FXCollections.observableArrayList();
 		facadeImpl= FacadeImpl.getInstance();
+		btnAddNextDay.setDisable(true);
 		cmbBoxTournament.setOnAction((ActionEvent)->{
-//			radioBtnGroup.setSelected(false);
-//			radioBtnBoard.setSelected(false);
 			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
 			radioBtnAutoSelection(tournament);
 			try {
@@ -79,10 +83,11 @@ public class InsertResultController implements Initializable {
 			
 		});
 		cmbBoxDay.setOnAction((ActionEvent)->{
-			//dayNumber=cmbBoxDay.getSelectionModel().getSelectedItem()
 			matches.clear();
 			int indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;
-			for(Match m: tournament.getSchedule().get(indexDay).getMatchesList()){
+			Day selectedDay=tournament.getSchedule().get(indexDay);
+			btnAddNextDay.setDisable(selectedDay.isCompleted()&&radioBtnBoard.isSelected()?false:true);
+			for(Match m: selectedDay.getMatchesList()){
 				matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
 			}
 			this.listViewMatches.setItems(matches);
@@ -91,24 +96,27 @@ public class InsertResultController implements Initializable {
 
 				@Override
 				public void handle(MouseEvent event) {
-					int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
-					Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
-					Optional<Pair<String,String>> result=getDialogResult();
-					result.ifPresent(score-> {
-						String matchScore[]=score.getValue().trim().split("-");
-						int homeScore=Integer.parseInt(matchScore[0]);
-						int awayScore=Integer.parseInt(matchScore[1]);
-						try {
-							if (tournament.insertScore(indexDay + 1, oldMatch,homeScore, awayScore)) {
-								if (facadeImpl.updateMatch(oldMatch, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
-									tournament.setSchedule(facadeImpl.getSchedule(tournament, false));
+					if(event.getClickCount()==2) {
+						int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
+						Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
+						checkBoxPlayed.setSelected(oldMatch.isPlayed()?true:false);
+						Optional<Pair<String,String>> result=getDialogResult(oldMatch);
+						result.ifPresent(score-> {
+							String matchScore[]=score.getValue().trim().split("-");
+							int homeScore=Integer.parseInt(matchScore[0]);
+							int awayScore=Integer.parseInt(matchScore[1]);
+							try {
+								if (tournament.insertScore(indexDay + 1, oldMatch,homeScore, awayScore)) {
+									if (facadeImpl.updateMatch(oldMatch,tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
+										tournament.setSchedule(facadeImpl.getSchedule(tournament, false));
+									}
 								}
+							}catch (Exception ex) {
+								ex.printStackTrace();
 							}
-						}catch (Exception ex) {
-							ex.printStackTrace();
-						}
-					});
-					
+							
+						});
+					}
 				}
 				
 			});
@@ -116,30 +124,23 @@ public class InsertResultController implements Initializable {
 		
 	}
 	
-	private Optional<Pair<String, String>> getDialogResult() {
+	private Optional<Pair<String, String>> getDialogResult(Match match) {
 		dialog= new Dialog<>();
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
-		Text txtHomeTeamScore= new Text("Home team score:");
-		SpinnerValueFactory<Integer> homeNumbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
-		Spinner<Integer> spinnerHomeTeamScore= new Spinner<>(homeNumbers);
-		spinnerHomeTeamScore.setEditable(true);
-//		ComboBox<Integer> cmbBoxHomeTeamScore=new ComboBox<Integer>();
-//		cmbBoxHomeTeamScore.setPromptText("Score Home Team");
-//		ComboBox<Integer> cmbBoxAwayTeamScore=new ComboBox<Integer>();
-//		cmbBoxAwayTeamScore.setPromptText("Score Away Team");
-		Text txtAwayTeamScore= new Text("Away team score:");
-		SpinnerValueFactory<Integer> awayNumbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
-		Spinner<Integer> spinnerAwayTeamScore= new Spinner<>(awayNumbers);
-		spinnerAwayTeamScore.setEditable(true);	
+		boolean played=match.isPlayed();
+		Text txtHomeTeamScore= new Text(match.getHomeTeam().getName().toUpperCase()+"'s"+" score:");
+		Spinner<Integer> spinnerHomeTeamScore= getSpinner(played, match.getHomeScore());
+		Text txtAwayTeamScore= new Text(match.getAwayTeam().getName().toUpperCase()+"'s"+" score:");
+		Spinner<Integer> spinnerAwayTeamScore= getSpinner(played, match.getAwayScore());
 		ButtonType btnTypeSaveResult= new ButtonType("Save",ButtonData.OK_DONE);
-
 		grid.add(txtHomeTeamScore, 0,0);
 		grid.add(spinnerHomeTeamScore, 1,0);
 		grid.add(txtAwayTeamScore, 2,0);
 		grid.add(spinnerAwayTeamScore, 3,0);
 		dialog.getDialogPane().getButtonTypes().add(btnTypeSaveResult);
+		dialog.getDialogPane().lookupButton(btnTypeSaveResult).setDisable(played);
 		
 		dialog.getDialogPane().setContent(grid);
 		
@@ -177,17 +178,33 @@ public class InsertResultController implements Initializable {
 	private void radioBtnAutoSelection(Tournament tournament) {
 		if(tournament.getTournamentType()==TournamentType.KNOCKOUT_PHASE) {
 			toggleGrp.selectToggle(radioBtnBoard);
-			radioButtonsSetDisable();
+			setRadioButtonsDisable(true);
 		}
 		else if(tournament.getTournamentType()==TournamentType.LEAGUE) {
 			toggleGrp.selectToggle(radioBtnGroup);
-			radioButtonsSetDisable();
+			setRadioButtonsDisable(true);
 		}
+		else setRadioButtonsDisable(false);
 	}
 	
-	private void radioButtonsSetDisable() {
-		radioBtnGroup.setDisable(true);
-		radioBtnBoard.setDisable(true);
+	private void setRadioButtonsDisable(boolean value) {
+		radioBtnGroup.setDisable(value);
+		radioBtnBoard.setDisable(value);
+	}
+	
+	private Spinner<Integer> getSpinner(boolean played,int score) {
+		SpinnerValueFactory <Integer> spinnerValueFactory=new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
+		Spinner<Integer> spinner= new Spinner<>(spinnerValueFactory);
+		spinner.setEditable(true);
+		if(played) {
+			spinner.setDisable(true);
+			spinner.getValueFactory().setValue(score);
+		}
+		return spinner;
+	}
+	
+	public void addNextDay(ActionEvent event) {
+		System.out.println("add next day");
 	}
 	
 }
