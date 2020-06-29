@@ -222,7 +222,7 @@ public class ElementDAOImpl implements IElementDAO {
 		int idBoard;
 		
 		// group
-		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
+		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1 && !wantsBoard) {
 			query = "SELECT IDGroup from tournament.group where IDTournament=?";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
