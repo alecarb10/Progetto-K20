@@ -148,9 +148,9 @@ public class ManagerDAOImpl implements IManagerDAO {
 		rs = ps.executeQuery();
 
 		if (rs.next()) {
-			String name = rs.getString(1);
-			String surname = rs.getString(2);
-			String pass = rs.getString(3);
+			String name = rs.getString(2);
+			String surname = rs.getString(3);
+			String pass = rs.getString(4);
 			
 			info.add(name);
 			info.add(surname);
