@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.util.StageLoader;
 import database.dao.impl.FacadeImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -223,7 +224,10 @@ public class KnockoutPhase16Controller implements Initializable {
 	
 	
 	public void backButtonClicked(ActionEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader();
+	
+		StageLoader SLB = new StageLoader();
+		SLB.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", event);
+		/*	FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
 		Scene scene = new Scene(loader.load());
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -234,7 +238,7 @@ public class KnockoutPhase16Controller implements Initializable {
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
-		
+		*/
 	}
 
 
