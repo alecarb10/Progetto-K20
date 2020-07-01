@@ -7,7 +7,7 @@ public interface IManagerDAO {
 
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException;
 	
-	public boolean updateManager(String username, String name, String surname, String password) throws SQLException;
+	public boolean updateManager(String username, String name, String surname) throws SQLException;
 	
 	public boolean removeManager(String username) throws SQLException;
 	

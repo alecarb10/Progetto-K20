@@ -44,18 +44,16 @@ public class ManagerDAOImpl implements IManagerDAO {
 	}
 	
 	@Override
-	public boolean updateManager(String username, String name, String surname, String password) throws SQLException {
+	public boolean updateManager(String username, String name, String surname) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
 		
-		password = MD5.getMd5(password);
-		String query = "UPDATE manager SET Name=?, Surname=?, Password=? WHERE Username=?";
+		String query = "UPDATE manager SET Name=?, Surname=? WHERE Username=?";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, name);
 		ps.setString(2, surname);
-		ps.setString(3, password);
-		ps.setString(4, username);
+		ps.setString(3, username);
 		rs = ps.execute();
 		
 		if (!rs) {

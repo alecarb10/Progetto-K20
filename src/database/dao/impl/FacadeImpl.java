@@ -33,9 +33,9 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public boolean updateManager(String username, String name, String surname, String password) throws SQLException {
+	public boolean updateManager(String username, String name, String surname) throws SQLException {
 		IManagerDAO md = new ManagerDAOImpl();
-		return md.updateManager(username, name, surname, password);
+		return md.updateManager(username, name, surname);
 	}
 	
 	@Override
