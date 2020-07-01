@@ -9,6 +9,7 @@ import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import clientserver.client.fan.gui.view.league.LeagueRankingController;
+import clientserver.client.fan.gui.view.util.StageLoader;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,6 +62,12 @@ public class FanMenuController implements Initializable {
 		int idx = tournamentNames.getSelectionModel().getSelectedIndex();
 		Tournament tSelect = tournamentList.get(idx);
 		if (tSelect.getTournamentType() == TournamentType.LEAGUE) {
+			StageLoader SLL = new StageLoader();
+			SLL.show("clientserver/client/fan/gui/view/league/LeagueRanking.fxml", "Ranking", event);
+			LeagueRankingController lrc = SLL.getLoader().getController();
+			lrc.passingData(tournamentList.get(idx));
+			
+			/*
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
 			Parent root = loader.load();
@@ -75,7 +82,7 @@ public class FanMenuController implements Initializable {
 			primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
 			primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 			primaryStage.show();
-
+			*/
 		}
 
 		if (tSelect.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
@@ -83,7 +90,11 @@ public class FanMenuController implements Initializable {
 			int c = teams.size();
 			switch (c) {
 			case 4:
-				FXMLLoader loader4 = new FXMLLoader();
+				StageLoader SL4 = new StageLoader();
+				SL4.show("clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml", "Board", event);
+				KnockoutPhase4Controller kp4c = SL4.getLoader().getController();
+				kp4c.passingDataToKnock4(tournamentList.get(idx));
+			/*	FXMLLoader loader4 = new FXMLLoader();
 				loader4.setLocation(
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
 				Parent root4 = loader4.load();
@@ -98,9 +109,14 @@ public class FanMenuController implements Initializable {
 				primaryStage4.setX((primScreenBounds4.getWidth() - primaryStage4.getWidth()) / 2);
 				primaryStage4.setY((primScreenBounds4.getHeight() - primaryStage4.getHeight()) / 2);
 				primaryStage4.show();
-
+			*/	
 				break;
 			case 8:
+				StageLoader SL8 = new StageLoader();
+				SL8.show("clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml", "Board", event);
+				KnockoutPhase8Controller kp8c = SL8.getLoader().getController();
+				kp8c.passingDataToKnock8(tournamentList.get(idx));
+				/*
 				FXMLLoader loader8 = new FXMLLoader();
 				loader8.setLocation(
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
@@ -116,9 +132,15 @@ public class FanMenuController implements Initializable {
 				primaryStage8.setX((primScreenBounds8.getWidth() - primaryStage8.getWidth()) / 2);
 				primaryStage8.setY((primScreenBounds8.getHeight() - primaryStage8.getHeight()) / 2);
 				primaryStage8.show();
-
+	*/
 				break;
 			case 16:
+				StageLoader SL16 = new StageLoader();
+				SL16.show("clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml", "Board", event);
+				KnockoutPhase16Controller kp16c = SL16.getLoader().getController();
+				kp16c.passingDataToKnock16(tournamentList.get(idx));
+				
+			/*	
 				FXMLLoader loader16 = new FXMLLoader();
 				loader16.setLocation(
 						getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
@@ -134,13 +156,20 @@ public class FanMenuController implements Initializable {
 				primaryStage16.setX((primScreenBounds16.getWidth() - primaryStage16.getWidth()) / 2);
 				primaryStage16.setY((primScreenBounds16.getHeight() - primaryStage16.getHeight()) / 2);
 				primaryStage16.show();
+				
+			*/	
 				break;
 
 			}
 		}
 
 		if (tSelect.getTournamentType() == TournamentType.MIXED) {
-
+			StageLoader SLM = new StageLoader();
+			SLM.show("clientserver/client/fan/gui/view/league/LeagueRanking.fxml", "Mixed ranking", event);
+			LeagueRankingController lrc = SLM.getLoader().getController();
+			lrc.passingData(tournamentList.get(idx));
+			
+			/*
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
 			Parent root = loader.load();
@@ -155,7 +184,7 @@ public class FanMenuController implements Initializable {
 			primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
 			primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 			primaryStage.show();
-
+	*/
 		}
 
 	}
