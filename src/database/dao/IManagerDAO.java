@@ -15,5 +15,5 @@ public interface IManagerDAO {
 	
 	public boolean checkManagerLogin(String username, String password) throws SQLException;	
 	
-	public List<String> getManagerByID(String username) throws SQLException;
+	public List<String> getManagerByUsername(String username) throws SQLException;
 }

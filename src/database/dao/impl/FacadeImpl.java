@@ -57,9 +57,9 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
-	public List<String> getManagerByID(String username) throws SQLException {
+	public List<String> getManagerByUsername(String username) throws SQLException {
 		IManagerDAO md = new ManagerDAOImpl();
-		return md.getManagerByID(username);
+		return md.getManagerByUsername(username);
 	}
 
 	@Override

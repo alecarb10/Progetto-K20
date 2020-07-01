@@ -135,7 +135,7 @@ public class ManagerDAOImpl implements IManagerDAO {
 	}
 
 	@Override
-	public List<String> getManagerByID(String username) throws SQLException {
+	public List<String> getManagerByUsername(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		ResultSet rs;
