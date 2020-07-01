@@ -9,6 +9,7 @@ import com.sun.jdi.event.Event;
 import database.dao.impl.FacadeImpl;
 import mvc.model.tournament.Tournament;
 import mvc.view.manager.gui.util.Constants;
+import mvc.view.manager.gui.util.GraphicControlsHandler;
 import mvc.view.manager.gui.util.GraphicHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,6 +41,7 @@ public class HomeController implements Initializable {
 	
 	public void editTeam(ActionEvent event) {
 		try {
+			GraphicControlsHandler.resetComboBox(cmbBoxProfile, username);
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/EditTeam.fxml");
 			Parent root=loader.load();
 			EditTeamController controller= loader.getController();
@@ -56,6 +58,7 @@ public class HomeController implements Initializable {
 	
 	public void addStadium(ActionEvent event) {
 		try {
+			GraphicControlsHandler.resetComboBox(cmbBoxProfile, username);
 			this.borderPaneHome.setCenter(GraphicHandler.getParent(Constants.PATH_PREFIX+"/resources/AddStadium.fxml"));
 		}
 		catch (Exception ex) {
@@ -65,6 +68,7 @@ public class HomeController implements Initializable {
 	
 	public void insertResult(ActionEvent event) {
 		try {
+			GraphicControlsHandler.resetComboBox(cmbBoxProfile, username);
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/InsertResult.fxml");
 			Parent root=loader.load();
 			InsertResultController controller= loader.getController();
@@ -80,6 +84,7 @@ public class HomeController implements Initializable {
 	
 	public void createTournament(ActionEvent event) {
 		try {
+			GraphicControlsHandler.resetComboBox(cmbBoxProfile, username);
 			FXMLLoader loader= GraphicHandler.getLoader(Constants.PATH_PREFIX+"/resources/CreateTournament.fxml");
 			Parent root=loader.load();
 			CreateTournamentController controller= loader.getController();
