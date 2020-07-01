@@ -150,11 +150,9 @@ public class ManagerDAOImpl implements IManagerDAO {
 		if (rs.next()) {
 			String name = rs.getString(2);
 			String surname = rs.getString(3);
-			String pass = rs.getString(4);
 			
 			info.add(name);
 			info.add(surname);
-			info.add(pass);
 		}
 			
 		DBConnection.closeConnection(conn);
