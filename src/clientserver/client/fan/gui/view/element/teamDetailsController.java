@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import clientserver.client.fan.gui.view.league.LeagueRankingController;
+import clientserver.client.fan.gui.view.util.StageLoader;
 import database.dao.impl.FacadeImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -87,6 +88,11 @@ public class teamDetailsController implements Initializable {
 
 	
 	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
+		StageLoader SLB = new StageLoader();
+		SLB.show("clientserver/client/fan/gui/view/league/LeagueRanking.fxml", "Ranking", event);
+		LeagueRankingController lrc = SLB.getLoader().getController();
+		lrc.passingData(tournamentB);
+		/*
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
 		Parent root =loader.load();
@@ -101,7 +107,7 @@ public class teamDetailsController implements Initializable {
         primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
-		
+		*/
 	}
 	
 	
