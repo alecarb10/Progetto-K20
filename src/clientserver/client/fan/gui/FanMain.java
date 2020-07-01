@@ -2,6 +2,7 @@ package clientserver.client.fan.gui;
 
 import java.io.IOException;
 
+import clientserver.client.fan.gui.view.util.StageLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -13,6 +14,10 @@ public class FanMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
+		
+		StageLoader SLF = new StageLoader();
+		SLF.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", primaryStage);
+		/*
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
 		Scene scene = new Scene(loader.load());
@@ -23,7 +28,7 @@ public class FanMain extends Application {
 		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
 		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
-
+	*/
 	}
 
 	public static void main(String[] args) {
