@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import clientserver.client.fan.gui.view.element.dayViewController;
+import clientserver.client.fan.gui.view.element.teamDetailsController;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import database.dao.impl.FacadeImpl;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +24,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -29,6 +35,7 @@ import javafx.scene.Parent;
 import mvc.model.element.Day;
 import mvc.model.element.Group;
 import mvc.model.match.Match;
+import mvc.model.team.Player;
 import mvc.model.team.Team;
 import mvc.model.tournament.KnockoutPhase;
 import mvc.model.tournament.League;
@@ -38,31 +45,36 @@ import mvc.model.tournament.Tournament;
 import mvc.model.tournament.TournamentType;
 
 public class LeagueRankingController implements Initializable {
-	@FXML
-	private Button menuButton;
-	@FXML
-	private Button teamDetailsButton;
-	@FXML
-	private ListView<String> ranking;
-	@FXML
-	private ComboBox dayComboBox;
+	
 	@FXML
 	private Text text;
 	@FXML
-	private Button rankingButton;
+	private Button menuButton;
+	@FXML
+	private ComboBox dayComboBox;
+	@FXML
+	private ComboBox teamComboBox;
 	@FXML
 	private Button boardButton;
-
+	@FXML
+	private TableView<Team> table;
+	@FXML
+	private TableColumn<Team, String> teamName;
+	@FXML
+	private TableColumn<Team, Integer> points;
+	@FXML
+	private TableColumn<Team, Integer> gs;
+	@FXML
+	private TableColumn<Team, Integer> gc;
+	
+	//--------------------------------------------------	
 	FacadeImpl facade = FacadeImpl.getInstance();
-	MixedTournament mixed;
-
-	List<Team> wTeams;
-	List<Team> teams;
-	List<Day> days;
-	List<Day> dayMixed;
-	Day day;
+	ObservableList<Team> wTeams = FXCollections.observableArrayList();
 	Tournament tournament;
-
+	List<Day> dayMixed;
+	
+	
+	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
@@ -78,93 +90,106 @@ public class LeagueRankingController implements Initializable {
 	}
 
 	public void passingData(Tournament tournamentPass) throws SQLException {
-
-		if (tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
+		
+		text.setText(tournamentPass.getName());
+		if(tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
 			boardButton.setVisible(false);
-			tournament = (League) tournamentPass;
-			teams = facade.getTeamsByTournament(tournamentPass);
-			for (Team team : teams) {
-				tournament.addTeamInTournament(team);
-			}
-			wTeams = tournament.getTeamsList();
-			for (Team team : wTeams) {
-				ranking.getItems().add(team.getName() + "             " + team.getPoints());
-			}
-
-			days = facade.getSchedule(tournamentPass, false);
-			for (Day day : days) {
-				dayComboBox.getItems().add(day.getNumber());
-			}
-
 		}
-
-		if (tournamentPass.getTournamentType() == TournamentType.MIXED) {
+		else if(tournamentPass.getTournamentType() == TournamentType.MIXED) {
 			boardButton.setVisible(true);
-			tournament = (MixedTournament) tournamentPass;
-			teams = facade.getTeamsByTournament(tournamentPass);
-			for (Team team : teams) {
-				tournament.addTeamInTournament(team);
-			}
-			wTeams = tournament.getTeamsList();
-			for (Team team : wTeams) {
-				ranking.getItems().add(team.getName() + "             " + team.getPoints());
-			}
-			days = facade.getSchedule(tournamentPass, false);
-			for (Day day : days) {
-				dayComboBox.getItems().add(day.getNumber());
-			}
-			dayMixed = facade.getSchedule(tournamentPass, true);
-			if (dayMixed.isEmpty()) {
-				boardButton.setDisable(false);
-			} else {
-				boardButton.setDisable(true);
-			}
-
+			
+			
 		}
-
+		
+		tournament = tournamentPass;
+		for(Team team : facade.getTeamsByTournament(tournamentPass)) {
+			if(tournament.getTeamsList().contains(team) == false) {
+			tournament.addTeamInTournament(team);
+				}
+			}
+		for(Team team : tournament.getTeamsList()) {
+			if(wTeams.contains(team) == false) {
+			wTeams.add(team);
+				}
+			if(teamComboBox.getItems().contains(team.getName()) == false) {
+			teamComboBox.getItems().add(team.getName());
+			}
+			
+		}
+		for(Day day: facade.getSchedule(tournament, false)) {
+			dayComboBox.getItems().add(day.getNumber());
+		}
+		
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		teamName.setCellValueFactory(new PropertyValueFactory<Team, String>("name"));
+		points.setCellValueFactory(new PropertyValueFactory<Team, Integer>("points"));
+		gs.setCellValueFactory(new PropertyValueFactory<Team, Integer>("goalsScored"));
+		gc.setCellValueFactory(new PropertyValueFactory<Team, Integer>("goalsConceded"));
+		table.setItems(wTeams);
 	}
-
-	public void rankingButtonClicked(ActionEvent event) {
-		teamDetailsButton.setDisable(false);
-		ranking.getItems().clear();
-		text.setText("RANKING");
-		for (Team team : wTeams) {
-			ranking.getItems().add(team.getName() + "             " + team.getPoints());
-		}
-	}
-
-	public void daySelected(ActionEvent event) {
-		teamDetailsButton.setDisable(true);
-		int indx = (int) dayComboBox.getSelectionModel().getSelectedIndex();
-		ranking.getItems().clear();
-		text.setText("DAY  " + (indx + 1));
-		day = days.get(indx);
-		for (Match match : day.getMatchesList()) {
-			ranking.getItems().add(match.toString());
-		}
-
-	}
-
-	public void teamSelected(ActionEvent event) {
-		teamDetailsButton.setDisable(true);
-		int index = ranking.getSelectionModel().getSelectedIndex();
-		ranking.getItems().clear();
-		text.setText(wTeams.get(index).getName());
-		for (Day day : days) {
-			for (Match match : day.getMatchesList()) {
-				if (match.getHomeTeam().getId() == wTeams.get(index).getId()
-						|| match.getAwayTeam().getId() == wTeams.get(index).getId()) {
-					ranking.getItems().add(match.toString());
-				}
+	
+	public void teamSelected(ActionEvent event) throws IOException, SQLException {
+		String teamNameTS = (String) (teamComboBox.getSelectionModel().getSelectedItem());
+		Team teamSelectedTS = null;
+		for(Team team : tournament.getTeamsList()) {
+			if(team.getName() == teamNameTS) {
+				teamSelectedTS = team;
 			}
 		}
+			
+		FXMLLoader loaderTS = new FXMLLoader();
+		loaderTS.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/element/teamDetails.fxml"));
+		Parent rootTS = loaderTS.load();
+		teamDetailsController tdc = loaderTS.getController();
+		tdc.passingData(tournament, teamSelectedTS);
+		Scene sceneTS = new Scene(rootTS);
+		Stage primaryStageTS = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		primaryStageTS.setTitle("team details");
+		primaryStageTS.setScene(sceneTS);
+		primaryStageTS.setResizable(false);
+		Rectangle2D primScreenBoundsTS = Screen.getPrimary().getVisualBounds();
+		primaryStageTS.setX((primScreenBoundsTS.getWidth() - primaryStageTS.getWidth()) / 2);
+		primaryStageTS.setY((primScreenBoundsTS.getHeight() - primaryStageTS.getHeight()) / 2);
+		primaryStageTS.show();
+				
 	}
-
+	
+	
+	public void daySelected(ActionEvent event) throws SQLException, IOException {
+		int dayN = (int) dayComboBox.getSelectionModel().getSelectedItem();
+		Day dayS = null;
+		for(Day day : facade.getSchedule(tournament, false)) {
+			if(day.getNumber() == dayN) {
+				dayS = day;
+			}
+		}
+		
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/element/dayView.fxml"));
+		Parent root = loader.load();
+		dayViewController dvc = loader.getController();
+		dvc.passingDataToDay(tournament, dayS);
+		Scene scene = new Scene(root);
+		Stage primaryStage = new Stage();
+		primaryStage.setTitle("DAY " + dayS.getNumber());
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+/*
 	public void boardButtonCliccked(ActionEvent event) throws IOException, SQLException {
 		int c = wTeams.size();
 		switch (c) {
@@ -225,5 +250,5 @@ public class LeagueRankingController implements Initializable {
 		}
 
 	}
-
+*/
 }
