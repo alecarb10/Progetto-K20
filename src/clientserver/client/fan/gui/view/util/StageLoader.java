@@ -47,6 +47,17 @@ public class StageLoader {
 		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();		
 	}
+	public void showDaySelected(String URL, String title, ActionEvent event) throws IOException {
+		loader = new FXMLLoader();
+		loader.setLocation(getClass().getClassLoader().getResource(URL));
+		root = loader.load();
+		scene = new Scene(root);
+		primaryStage = new Stage();
+		primaryStage.setTitle(title);
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+	}
 	
 	
 	public FXMLLoader getLoader() {
