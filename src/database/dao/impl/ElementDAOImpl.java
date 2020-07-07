@@ -347,36 +347,23 @@ public class ElementDAOImpl implements IElementDAO {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
-		PreparedStatement ps2;
-		boolean rs2;
 		
-		String query = "UPDATE tournament.match SET HomeScore=?, AwayScore=?, Played=? WHERE IDMatch=?";
+		String query = "UPDATE tournament.match SET HomeScore=?, AwayScore=?, Played=?, Stadium=? WHERE IDMatch=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1,match.getHomeScore());
 		ps.setInt(2, match.getAwayScore());
 		ps.setInt(3, 1);
-		ps.setInt(4, match.getId());
+		
+		if (match.getHomeTeam().getStadium() == null)
+			ps.setNull(4, Types.VARCHAR);
+		else
+			ps.setString(4, match.getHomeTeam().getStadium().getName());
+		
+		ps.setInt(5, match.getId());
 		rs = ps.execute();
 		
 		if (!rs) {
-			String query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
-			ps2 = conn.prepareStatement(query2);
-			ps2.setInt(1, match.getHomeTeam().getPoints());
-			ps2.setInt(2, match.getHomeTeam().getGoalsScored());
-			ps2.setInt(3, match.getHomeTeam().getGoalsConceded());
-			ps2.setInt(4, match.getHomeTeam().getId());
-			
-			rs2 = ps2.execute();
-			
-			query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
-			ps2.setInt(1, match.getAwayTeam().getPoints());
-			ps2.setInt(2, match.getAwayTeam().getGoalsScored());
-			ps2.setInt(3, match.getAwayTeam().getGoalsConceded());
-			ps2.setInt(4, match.getAwayTeam().getId());			
-			
-			rs2 = ps2.execute();
-			
-			if (!rs2) {
+			if (!updateTeamInfo(match.getHomeTeam()) && !updateTeamInfo(match.getAwayTeam())) {
 				DBConnection.closeConnection(conn);
 				return true;
 			}
@@ -384,5 +371,18 @@ public class ElementDAOImpl implements IElementDAO {
 
 		DBConnection.closeConnection(conn);
 		return false;
+	}
+	
+	private boolean updateTeamInfo(Team team) throws SQLException {
+		PreparedStatement ps;
+		
+		String query = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, team.getPoints());
+		ps.setInt(2, team.getGoalsScored());
+		ps.setInt(3, team.getGoalsConceded());
+		ps.setInt(4, team.getId());
+		
+		return ps.execute();
 	}
 }
