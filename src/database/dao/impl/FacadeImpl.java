@@ -201,8 +201,8 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public boolean updateMatch(Match oldMatch, Match newMatch) throws SQLException {
+	public boolean updateMatch(Match match) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.updateMatch(oldMatch, newMatch);
+		return ed.updateMatch(match);
 	}
 }

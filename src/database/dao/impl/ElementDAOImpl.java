@@ -343,7 +343,7 @@ public class ElementDAOImpl implements IElementDAO {
 	}
 
 	@Override
-	public boolean updateMatch(Match oldMatch, Match newMatch) throws SQLException {
+	public boolean updateMatch(Match match) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
@@ -352,27 +352,27 @@ public class ElementDAOImpl implements IElementDAO {
 		
 		String query = "UPDATE tournament.match SET HomeScore=?, AwayScore=?, Played=? WHERE IDMatch=?";
 		ps = conn.prepareStatement(query);
-		ps.setInt(1,newMatch.getHomeScore());
-		ps.setInt(2, newMatch.getAwayScore());
+		ps.setInt(1,match.getHomeScore());
+		ps.setInt(2, match.getAwayScore());
 		ps.setInt(3, 1);
-		ps.setInt(4, oldMatch.getId());
+		ps.setInt(4, match.getId());
 		rs = ps.execute();
 		
 		if (!rs) {
 			String query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
 			ps2 = conn.prepareStatement(query2);
-			ps2.setInt(1, newMatch.getHomeTeam().getPoints());
-			ps2.setInt(2, newMatch.getHomeTeam().getGoalsScored());
-			ps2.setInt(3, newMatch.getHomeTeam().getGoalsConceded());
-			ps2.setInt(4, newMatch.getHomeTeam().getId());
+			ps2.setInt(1, match.getHomeTeam().getPoints());
+			ps2.setInt(2, match.getHomeTeam().getGoalsScored());
+			ps2.setInt(3, match.getHomeTeam().getGoalsConceded());
+			ps2.setInt(4, match.getHomeTeam().getId());
 			
 			rs2 = ps2.execute();
 			
 			query2 = "UPDATE team SET Points=?, GoalsScored=?, GoalsConceded=? WHERE IDTeam=?";
-			ps2.setInt(1, newMatch.getAwayTeam().getPoints());
-			ps2.setInt(2, newMatch.getAwayTeam().getGoalsScored());
-			ps2.setInt(3, newMatch.getAwayTeam().getGoalsConceded());
-			ps2.setInt(4, newMatch.getAwayTeam().getId());			
+			ps2.setInt(1, match.getAwayTeam().getPoints());
+			ps2.setInt(2, match.getAwayTeam().getGoalsScored());
+			ps2.setInt(3, match.getAwayTeam().getGoalsConceded());
+			ps2.setInt(4, match.getAwayTeam().getId());			
 			
 			rs2 = ps2.execute();
 			
