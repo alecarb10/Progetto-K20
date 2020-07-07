@@ -1,11 +1,11 @@
 package database.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +147,7 @@ public class ElementDAOImpl implements IElementDAO {
 		String query = "INSERT INTO day(Number, Date, day.Group, Board) VALUES(?,?,?,?)";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, d.getNumber());
-		ps.setDate(2, new java.sql.Date(d.getDate().getTime()));
+		ps.setTimestamp(2, new java.sql.Timestamp(d.getDate().getTime()));
 
 		// group
 		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
@@ -262,7 +262,7 @@ public class ElementDAOImpl implements IElementDAO {
 			
 			int id = rs.getInt(1);
 			int number = rs.getInt(2);
-			Date date = rs.getDate(3);
+			Timestamp date = rs.getTimestamp(3);
 			
 			query = "SELECT IDMatch, HomeTeam, AwayTeam, HomeScore, AwayScore, Played from tournament.match where Day=?";
 			ps2 = conn.prepareStatement(query);

@@ -73,7 +73,7 @@ CREATE TABLE `group` (
 CREATE TABLE `day` (
   `IDDay` int(11) NOT NULL AUTO_INCREMENT,
   `Number` int(11) NOT NULL,
-  `Date` date NOT NULL,
+  `Date` timestamp NOT NULL,
   `Group` int(11) DEFAULT NULL,
   `Board` int(11) DEFAULT NULL,
   PRIMARY KEY (`IDDay`),
