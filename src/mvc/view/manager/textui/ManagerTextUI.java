@@ -294,15 +294,15 @@ public class ManagerTextUI {
 					System.out.println("Wrong number - match doesn't exist");
 				else {
 					int scheduleSize = tournament.getSchedule().size();
-					Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
-					System.out.println(oldMatch);
+					Match match = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
+					System.out.println(match);
 					System.out.println("Enter Home Score: ");
 					int homeScore = Integer.parseInt(scanner.nextLine());
 					System.out.println("Enter Away Score: ");
 					int awayScore = Integer.parseInt(scanner.nextLine());
 					
-					if (tournament.insertScore(indexDay + 1, oldMatch, homeScore, awayScore)) {
-						if (facade.updateMatch(oldMatch, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1))) {
+					if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
+						if (facade.updateMatch(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1))) {
 							System.out.println("\nResult entered");
 							
 							if (tournament.getSchedule().size() > scheduleSize) {

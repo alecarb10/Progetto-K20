@@ -98,16 +98,16 @@ public class InsertResultController implements Initializable {
 				public void handle(MouseEvent event) {
 					if(event.getClickCount()==2) {
 						int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
-						Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
-						checkBoxPlayed.setSelected(oldMatch.isPlayed()?true:false);
-						Optional<Pair<String,String>> result=getDialogResult(oldMatch);
+						Match match = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
+						checkBoxPlayed.setSelected(match.isPlayed()?true:false);
+						Optional<Pair<String,String>> result=getDialogResult(match);
 						result.ifPresent(score-> {
 							String matchScore[]=score.getValue().trim().split("-");
 							int homeScore=Integer.parseInt(matchScore[0]);
 							int awayScore=Integer.parseInt(matchScore[1]);
 							try {
-								if (tournament.insertScore(indexDay + 1, oldMatch,homeScore, awayScore)) {
-									if (facadeImpl.updateMatch(oldMatch,tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
+								if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
+									if (facadeImpl.updateMatch(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
 										tournament.setSchedule(facadeImpl.getSchedule(tournament, false));
 									}
 								}
