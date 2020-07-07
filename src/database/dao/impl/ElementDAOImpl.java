@@ -210,14 +210,11 @@ public class ElementDAOImpl implements IElementDAO {
 	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps = null;
-		PreparedStatement ps2;
 		ResultSet rs;
-		ResultSet rs2;
 		String query;
 		
 		List<Day> schedule = new ArrayList<>();
 		List<Match> matches;
-		Match match = null;
 		int idGroup;
 		int idBoard;
 		
@@ -238,8 +235,7 @@ public class ElementDAOImpl implements IElementDAO {
 			ps.setInt(1, idGroup);
 		}
 		// board
-		else if (t.getTournamentElement().getTournamentElementType().ordinal() == 0 ||
-				(t.getTournamentType() == TournamentType.MIXED && wantsBoard)) {
+		else if (t.getTournamentElement().getTournamentElementType().ordinal() == 0 || (t.getTournamentType() == TournamentType.MIXED && wantsBoard)) {
 			query = "SELECT IDBoard from board where IDTournament=?";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
@@ -258,35 +254,11 @@ public class ElementDAOImpl implements IElementDAO {
 		rs = ps.executeQuery();
 
 		while (rs.next()) {
-			matches = new ArrayList<>();
-			
 			int id = rs.getInt(1);
 			int number = rs.getInt(2);
 			Timestamp date = rs.getTimestamp(3);
 			
-			query = "SELECT IDMatch, HomeTeam, AwayTeam, HomeScore, AwayScore, Played from tournament.match where Day=?";
-			ps2 = conn.prepareStatement(query);
-			ps2.setInt(1, id);
-			
-			rs2 = ps2.executeQuery();
-
-			while (rs2.next()) {
-				int idMatch = rs2.getInt(1);
-				int idHomeTeam = rs2.getInt(2);
-				int idAwayTeam = rs2.getInt(3);
-				int homeScore = rs2.getInt(4);
-				int awayScore = rs2.getInt(5);
-				int played = rs2.getInt(6);
-				
-				Team homeTeam = getTeamByID(idHomeTeam);
-				Team awayTeam = getTeamByID(idAwayTeam);
-				match = new Match(date, homeTeam, awayTeam);
-				match.setId(idMatch);
-				if (played == 1)
-					match.setScore(homeScore, awayScore);
-				
-				matches.add(match);
-			}
+			matches = getMatchesByDay(id, date);
 			
 			Day d = new Day(number, matches, date);
 			d.setId(id);
@@ -295,6 +267,41 @@ public class ElementDAOImpl implements IElementDAO {
 		
 		DBConnection.closeConnection(conn);
 		return schedule;
+	}
+	
+	private List<Match> getMatchesByDay(int id, Timestamp date) throws SQLException {
+		PreparedStatement ps;
+		ResultSet rs;
+		String query;
+		
+		Match match;
+		List<Match> matches = new ArrayList<>();	
+		
+		query = "SELECT IDMatch, HomeTeam, AwayTeam, HomeScore, AwayScore, Played from tournament.match where Day=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, id);
+		
+		rs = ps.executeQuery();
+
+		while (rs.next()) {
+			int idMatch = rs.getInt(1);
+			int idHomeTeam = rs.getInt(2);
+			int idAwayTeam = rs.getInt(3);
+			int homeScore = rs.getInt(4);
+			int awayScore = rs.getInt(5);
+			int played = rs.getInt(6);
+			
+			Team homeTeam = getTeamByID(idHomeTeam);
+			Team awayTeam = getTeamByID(idAwayTeam);
+			match = new Match(date, homeTeam, awayTeam);
+			match.setId(idMatch);
+			if (played == 1)
+				match.setScore(homeScore, awayScore);
+			
+			matches.add(match);
+		}
+		
+		return matches;
 	}
 	
 	private Team getTeamByID(int id) throws SQLException {
@@ -354,10 +361,10 @@ public class ElementDAOImpl implements IElementDAO {
 		ps.setInt(2, match.getAwayScore());
 		ps.setInt(3, 1);
 		
-		if (match.getHomeTeam().getStadium() == null)
+		if (match.getStadium() == null)
 			ps.setNull(4, Types.VARCHAR);
 		else
-			ps.setString(4, match.getHomeTeam().getStadium().getName());
+			ps.setString(4, match.getStadium().getName());
 		
 		ps.setInt(5, match.getId());
 		rs = ps.execute();
