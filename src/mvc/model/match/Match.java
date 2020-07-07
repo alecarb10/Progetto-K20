@@ -106,8 +106,7 @@ public class Match {
 
 	@Override
 	public String toString() {
-		return "MATCH: " + homeTeam.getName() + "  " + homeScore + "  VS  " + awayScore + "  " + awayTeam.getName()
-				+ "    DATE: " + date;
+		return homeTeam.getName() + " " + homeScore + " VS " + awayScore + " " + awayTeam.getName() + " | Date: " + date;
 	}
 	
 	@Override
