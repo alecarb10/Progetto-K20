@@ -19,28 +19,16 @@ public class Board extends TournamentElement {
 	}
 	
 	@Override
-	public void endTournamentElement() {
-		completed = true;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("Team Name" + "\n");
-		for (Team team : teamsList) {
-			sb.append(team + "\n");
+	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
+		if (super.insertScore(dayNumber, match, homeScore, awayScore)) {
+			if (isCompleted())
+				return addNextDay();
+			return true;
 		}
-
-		return sb.toString();
-	}
-
-	@Override
-	public ElementType getTournamentElementType() {
-		return ElementType.BOARD;
+		return false;
 	}
 	
-	public boolean addNextDay() {
+	private boolean addNextDay() {
 		int prevDayNumber = schedule.size() - 1;
 		Day prevDay = schedule.get(prevDayNumber);
 		Date date = incrementDate(prevDay.getDate()).getTime();
@@ -72,5 +60,22 @@ public class Board extends TournamentElement {
 			if(m.isPlayed())
 				dayWinnersList.add(m.getWinner());
 		return dayWinnersList;
+	}
+	
+	@Override
+	public ElementType getTournamentElementType() {
+		return ElementType.BOARD;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Team Name" + "\n");
+		for (Team team : teamsList) {
+			sb.append(team + "\n");
+		}
+
+		return sb.toString();
 	}
 }

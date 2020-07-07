@@ -17,18 +17,6 @@ public abstract class TournamentElement implements IElement {
 		this.teamsList = new ArrayList<>();
 		this.completed = false;
 	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id=id;
-	}
-	
-	public List<Team> getTeamsList() {
-		return teamsList;
-	}
 
 	public boolean addTeam(Team team) {
 		return teamsList.add(team);
@@ -39,20 +27,14 @@ public abstract class TournamentElement implements IElement {
 	}
 
 	public boolean isCompleted() {
-		int counter=0;
+		int counter = 0;
+		
 		for (Day d: schedule)
-			if(d.isCompleted())
-					counter++;
-		completed=counter==schedule.size()?true:false;
+			if (d.isCompleted())
+				counter++;
+		
+		completed = counter == schedule.size() ? true : false;
 		return completed;
-	}
-	
-	public void setSchedule(List<Day> schedule) {
-		this.schedule = schedule;
-	}
-	
-	public List<Day> getSchedule() {
-		return schedule;
 	}
 	
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
@@ -69,11 +51,11 @@ public abstract class TournamentElement implements IElement {
 		if (index < 0)
 			return false;
 		
-		if(dayNumber>=2&&!schedule.get(dayNumber-2).isCompleted())
+		if (dayNumber >= 2 && !schedule.get(dayNumber-2).isCompleted())
 			return false;
 		
 		for (Match m: schedule.get(index).getMatchesList())
-			if (m.equals(match)&&!m.isPlayed()) {
+			if (m.equals(match) && !m.isPlayed()) {
 				m.setScore(homeScore, awayScore);
 				return true;
 			}
@@ -91,5 +73,25 @@ public abstract class TournamentElement implements IElement {
 			}
 		
 		return day;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id=id;
+	}
+	
+	public void setSchedule(List<Day> schedule) {
+		this.schedule = schedule;
+	}
+	
+	public List<Day> getSchedule() {
+		return schedule;
+	}
+	
+	public List<Team> getTeamsList() {
+		return teamsList;
 	}
 }

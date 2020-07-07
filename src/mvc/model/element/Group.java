@@ -23,7 +23,6 @@ public class Group extends TournamentElement {
 	}
 
 	private void sortTeamsList() {
-
 		Collections.sort(teamsList, new Comparator<Team>() {
 			@Override
 			public int compare(Team t1, Team t2) {
@@ -49,12 +48,6 @@ public class Group extends TournamentElement {
 				}
 			}
 		});
-
-	}
-
-	@Override
-	public void endTournamentElement() {
-		completed = true;
 	}
 
 	@Override
