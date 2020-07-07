@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import database.dao.impl.FacadeImpl;
-import mvc.model.element.Board;
 import mvc.model.element.Day;
 import mvc.model.match.Match;
 import mvc.model.team.Player;
@@ -242,19 +241,10 @@ public class ManagerTextUI {
 	}
 	
 	private void insertResult() throws SQLException {
-		boolean knock = false;
-		if (tournament.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-			tournament.getTournamentElement().setId(facade.getBoardIDByTournament(tournament));
-			knock = true;
-		}
-		
 		while(true) {
 			System.out.println("\nChoose a day: \n");
 			for (Day d: tournament.getSchedule())
 				System.out.println("Day " + d.getNumber() + " - " + d.getDate());
-			
-			if (knock)
-				System.out.println("Enter \"next\" to add a new day on the board\n");
 			
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
 			
@@ -268,27 +258,15 @@ public class ManagerTextUI {
 			if (inputString.contentEquals("b"))
 				break;
 			
-			if (knock && inputString.contentEquals("next")) {
-				if (((Board)tournament.getTournamentElement()).addNextDay()) {
-					if (facade.storeDay(tournament.getSchedule().get(tournament.getSchedule().size() - 1), tournament)) {
-						System.out.println("\nDay added");
-						break;
-					}
+			try {
+				int indexDay = Integer.parseInt(inputString);
+				if (indexDay < 1 || indexDay > tournament.getSchedule().size())
+					System.out.println("Wrong number - day doesn't exist");
+				else {
+					selectMatch(indexDay - 1);
 				}
-				else
-					System.out.println("\nCan't add a new day - maybe previous day is not completed or tournament is finished");
-			}
-			else {
-				try {
-					int indexDay = Integer.parseInt(inputString);
-					if (indexDay < 1 || indexDay > tournament.getSchedule().size())
-						System.out.println("Wrong number - day doesn't exist");
-					else {
-						selectMatch(indexDay - 1);
-					}
-				} catch (NumberFormatException e) {
-					System.out.println("Invalid input.\n");
-				}
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid input.\n");
 			}
 		}
 	}
@@ -297,7 +275,7 @@ public class ManagerTextUI {
 		while (true) {
 			System.out.println("\nDay " + (indexDay + 1) + ". Choose a match: \n");
 			for (int i = 0; i < tournament.getSchedule().get(indexDay).getMatchesList().size(); i++)
-				System.out.println((i + 1) + "° " + tournament.getSchedule().get(indexDay).getMatchesList().get(i));
+				System.out.println((i + 1) + "° match: " + tournament.getSchedule().get(indexDay).getMatchesList().get(i));
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
 			
 			System.out.print("Input: ");
@@ -315,6 +293,7 @@ public class ManagerTextUI {
 				if (indexMatch < 1 || indexMatch > tournament.getSchedule().get(indexDay).getMatchesList().size())
 					System.out.println("Wrong number - match doesn't exist");
 				else {
+					int scheduleSize = tournament.getSchedule().size();
 					Match oldMatch = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1);
 					System.out.println(oldMatch);
 					System.out.println("Enter Home Score: ");
@@ -325,6 +304,13 @@ public class ManagerTextUI {
 					if (tournament.insertScore(indexDay + 1, oldMatch, homeScore, awayScore)) {
 						if (facade.updateMatch(oldMatch, tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch - 1))) {
 							System.out.println("\nResult entered");
+							
+							if (tournament.getSchedule().size() > scheduleSize) {
+								tournament.getTournamentElement().setId(facade.getBoardIDByTournament(tournament));
+								if (facade.storeDay(tournament.getSchedule().get(tournament.getSchedule().size() - 1), tournament))
+									System.out.println("Day added");
+							}
+								
 							tournament.setSchedule(facade.getSchedule(tournament, false));
 							break;
 						}
