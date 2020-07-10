@@ -11,15 +11,25 @@ public interface ITournament {
 
 	public TournamentType getTournamentType();
 
-	public void initTournament(List<Team> teamsList);
+	public void initGroup(List<Team> teamsList);
+	
+	public void initBoard(List<Team> teamsList);
 
 	public boolean addTeamInTournament(Team t);
 	
+	public List<Team> getTeamsList();
+	
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore);
 	
-	public List<Day> getSchedule();
+	public List<Day> getGroupSchedule();
 	
-	public void setSchedule(List<Day> schedule);
+	public void setGroupSchedule(List<Day> schedule);
 	
-	public TournamentElement getTournamentElement();
+	public List<Day> getBoardSchedule();
+	
+	public void setBoardSchedule(List<Day> schedule);
+	
+	public TournamentElement getGroup();
+	
+	public TournamentElement getBoard();
 }

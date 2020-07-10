@@ -17,9 +17,14 @@ public class League extends Tournament {
 	}
 	
 	@Override
-	public void initTournament(List<Team> teamsList) {
+	public void initGroup(List<Team> teamsList) {
 		addTeams(teamsList);
 		this.group.initTournamentElement();
+	}
+	
+	@Override
+	public void initBoard(List<Team> teamsList) {
+		
 	}
 
 	@Override
@@ -28,28 +33,48 @@ public class League extends Tournament {
 	}
 
 	@Override
+	public List<Team> getTeamsList() {
+		return this.group.getTeamsList();
+	}
+
+	@Override
 	public boolean insertScore(int numberDay, Match match, int homeScore, int awayScore) {
 		return this.group.insertScore(numberDay, match, homeScore, awayScore);
 	}
 
 	@Override
-	public List<Day> getSchedule() {
+	public TournamentElement getGroup() {
+		return group;
+	}
+	
+	@Override
+	public TournamentElement getBoard() {
+		return null;
+	}
+	
+	@Override
+	public List<Day> getGroupSchedule() {
 		return this.group.getSchedule();
 	}
 	
 	@Override
-	public void setSchedule(List<Day> schedule) {
+	public void setGroupSchedule(List<Day> schedule) {
 		this.group.setSchedule(schedule);
+	}
+	
+	@Override
+	public List<Day> getBoardSchedule() {
+		return null;
+	}
+
+	@Override
+	public void setBoardSchedule(List<Day> schedule) {
+		
 	}
 	
 	@Override
 	public TournamentType getTournamentType() {
 		return TournamentType.LEAGUE;
-	}
-	
-	@Override
-	public TournamentElement getTournamentElement() {
-		return group;
 	}
 
 	@Override

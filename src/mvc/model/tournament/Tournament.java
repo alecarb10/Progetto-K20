@@ -35,10 +35,6 @@ public abstract class Tournament implements ITournament {
 			addTeamInTournament(t);
 	}
 	
-	public List<Team> getTeamsList(){
-		return this.getTournamentElement().getTeamsList();
-	}
-
 	@Override
 	public String toString() {
 		return String.format("Tournament name: %s\n", this.name);
