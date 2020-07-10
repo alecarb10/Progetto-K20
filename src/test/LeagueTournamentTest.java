@@ -2,15 +2,12 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import mvc.model.match.Match;
 import mvc.model.team.Team;
 import mvc.model.tournament.League;
 import mvc.model.tournament.Tournament;
@@ -35,7 +32,7 @@ class LeagueTournamentTest {
 		teams.add(team3);
 		teams.add(team4);
 
-		league.initTournament(teams);
+		league.initGroup(teams);
 	}
 
 	@Test
@@ -45,7 +42,7 @@ class LeagueTournamentTest {
 
 	@Test
 	public void insertScoreTest() {
-		assertTrue(league.insertScore(1, league.getSchedule().get(0).getMatchesList().get(0), 1, 2));
+		assertTrue(league.insertScore(1, league.getGroupSchedule().get(0).getMatchesList().get(0), 1, 2));
 	}
 
 }
