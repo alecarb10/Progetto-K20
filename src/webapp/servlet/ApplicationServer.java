@@ -1,15 +1,10 @@
 package webapp.servlet;
 
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.session.DefaultSessionCache;
-import org.eclipse.jetty.server.session.FileSessionDataStore;
-import org.eclipse.jetty.server.session.SessionCache;
-import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -17,12 +12,12 @@ import org.rythmengine.Rythm;
 
 public class ApplicationServer {
 	private int port;
-	private List<WebServlet> servlet;
+	private List<WebServlet> servlets;
 	private Server server;
 
-	public ApplicationServer(int port, List<WebServlet> servlet) {
+	public ApplicationServer(int port, List<WebServlet> servlets) {
 		this.port = port;
-		this.servlet = servlet;
+		this.servlets = servlets;
 	}
 
 	public void start(){
@@ -31,16 +26,15 @@ public class ApplicationServer {
 		
 		ServletContextHandler handler = new ServletContextHandler();		
 		
-		for (WebServlet servlet2 : servlet) {
-			handler.addServlet(new ServletHolder(servlet2), servlet2.getUrl());
-		}
+		for (WebServlet servlet : servlets) 
+			handler.addServlet(new ServletHolder(servlet), servlet.getUrl());
+		
 		addStaticFileServing(handler);
 		server.setHandler(handler);		
 		
 		try {
 			server.start();
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
 	}
@@ -49,15 +43,13 @@ public class ApplicationServer {
 		try {
 			server.stop();
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
-
 	}
 
 	private void addStaticFileServing(ServletContextHandler handler) {
 		ServletHolder holderPwd = new ServletHolder("default", new DefaultServlet());
-		holderPwd.setInitParameter("resourceBase", "./src/main/resources/statics");
+		holderPwd.setInitParameter("resourceBase", "./resources/statics");
 		holderPwd.setInitParameter("dirAllowed", "false");
 		holderPwd.setInitParameter("pathInfoOnly", "true");
 		handler.addServlet(holderPwd, "/statics/*");
@@ -65,7 +57,7 @@ public class ApplicationServer {
 
 	private void initTemplateEngine() {
 		Map<String, Object> conf = new HashMap<>();
-		conf.put("home.template", "templates");
+		conf.put("home.template", "./resources/templates");
 		Rythm.init(conf);
 	}
 }
