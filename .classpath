@@ -9,5 +9,20 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX14"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.19.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="lib/Rythm/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/Rythm/ecj-4.4.jar"/>
+	<classpathentry kind="lib" path="lib/Rythm/fastjson-1.1.39.jar"/>
+	<classpathentry kind="lib" path="lib/Rythm/mvel2-2.1.5.Final.jar"/>
+	<classpathentry kind="lib" path="lib/Rythm/pat-1.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/Rythm/rythm-engine-1.1.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-http-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-io-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-security-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-server-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-servlet-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-servlets-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-util-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/jetty-webapp-9.4.28.v20200408.jar"/>
+	<classpathentry kind="lib" path="lib/Jetty/servlet-api-3.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
