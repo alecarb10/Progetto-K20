@@ -165,9 +165,15 @@ public class FacadeImpl implements IFacade {
 	}
 	
 	@Override
-	public boolean storeElement(Tournament t) throws SQLException {
+	public boolean storeGroup(TournamentElement t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.storeElement(t);
+		return ed.storeGroup(t);
+	}
+	
+	@Override
+	public boolean storeBoard(TournamentElement t) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.storeBoard(t);
 	}
 	
 	@Override
@@ -195,9 +201,15 @@ public class FacadeImpl implements IFacade {
 	}
 
 	@Override
-	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException {
+	public List<Day> getGroupSchedule(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
-		return ed.getSchedule(t, wantsBoard);
+		return ed.getGroupSchedule(t);
+	}
+	
+	@Override
+	public List<Day> getBoardSchedule(Tournament t) throws SQLException {
+		IElementDAO ed = new ElementDAOImpl();
+		return ed.getBoardSchedule(t);
 	}
 
 	@Override

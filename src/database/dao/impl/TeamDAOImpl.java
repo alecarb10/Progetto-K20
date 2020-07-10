@@ -36,16 +36,15 @@ public class TeamDAOImpl implements ITeamDAO {
 		ps.setInt(5, team.getGoalsScored());
 		ps.setInt(6, team.getGoalsConceded());
 
-		// group
-		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
-			ps.setInt(7, t.getTournamentElement().getId());
-			ps.setNull(8, Types.INTEGER);
-		}
-		// board
-		else {
+		if (t.getGroup() == null)
 			ps.setNull(7, Types.INTEGER);
-			ps.setInt(8, t.getTournamentElement().getId());
-		}
+		else
+			ps.setInt(7, t.getGroup().getId());
+		
+		if (t.getBoard() == null)
+			ps.setNull(8, Types.INTEGER);
+		else
+			ps.setInt(8, t.getBoard().getId());
 
 		rs = ps.execute();
 		if (!rs) {

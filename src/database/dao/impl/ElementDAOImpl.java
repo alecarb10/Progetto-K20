@@ -18,20 +18,18 @@ import mvc.model.match.Match;
 import mvc.model.team.Stadium;
 import mvc.model.team.Team;
 import mvc.model.tournament.Tournament;
-import mvc.model.tournament.TournamentType;
 
 public class ElementDAOImpl implements IElementDAO {
 
 	private Connection conn;
 	
 	@Override
-	public boolean storeElement(Tournament t) throws SQLException {
+	public boolean storeGroup(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
 		
-		// group
-		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
+		if (t != null) {
 			String query = "INSERT INTO tournament.group(IDTournament, Completed) VALUES(?,?)";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
@@ -43,8 +41,18 @@ public class ElementDAOImpl implements IElementDAO {
 				return true;
 			}
 		}
-		// board
-		else {
+		
+		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
+	@Override
+	public boolean storeBoard(TournamentElement t) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		if (t != null) {
 			String query = "INSERT INTO board(IDTournament, Completed) VALUES(?,?)";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
@@ -149,16 +157,15 @@ public class ElementDAOImpl implements IElementDAO {
 		ps.setInt(1, d.getNumber());
 		ps.setTimestamp(2, new java.sql.Timestamp(d.getDate().getTime()));
 
-		// group
-		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1) {
-			ps.setInt(3, t.getTournamentElement().getId());
-			ps.setNull(4, Types.INTEGER);
-		}
-		// board
-		else {
+		if (t.getGroup() == null)
 			ps.setNull(3, Types.INTEGER);
-			ps.setInt(4, t.getTournamentElement().getId());
-		}
+		else
+			ps.setInt(3, t.getGroup().getId());
+		
+		if (t.getBoard() == null)
+			ps.setNull(4, Types.INTEGER);
+		else
+			ps.setInt(4, t.getBoard().getId());
 
 		rs = ps.execute();
 		if (!rs) {
@@ -207,7 +214,7 @@ public class ElementDAOImpl implements IElementDAO {
 	}
 	
 	@Override
-	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException {
+	public List<Day> getGroupSchedule(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps = null;
 		ResultSet rs;
@@ -216,10 +223,8 @@ public class ElementDAOImpl implements IElementDAO {
 		List<Day> schedule = new ArrayList<>();
 		List<Match> matches;
 		int idGroup;
-		int idBoard;
 		
-		// group
-		if (t.getTournamentElement().getTournamentElementType().ordinal() == 1 && !wantsBoard) {
+		if (t.getGroup() != null) {
 			query = "SELECT IDGroup from tournament.group where IDTournament=?";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
@@ -234,8 +239,39 @@ public class ElementDAOImpl implements IElementDAO {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, idGroup);
 		}
-		// board
-		else if (t.getTournamentElement().getTournamentElementType().ordinal() == 0 || (t.getTournamentType() == TournamentType.MIXED && wantsBoard)) {
+		else
+			return null;
+		
+		rs = ps.executeQuery();
+
+		while (rs.next()) {
+			int id = rs.getInt(1);
+			int number = rs.getInt(2);
+			Timestamp date = rs.getTimestamp(3);
+			
+			matches = getMatchesByDay(id, date);
+			
+			Day d = new Day(number, matches, date);
+			d.setId(id);
+			schedule.add(d);
+		}
+		
+		DBConnection.closeConnection(conn);
+		return schedule;
+	}
+	
+	@Override
+	public List<Day> getBoardSchedule(Tournament t) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps = null;
+		ResultSet rs;
+		String query;
+		
+		List<Day> schedule = new ArrayList<>();
+		List<Match> matches;
+		int idBoard;
+		
+		if (t.getBoard() != null) {
 			query = "SELECT IDBoard from board where IDTournament=?";
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, t.getId());
@@ -250,6 +286,8 @@ public class ElementDAOImpl implements IElementDAO {
 			ps = conn.prepareStatement(query);
 			ps.setInt(1, idBoard);
 		}
+		else
+			return null;
 		
 		rs = ps.executeQuery();
 

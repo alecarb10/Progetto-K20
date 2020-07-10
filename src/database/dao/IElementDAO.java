@@ -10,7 +10,9 @@ import mvc.model.tournament.Tournament;
 
 public interface IElementDAO {
 	
-	public boolean storeElement(Tournament t) throws SQLException;
+	public boolean storeGroup(TournamentElement t) throws SQLException;
+	
+	public boolean storeBoard(TournamentElement t) throws SQLException;
 	
 	public int getBoardIDByTournament(Tournament t) throws SQLException;
 	
@@ -20,7 +22,9 @@ public interface IElementDAO {
 	
 	public boolean storeDay(Day d, Tournament t) throws SQLException;
 	
-	public List<Day> getSchedule(Tournament t, boolean wantsBoard) throws SQLException;
+	public List<Day> getGroupSchedule(Tournament t) throws SQLException;
+	
+	public List<Day> getBoardSchedule(Tournament t) throws SQLException;
 	
 	public boolean updateMatch(Match match) throws SQLException;
 
