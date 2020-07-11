@@ -4,6 +4,11 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import domain.team.Player;
+import domain.team.PlayerPositionType;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.Tournament;
 import interfaces.manager.gui.util.GraphicControlsHandler;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,11 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import model.team.Player;
-import model.team.PlayerPositionType;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.Tournament;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class EditTeamController implements Initializable {

@@ -3,10 +3,10 @@ package services.persistence.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.team.Player;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.Tournament;
+import domain.team.Player;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.Tournament;
 
 public interface ITeamDAO {
 	

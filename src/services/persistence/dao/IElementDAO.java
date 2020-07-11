@@ -3,10 +3,10 @@ package services.persistence.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.element.Day;
-import model.element.TournamentElement;
-import model.match.Match;
-import model.tournament.Tournament;
+import domain.element.Day;
+import domain.element.TournamentElement;
+import domain.match.Match;
+import domain.tournament.Tournament;
 
 public interface IElementDAO {
 	

@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import domain.element.Day;
+import domain.match.Match;
+import domain.team.Team;
+import domain.tournament.Tournament;
+import domain.tournament.TournamentType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,11 +33,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
-import model.element.Day;
-import model.match.Match;
-import model.team.Team;
-import model.tournament.Tournament;
-import model.tournament.TournamentType;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class InsertResultController implements Initializable {

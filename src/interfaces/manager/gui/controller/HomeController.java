@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.sun.jdi.event.Event;
 
+import domain.tournament.Tournament;
 import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicControlsHandler;
 import interfaces.manager.gui.util.GraphicHandler;
@@ -22,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.tournament.Tournament;
 
 
 public class HomeController implements Initializable {

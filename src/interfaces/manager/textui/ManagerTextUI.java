@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import model.element.Day;
-import model.match.Match;
-import model.team.Player;
-import model.team.PlayerPositionType;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.*;
+import domain.element.Day;
+import domain.match.Match;
+import domain.team.Player;
+import domain.team.PlayerPositionType;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.*;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class ManagerTextUI {
@@ -244,7 +244,7 @@ public class ManagerTextUI {
 	private void insertResult() throws SQLException {
 		while(true) {
 			System.out.println("\nChoose a day: \n");
-			for (Day d: tournament.getSchedule())
+			for (Day d: tournament.getGroupSchedule())
 				System.out.println("Day " + d.getNumber() + " - " + d.getDate());
 			
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");

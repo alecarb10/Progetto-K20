@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.tournament.*;
+import domain.tournament.*;
 import services.persistence.dao.ITournamentDAO;
 import services.persistence.util.DBConnection;
 

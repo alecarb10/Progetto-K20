@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import model.team.Team;
-import model.tournament.League;
-import model.tournament.Tournament;
+import domain.team.Team;
+import domain.tournament.League;
+import domain.tournament.Tournament;
 
 class LeagueTournamentTest {
 	

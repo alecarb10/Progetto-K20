@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.rythmengine.Rythm;
 
+import domain.tournament.Tournament;
 import services.persistence.dao.impl.FacadeImpl;
-
-import model.tournament.Tournament;
 
 @SuppressWarnings("serial")
 public class HomeServlet extends WebServlet {
@@ -48,7 +47,7 @@ public class HomeServlet extends WebServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			resp.getWriter().write(Rythm.render("tournamentdetail.html", tournament));	
+			resp.getWriter().write(Rythm.render("tournament-detail.html", tournament));	
 		} 
 	}
 }

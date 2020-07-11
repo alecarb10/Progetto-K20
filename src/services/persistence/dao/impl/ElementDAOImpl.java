@@ -10,12 +10,12 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.element.Day;
-import model.element.TournamentElement;
-import model.match.Match;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.Tournament;
+import domain.element.Day;
+import domain.element.TournamentElement;
+import domain.match.Match;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.Tournament;
 import services.persistence.dao.IElementDAO;
 import services.persistence.util.DBConnection;
 

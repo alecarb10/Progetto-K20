@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import domain.team.Team;
+import domain.tournament.KnockoutPhase;
+import domain.tournament.League;
+import domain.tournament.MixedTournament;
+import domain.tournament.Tournament;
 import interfaces.manager.gui.util.GraphicControlsHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,11 +24,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
-import model.team.Team;
-import model.tournament.KnockoutPhase;
-import model.tournament.League;
-import model.tournament.MixedTournament;
-import model.tournament.Tournament;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class CreateTournamentController implements Initializable {

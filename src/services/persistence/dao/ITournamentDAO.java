@@ -3,7 +3,7 @@ package services.persistence.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.tournament.Tournament;
+import domain.tournament.Tournament;
 
 public interface ITournamentDAO {
 

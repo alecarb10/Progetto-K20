@@ -9,11 +9,11 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.team.Player;
-import model.team.PlayerPositionType;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.Tournament;
+import domain.team.Player;
+import domain.team.PlayerPositionType;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.Tournament;
 import services.persistence.dao.ITeamDAO;
 import services.persistence.util.DBConnection;
 

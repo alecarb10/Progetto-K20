@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import domain.team.Player;
+import domain.team.Stadium;
 import interfaces.manager.gui.util.GraphicControlsHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +19,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.team.Player;
-import model.team.Stadium;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class AddStadiumController implements Initializable {

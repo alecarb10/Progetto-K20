@@ -4,13 +4,13 @@ import java.sql.SQLException;
 
 import java.util.List;
 
-import model.element.Day;
-import model.element.TournamentElement;
-import model.match.Match;
-import model.team.Player;
-import model.team.Stadium;
-import model.team.Team;
-import model.tournament.Tournament;
+import domain.element.Day;
+import domain.element.TournamentElement;
+import domain.match.Match;
+import domain.team.Player;
+import domain.team.Stadium;
+import domain.team.Team;
+import domain.tournament.Tournament;
 import services.persistence.dao.*;
 
 public class FacadeImpl implements IFacade {
