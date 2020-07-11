@@ -56,6 +56,9 @@ public class StageLoader {
 		primaryStage.setTitle(title);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+		primScreenBounds = Screen.getPrimary().getVisualBounds();
+		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
+		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
 		primaryStage.show();
 	}
 	

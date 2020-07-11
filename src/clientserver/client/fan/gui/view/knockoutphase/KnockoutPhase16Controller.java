@@ -100,10 +100,10 @@ public class KnockoutPhase16Controller implements Initializable {
 	public void passingDataToKnock16(Tournament k16) throws SQLException {
 		textBoard.setText(k16.getName());
 		if(k16.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-			days = facade.getSchedule((KnockoutPhase)k16,false);
+			days = facade.getBoardSchedule(k16);
 			}
 			else if(k16.getTournamentType() == TournamentType.MIXED) {
-				days = facade.getSchedule(k16, true);
+				days = facade.getBoardSchedule(k16);
 			}
 		
 //		List<Label> labelsList= new ArrayList<>();

@@ -77,10 +77,10 @@ public class KnockoutPhase8Controller implements Initializable {
 	public void passingDataToKnock8(Tournament k8) throws SQLException {
 		textBoard.setText(k8.getName());
 		if(k8.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-		days = facade.getSchedule((KnockoutPhase)k8,false);
+		days = facade.getBoardSchedule(k8);
 		}
 		else if(k8.getTournamentType() == TournamentType.MIXED) {
-			days = facade.getSchedule(k8, true);
+			days = facade.getBoardSchedule(k8);
 		}
 		
 		

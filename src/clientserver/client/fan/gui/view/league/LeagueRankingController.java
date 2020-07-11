@@ -121,7 +121,7 @@ public class LeagueRankingController implements Initializable {
 			}
 			
 		}
-		for(Day day: facade.getSchedule(tournament, false)) {
+		for(Day day: facade.getGroupSchedule(tournament)) {
 			dayComboBox.getItems().add(day.getNumber());
 		}
 		
@@ -172,7 +172,7 @@ public class LeagueRankingController implements Initializable {
 	public void daySelected(ActionEvent event) throws SQLException, IOException {
 		int dayN = (int) dayComboBox.getSelectionModel().getSelectedItem();
 		Day dayS = null;
-		for(Day day : facade.getSchedule(tournament, false)) {
+		for(Day day : facade.getGroupSchedule(tournament)) {
 			if(day.getNumber() == dayN) {
 				dayS = day;
 			}

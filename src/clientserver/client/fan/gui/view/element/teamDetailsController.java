@@ -63,7 +63,7 @@ public class teamDetailsController implements Initializable {
 		text.setText(teamPass.getName());
 		tournamentB = tournamentPass;
 		
-		for(Day day : facade.getSchedule(tournamentPass, false)) {
+		for(Day day : facade.getGroupSchedule(tournamentPass)) {
 			for(Match match : day.getMatchesList()) {
 				if((match.getHomeTeam().getId() == teamPass.getId() || match.getAwayTeam().getId() == teamPass.getId()) && match.isPlayed()) {
 					matchesPlayed.getItems().add(match.toString());

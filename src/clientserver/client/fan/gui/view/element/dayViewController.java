@@ -26,7 +26,7 @@ public class dayViewController implements Initializable {
 	
 	public void passingDataToDay(Tournament tournamentpass, Day dayPass) throws SQLException {
 		text.setText("DAY " + dayPass.getNumber());
-		for(Day day : facade.getSchedule(tournamentpass, false)) {
+		for(Day day : facade.getGroupSchedule(tournamentpass)) {
 			if(day.getId() == dayPass.getId()) {
 				for(Match match : day.getMatchesList()) {
 					if(match.isPlayed()) {
