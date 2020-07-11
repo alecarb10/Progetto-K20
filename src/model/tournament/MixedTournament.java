@@ -49,7 +49,7 @@ public class MixedTournament extends Tournament {
 		return this.group.getTeamsList();
 	}
 
-	public boolean isGroupCompleted() {
+	private boolean isGroupCompleted() {
 		return this.group.isCompleted();
 	}
 
