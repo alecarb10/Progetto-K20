@@ -1,5 +1,5 @@
 @args() {
-	List<model.tournament.Tournament> tournaments
+	model.tournament.Tournament tournament
 }
 <!DOCTYPE html> 
 <html>
@@ -9,25 +9,18 @@
   	</head>
   	
 	  <body> 
-	    <h1> HOME </h1> 
+	    <h1> TEAMS </h1> 
 	        
 	     <table class="table">
 		    <thead>
 		      <tr>
 		        <th scope="col"> Name </th>
-		        <th scope="col"> </th>
 		      </tr>
 		    </thead>
 		    <tbody>
-		    @for (model.tournament.Tournament t: tournaments) {
+		    @for (model.team.Team t: tournament.getTeamsList()) {
 				<tr> 
 					<td>@(t.getName())</td>
-					<td>
-						<form method="post" action="/view" class="noreturn">
-							<input type="hidden" name="id" value="@(t.getId())" />
-							<button type="submit" class="btn btn-primary"> Enter </button>
-						</form>
-					</td> 
 				</tr>
 			}
 			</tbody>
