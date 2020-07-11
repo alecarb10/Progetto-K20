@@ -49,7 +49,7 @@ public class ApplicationServer {
 
 	private void addStaticFileServing(ServletContextHandler handler) {
 		ServletHolder holderPwd = new ServletHolder("default", new DefaultServlet());
-		holderPwd.setInitParameter("resourceBase", "./resources/statics");
+		holderPwd.setInitParameter("resourceBase", "resources/");
 		holderPwd.setInitParameter("dirAllowed", "false");
 		holderPwd.setInitParameter("pathInfoOnly", "true");
 		handler.addServlet(holderPwd, "/statics/*");
@@ -57,7 +57,7 @@ public class ApplicationServer {
 
 	private void initTemplateEngine() {
 		Map<String, Object> conf = new HashMap<>();
-		conf.put("home.template", "./resources/templates");
+		conf.put("home.template", "interfaces/fan/webapp/pages");
 		Rythm.init(conf);
 	}
 }
