@@ -221,7 +221,8 @@ public class ManagerTextUI {
 					if (tournament.getTournamentType() == TournamentType.MIXED)
 						insertResultForMixed();
 					else {
-						tournament.setSchedule(facade.getSchedule(tournament, false));
+						tournament.setGroupSchedule(facade.getGroupSchedule(tournament));
+						tournament.setBoardSchedule(facade.getBoardSchedule(tournament));
 						insertResult();
 					}
 					break;
@@ -343,23 +344,25 @@ public class ManagerTextUI {
 			try {				
 				int choose = Integer.parseInt(inputString);
 				
-				tournament.setSchedule(facade.getSchedule(tournament, false));
+				tournament.setGroupSchedule(facade.getGroupSchedule(tournament));
+				tournament.setBoardSchedule(facade.getBoardSchedule(tournament));
 				
 				if (choose == 1) {
-					if (tournament.getTournamentElement().isCompleted())
+					if (tournament.getGroup().isCompleted())
 						System.out.println("Group is already completed");
-					else
-					System.out.println(tournament.getTournamentElement());
+					else {
+						System.out.println(tournament.getGroup());
 						insertResult();
+					}
 				}
 				else if (choose == 2) {
-					if (!tournament.getTournamentElement().isCompleted())
+					if (!tournament.getGroup().isCompleted())
 						System.out.println("Group is not completed, board is not started yet");
 					else {
 						System.out.println("You can manage board");
 						
-						if (((MixedTournament)tournament).getBoardSchedule() == null) {
-							((MixedTournament)tournament).initKnockoutPhase();
+						if (tournament.getBoardSchedule() == null) {
+							tournament.initBoard(tournament.getTeamsList());
 							for(Day day : ((MixedTournament)tournament).getBoardSchedule())
 								System.out.println(day);
 						}
