@@ -1,0 +1,41 @@
+@args() {
+	domain.tournament.Tournament tournament
+}
+<!DOCTYPE html> 
+<html>
+	 
+	<head>	
+  		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  	</head>
+  	
+	  <body> 
+	  	<h2> TOURNAMENT: @(tournament.getName()) </h2>
+	  	
+	  	<br>
+	  	
+	    <h2> TEAMS: </h2> 
+	        
+	     <table class="table">
+		    <thead>
+		      <tr>
+		        <th scope="col"> Name </th>
+		        <th scope="col"> </th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		    @for (domain.team.Team t: tournament.getTeamsList()) {
+				<tr> 
+					<td> @(t.getName()) </td>
+					<td>
+						<form method="post" action="/viewteams" class="noreturn">
+							<input type="hidden" name="id" value="@(t.getId())" />
+							<button type="submit" class="btn btn-primary"> Enter </button>
+						</form>
+					</td>
+				</tr>
+			}
+			</tbody>
+	    </table>
+    
+  </body> 
+</html>
