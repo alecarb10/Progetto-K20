@@ -57,11 +57,7 @@ public class KnockoutPhase4Controller implements Initializable {
 
 	public void passingDataToKnock4(Tournament k4) throws SQLException {
 		textBoard.setText(k4.getName());
-		if (k4.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-			days = facade.getBoardSchedule(k4);
-		} else if (k4.getTournamentType() == TournamentType.MIXED) {
-			days = facade.getBoardSchedule(k4);
-		}
+		days = facade.getBoardSchedule(k4);
 		labelDay1c.add(label1);
 		labelDay1f.add(label2);
 		labelDay1c.add(label3);

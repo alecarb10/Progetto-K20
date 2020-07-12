@@ -45,7 +45,7 @@ import javafx.scene.Parent;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class LeagueRankingController implements Initializable {
-	
+
 	@FXML
 	private Text text;
 	@FXML
@@ -66,15 +66,13 @@ public class LeagueRankingController implements Initializable {
 	private TableColumn<Team, Integer> gs;
 	@FXML
 	private TableColumn<Team, Integer> gc;
-	
-	//--------------------------------------------------	
+
+	// --------------------------------------------------
 	FacadeImpl facade = FacadeImpl.getInstance();
 	ObservableList<Team> wTeams = FXCollections.observableArrayList();
 	Tournament tournament;
 	List<Day> dayMixed;
-	
-	
-	
+
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		StageLoader SLM = new StageLoader();
 		SLM.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
@@ -82,36 +80,34 @@ public class LeagueRankingController implements Initializable {
 	}
 
 	public void passingData(Tournament tournamentPass) throws SQLException {
-		
+
 		text.setText(tournamentPass.getName());
-		if(tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
+		if (tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
 			boardButton.setVisible(false);
-		}
-		else if(tournamentPass.getTournamentType() == TournamentType.MIXED) {
+		} else if (tournamentPass.getTournamentType() == TournamentType.MIXED) {
 			boardButton.setVisible(true);
-			
-			
+
 		}
-		
+
 		tournament = tournamentPass;
-		for(Team team : facade.getTeamsByTournament(tournamentPass)) {
-			if(tournament.getTeamsList().contains(team) == false) {
-			tournament.addTeamInTournament(team);
-				}
+		for (Team team : facade.getTeamsByTournament(tournamentPass)) {
+			if (tournament.getTeamsList().contains(team) == false) {
+				tournament.addTeamInTournament(team);
 			}
-		for(Team team : tournament.getTeamsList()) {
-			if(wTeams.contains(team) == false) {
-			wTeams.add(team);
-				}
-			if(teamComboBox.getItems().contains(team.getName()) == false) {
-			teamComboBox.getItems().add(team.getName());
-			}
-			
 		}
-		for(Day day: facade.getGroupSchedule(tournament)) {
+		for (Team team : tournament.getTeamsList()) {
+			if (wTeams.contains(team) == false) {
+				wTeams.add(team);
+			}
+			if (teamComboBox.getItems().contains(team.getName()) == false) {
+				teamComboBox.getItems().add(team.getName());
+			}
+
+		}
+		for (Day day : facade.getGroupSchedule(tournament)) {
 			dayComboBox.getItems().add(day.getNumber());
 		}
-		
+
 	}
 
 	@Override
@@ -122,104 +118,67 @@ public class LeagueRankingController implements Initializable {
 		gc.setCellValueFactory(new PropertyValueFactory<Team, Integer>("goalsConceded"));
 		table.setItems(wTeams);
 	}
-	
+
 	public void teamSelected(ActionEvent event) throws IOException, SQLException {
 		String teamNameTS = (String) (teamComboBox.getSelectionModel().getSelectedItem());
 		Team teamSelectedTS = null;
-		for(Team team : tournament.getTeamsList()) {
-			if(team.getName() == teamNameTS) {
+		for (Team team : tournament.getTeamsList()) {
+			if (team.getName() == teamNameTS) {
 				teamSelectedTS = team;
 			}
 		}
-		
+
 		StageLoader SLTS = new StageLoader();
 		SLTS.show("interfaces/fan/gui/view/element/teamDetails.fxml", "team details", event);
 		teamDetailsController tdc = SLTS.getLoader().getController();
 		tdc.passingData(tournament, teamSelectedTS);
-				
+
 	}
-	
-	
+
 	public void daySelected(ActionEvent event) throws SQLException, IOException {
 		int dayN = (int) dayComboBox.getSelectionModel().getSelectedItem();
 		Day dayS = null;
-		for(Day day : facade.getGroupSchedule(tournament)) {
-			if(day.getNumber() == dayN) {
+		for (Day day : facade.getGroupSchedule(tournament)) {
+			if (day.getNumber() == dayN) {
 				dayS = day;
 			}
 		}
-		
-		
+
 		StageLoader SLD = new StageLoader();
-		SLD.showDaySelected("interfaces/fan/gui/view/element/dayView.fxml", ("DAY " + Integer.toString(dayS.getNumber())), event);
+		SLD.showDaySelected("interfaces/fan/gui/view/element/dayView.fxml",
+				("DAY " + Integer.toString(dayS.getNumber())), event);
 		dayViewController dvc = SLD.getLoader().getController();
 		dvc.passingDataToDay(tournament, dayS);
-				
+
 	}
-	
-	
-	
-	
-/*
+
 	public void boardButtonCliccked(ActionEvent event) throws IOException, SQLException {
 		int c = wTeams.size();
 		switch (c) {
+		
 		case 4:
-			FXMLLoader loader4 = new FXMLLoader();
-			loader4.setLocation(
-					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase4.fxml"));
-			Parent root4 = loader4.load();
-			KnockoutPhase4Controller kp4c = loader4.getController();
+			StageLoader SLM4 = new StageLoader();
+			SLM4.show("interfaces/fan/gui/view/knockoutphase/knockoutphase4.fxml", "Board", event);
+			KnockoutPhase4Controller kp4c = SLM4.getLoader().getController();
 			kp4c.passingDataToKnock4(tournament);
-			Scene scene4 = new Scene(root4);
-			Stage primaryStage4 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			primaryStage4.setTitle("Board");
-			primaryStage4.setScene(scene4);
-			primaryStage4.setResizable(false);
-			Rectangle2D primScreenBounds4 = Screen.getPrimary().getVisualBounds();
-			primaryStage4.setX((primScreenBounds4.getWidth() - primaryStage4.getWidth()) / 2);
-			primaryStage4.setY((primScreenBounds4.getHeight() - primaryStage4.getHeight()) / 2);
-			primaryStage4.show();
-
 			break;
+			
 		case 8:
-			FXMLLoader loader8 = new FXMLLoader();
-			loader8.setLocation(
-					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase8.fxml"));
-			Parent root8 = loader8.load();
-			KnockoutPhase8Controller kp8c = loader8.getController();
+			StageLoader SLM8 = new StageLoader();
+			SLM8.show("interfaces/fan/gui/view/knockoutphase/knockoutphase8.fxml", "Board", event);
+			KnockoutPhase8Controller kp8c = SLM8.getLoader().getController();
 			kp8c.passingDataToKnock8(tournament);
-			Scene scene8 = new Scene(root8);
-			Stage primaryStage8 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			primaryStage8.setTitle("Board");
-			primaryStage8.setScene(scene8);
-			primaryStage8.setResizable(false);
-			Rectangle2D primScreenBounds8 = Screen.getPrimary().getVisualBounds();
-			primaryStage8.setX((primScreenBounds8.getWidth() - primaryStage8.getWidth()) / 2);
-			primaryStage8.setY((primScreenBounds8.getHeight() - primaryStage8.getHeight()) / 2);
-			primaryStage8.show();
-
 			break;
+			
 		case 16:
-			FXMLLoader loader16 = new FXMLLoader();
-			loader16.setLocation(
-					getClass().getResource("/clientserver/client/fan/gui/view/knockoutphase/knockoutphase16.fxml"));
-			Parent root16 = loader16.load();
-			KnockoutPhase16Controller kp16c = loader16.getController();
-			kp16c.passingDataToKnock16(tournament);
-			Scene scene16 = new Scene(root16);
-			Stage primaryStage16 = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			primaryStage16.setTitle("Board");
-			primaryStage16.setScene(scene16);
-			primaryStage16.setResizable(false);
-			Rectangle2D primScreenBounds16 = Screen.getPrimary().getVisualBounds();
-			primaryStage16.setX((primScreenBounds16.getWidth() - primaryStage16.getWidth()) / 2);
-			primaryStage16.setY((primScreenBounds16.getHeight() - primaryStage16.getHeight()) / 2);
-			primaryStage16.show();
+			StageLoader SLM16 = new StageLoader();
+			SLM16.show("interfaces/fan/gui/view/knockoutphase/knockoutphase16.fxml", "Board", event);
+			KnockoutPhase8Controller kp16c = SLM16.getLoader().getController();
+			kp16c.passingDataToKnock8(tournament);
 			break;
 
 		}
 
 	}
-*/
+
 }

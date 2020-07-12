@@ -76,13 +76,7 @@ public class KnockoutPhase8Controller implements Initializable {
 	
 	public void passingDataToKnock8(Tournament k8) throws SQLException {
 		textBoard.setText(k8.getName());
-		if(k8.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
 		days = facade.getBoardSchedule(k8);
-		}
-		else if(k8.getTournamentType() == TournamentType.MIXED) {
-			days = facade.getBoardSchedule(k8);
-		}
-		
 		
 		List<Label> labelsList= new ArrayList<>();
 		labelsList.add(label1);
