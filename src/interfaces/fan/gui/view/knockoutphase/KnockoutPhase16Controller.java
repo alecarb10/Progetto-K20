@@ -224,21 +224,8 @@ public class KnockoutPhase16Controller implements Initializable {
 	
 	
 	public void backButtonClicked(ActionEvent event) throws IOException {
-	
 		StageLoader SLB = new StageLoader();
-		SLB.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", event);
-		/*	FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
-		Scene scene = new Scene(loader.load());
-		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Fan menu");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-		primaryStage.show();
-		*/
+		SLB.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
 	}
 
 

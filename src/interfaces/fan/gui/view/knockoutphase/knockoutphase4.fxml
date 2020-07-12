@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientserver.client.fan.gui.view.knockoutphase.KnockoutPhase4Controller">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.fan.gui.view.knockoutphase.KnockoutPhase4Controller">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="51.0" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="170.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="50.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="51.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="170.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="100.0" />

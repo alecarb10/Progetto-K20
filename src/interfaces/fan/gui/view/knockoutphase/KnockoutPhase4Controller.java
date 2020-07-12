@@ -27,7 +27,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
 
-public class KnockoutPhase4Controller implements Initializable{
+public class KnockoutPhase4Controller implements Initializable {
 	@FXML
 	Button backButton;
 	@FXML
@@ -46,51 +46,54 @@ public class KnockoutPhase4Controller implements Initializable{
 	Label label6;
 	@FXML
 	Label label7;
-	
+
 	List<Label> labelDay1c = new ArrayList<>();
-	List<Label> labelDay1f = new ArrayList<>();	
+	List<Label> labelDay1f = new ArrayList<>();
 	List<Label> labelDay2c = new ArrayList<>();
 	List<Label> labelDay2f = new ArrayList<>();
-	
+
 	FacadeImpl facade = FacadeImpl.getInstance();
-	List<Day> days; 
-	
+	List<Day> days;
+
 	public void passingDataToKnock4(Tournament k4) throws SQLException {
 		textBoard.setText(k4.getName());
-		if(k4.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+		if (k4.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
 			days = facade.getBoardSchedule(k4);
-			}
-			else if(k4.getTournamentType() == TournamentType.MIXED) {
-				days = facade.getBoardSchedule(k4);
-			}
+		} else if (k4.getTournamentType() == TournamentType.MIXED) {
+			days = facade.getBoardSchedule(k4);
+		}
 		labelDay1c.add(label1);
 		labelDay1f.add(label2);
 		labelDay1c.add(label3);
 		labelDay1f.add(label4);
 		labelDay2c.add(label5);
 		labelDay2f.add(label6);
-		for(Label labelc : labelDay1c) {
-			for(Label labelf: labelDay1f) {
-				for(Day day : days) {
-					for(Match match: day.getMatchesList()) {
-						if(day.getNumber() == 1) {
-							
+		for (Label labelc : labelDay1c) {
+			for (Label labelf : labelDay1f) {
+				for (Day day : days) {
+					for (Match match : day.getMatchesList()) {
+						if (day.getNumber() == 1) {
+
 							labelc.setText(match.getHomeTeam().getName() + "          " + match.getHomeScore());
 							labelf.setText(match.getAwayTeam().getName() + "          " + match.getAwayScore());
-							labelDay1c.iterator().next().setText(day.getMatchesList().iterator().next().getHomeTeam().getName()+ "          " + day.getMatchesList().iterator().next().getHomeScore());
-							labelDay1f.iterator().next().setText(day.getMatchesList().iterator().next().getAwayTeam().getName()+ "          " + day.getMatchesList().iterator().next().getAwayScore());	
+							labelDay1c.iterator().next()
+									.setText(day.getMatchesList().iterator().next().getHomeTeam().getName()
+											+ "          " + day.getMatchesList().iterator().next().getHomeScore());
+							labelDay1f.iterator().next()
+									.setText(day.getMatchesList().iterator().next().getAwayTeam().getName()
+											+ "          " + day.getMatchesList().iterator().next().getAwayScore());
 						}
 					}
 				}
-				
+
 			}
 		}
-		
-		for(Label labelc : labelDay2c) {
-			for(Label labelf : labelDay2f ) {
-				for(Day day : days) {
-					if(day.getNumber() == 2) {
-						for(Match match : day.getMatchesList()) {
+
+		for (Label labelc : labelDay2c) {
+			for (Label labelf : labelDay2f) {
+				for (Day day : days) {
+					if (day.getNumber() == 2) {
+						for (Match match : day.getMatchesList()) {
 							labelc.setText(match.getHomeTeam().getName() + "          " + match.getHomeScore());
 							labelf.setText(match.getAwayTeam().getName() + "          " + match.getAwayScore());
 							label7.setText(match.getWinner().getName());
@@ -98,39 +101,22 @@ public class KnockoutPhase4Controller implements Initializable{
 						}
 					}
 				}
-					
+
 			}
 		}
-		
-	
-		
-		
-	}
-	
-	
-	public void backButtonClicked(ActionEvent event) throws IOException {
-		StageLoader SLB = new StageLoader();
-		SLB.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", event);
-		/*FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
-		Scene scene = new Scene(loader.load());
-		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Fan menu");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-		primaryStage.show();
-		*/
+
 	}
 
+	public void backButtonClicked(ActionEvent event) throws IOException {
+		StageLoader SLB = new StageLoader();
+		SLB.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
+
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 }

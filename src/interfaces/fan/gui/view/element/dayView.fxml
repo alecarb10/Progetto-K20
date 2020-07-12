@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="300.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clientserver.client.fan.gui.view.element.dayViewController">
+<AnchorPane prefHeight="300.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.fan.gui.view.element.dayViewController">
    <children>
       <ListView fx:id="matchPlayed" layoutX="14.0" layoutY="75.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
       <ListView fx:id="matchNotPlayed" layoutX="240.0" layoutY="86.0" prefHeight="200.0" prefWidth="300.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />

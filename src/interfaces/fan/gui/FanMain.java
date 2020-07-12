@@ -14,21 +14,8 @@ public class FanMain extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		
 		StageLoader SLF = new StageLoader();
-		SLF.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", primaryStage);
-		/*
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
-		Scene scene = new Scene(loader.load());
-		primaryStage.setTitle("Fan menu");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-		primaryStage.show();
-	*/
+		SLF.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", primaryStage);
 	}
 
 	public static void main(String[] args) {

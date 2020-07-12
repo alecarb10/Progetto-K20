@@ -22,30 +22,24 @@ public class dayViewController implements Initializable {
 	private ListView<String> matchNotPlayed;
 	FacadeImpl facade = FacadeImpl.getInstance();
 
-	
-	
 	public void passingDataToDay(Tournament tournamentpass, Day dayPass) throws SQLException {
 		text.setText("DAY " + dayPass.getNumber());
-		for(Day day : facade.getGroupSchedule(tournamentpass)) {
-			if(day.getId() == dayPass.getId()) {
-				for(Match match : day.getMatchesList()) {
-					if(match.isPlayed()) {
+		for (Day day : facade.getGroupSchedule(tournamentpass)) {
+			if (day.getId() == dayPass.getId()) {
+				for (Match match : day.getMatchesList()) {
+					if (match.isPlayed()) {
 						matchPlayed.getItems().add(match.toString());
-					}
-					else if (match.isPlayed() == false){
+					} else if (match.isPlayed() == false) {
 						matchNotPlayed.getItems().add(match.toString());
 					}
-						
+
 				}
 			}
-			
-			
+
 		}
-		
+
 	}
-	
-	
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub

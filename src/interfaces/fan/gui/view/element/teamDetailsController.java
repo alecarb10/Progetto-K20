@@ -53,75 +53,54 @@ public class teamDetailsController implements Initializable {
 	Button backButton;
 	@FXML
 	Text text;
-	
+
 	FacadeImpl facade = FacadeImpl.getInstance();
 	ObservableList<Player> players = FXCollections.observableArrayList();
 	Tournament tournamentB;
-	
-	
+
 	public void passingData(Tournament tournamentPass, Team teamPass) throws SQLException {
 		text.setText(teamPass.getName());
 		tournamentB = tournamentPass;
-		
-		for(Day day : facade.getGroupSchedule(tournamentPass)) {
-			for(Match match : day.getMatchesList()) {
-				if((match.getHomeTeam().getId() == teamPass.getId() || match.getAwayTeam().getId() == teamPass.getId()) && match.isPlayed()) {
+
+		for (Day day : facade.getGroupSchedule(tournamentPass)) {
+			for (Match match : day.getMatchesList()) {
+				if ((match.getHomeTeam().getId() == teamPass.getId() || match.getAwayTeam().getId() == teamPass.getId())
+						&& match.isPlayed()) {
 					matchesPlayed.getItems().add(match.toString());
-				}
-				else if(match.getHomeTeam().getId() == teamPass.getId() || match.getAwayTeam().getId() == teamPass.getId())
-				{
+				} else if (match.getHomeTeam().getId() == teamPass.getId()
+						|| match.getAwayTeam().getId() == teamPass.getId()) {
 					matchesNotPlayed.getItems().add(match.toString());
 				}
 			}
 		}
-		
-		for(Team team : facade.getTeamsByTournament(tournamentPass)) {
-			if(team.getId() == teamPass.getId()) {
-				for(Player player : team.getPlayers()) {
+
+		for (Team team : facade.getTeamsByTournament(tournamentPass)) {
+			if (team.getId() == teamPass.getId()) {
+				for (Player player : team.getPlayers()) {
 					players.add(player);
 				}
 			}
 		}
-		
-		
+
 	}
 
-	
 	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("clientserver/client/fan/gui/view/league/LeagueRanking.fxml", "Ranking", event);
+		SLB.show("interfaces/fan/gui/view/league/LeagueRanking.fxml", "Ranking", event);
 		LeagueRankingController lrc = SLB.getLoader().getController();
 		lrc.passingData(tournamentB);
-		/*
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/league/LeagueRanking.fxml"));
-		Parent root =loader.load();
-		LeagueRankingController lrc = loader.getController();
-		lrc.passingData(tournamentB);
-		Scene scene = new Scene(root);
-		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Ranking");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-        primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-		primaryStage.show();
-		*/
+
 	}
-	
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	
+
 		name.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
 		surname.setCellValueFactory(new PropertyValueFactory<Player, String>("surname"));
 		number.setCellValueFactory(new PropertyValueFactory<Player, Integer>("number"));
 		position.setCellValueFactory(new PropertyValueFactory<Player, PlayerPositionType>("position"));
 		table.setItems(players);
-		
-		
+
 	}
-	
 
 }

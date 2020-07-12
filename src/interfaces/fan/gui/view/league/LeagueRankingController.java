@@ -77,20 +77,8 @@ public class LeagueRankingController implements Initializable {
 	
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		StageLoader SLM = new StageLoader();
-		SLM.show("clientserver/client/fan/gui/view/FanMenu.fxml", "Fan menu", event);
-		/*
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/FanMenu.fxml"));
-		Scene scene = new Scene(loader.load());
-		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStage.setTitle("Fan menu");
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
-		primaryStage.show();
-		*/
+		SLM.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
+
 	}
 
 	public void passingData(Tournament tournamentPass) throws SQLException {
@@ -145,26 +133,10 @@ public class LeagueRankingController implements Initializable {
 		}
 		
 		StageLoader SLTS = new StageLoader();
-		SLTS.show("clientserver/client/fan/gui/view/element/teamDetails.fxml", "team details", event);
+		SLTS.show("interfaces/fan/gui/view/element/teamDetails.fxml", "team details", event);
 		teamDetailsController tdc = SLTS.getLoader().getController();
 		tdc.passingData(tournament, teamSelectedTS);
-			
-		/*
-		FXMLLoader loaderTS = new FXMLLoader();
-		loaderTS.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/element/teamDetails.fxml"));
-		Parent rootTS = loaderTS.load();
-		teamDetailsController tdc = loaderTS.getController();
-		tdc.passingData(tournament, teamSelectedTS);
-		Scene sceneTS = new Scene(rootTS);
-		Stage primaryStageTS = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		primaryStageTS.setTitle("team details");
-		primaryStageTS.setScene(sceneTS);
-		primaryStageTS.setResizable(false);
-		Rectangle2D primScreenBoundsTS = Screen.getPrimary().getVisualBounds();
-		primaryStageTS.setX((primScreenBoundsTS.getWidth() - primaryStageTS.getWidth()) / 2);
-		primaryStageTS.setY((primScreenBoundsTS.getHeight() - primaryStageTS.getHeight()) / 2);
-		primaryStageTS.show();
-		*/		
+				
 	}
 	
 	
@@ -179,27 +151,10 @@ public class LeagueRankingController implements Initializable {
 		
 		
 		StageLoader SLD = new StageLoader();
-		SLD.showDaySelected("clientserver/client/fan/gui/view/element/dayView.fxml", ("DAY " + Integer.toString(dayS.getNumber())), event);
+		SLD.showDaySelected("interfaces/fan/gui/view/element/dayView.fxml", ("DAY " + Integer.toString(dayS.getNumber())), event);
 		dayViewController dvc = SLD.getLoader().getController();
 		dvc.passingDataToDay(tournament, dayS);
-		
-		/*
-		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("clientserver/client/fan/gui/view/element/dayView.fxml"));
-		Parent root = loader.load();
-		dayViewController dvc = loader.getController();
-		dvc.passingDataToDay(tournament, dayS);
-		Scene scene = new Scene(root);
-		Stage primaryStage = new Stage();
-		primaryStage.setTitle("DAY " + dayS.getNumber());
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.show();
-		*/
-		
-		
-		
-		
+				
 	}
 	
 	
