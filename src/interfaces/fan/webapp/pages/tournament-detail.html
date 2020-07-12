@@ -1,30 +1,58 @@
 @args() {
-	model.tournament.Tournament tournament
+	domain.tournament.Tournament tournament
 }
 <!DOCTYPE html> 
 <html>
-	 
 	<head>	
   		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  		
+  		<style>
+	  		.card-img-top {
+			    height: 200px;
+			    width: 200px;
+			    margin: auto;
+			}
+			.card {
+				margin: 10px !important;
+				padding: 10px !important;
+				border: 1px solid rgba(0,0,0,.125) !important;
+			}
+  		</style>
   	</head>
   	
-	  <body> 
-	    <h1> TEAMS </h1> 
-	        
-	     <table class="table">
-		    <thead>
-		      <tr>
-		        <th scope="col"> Name </th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		    @for (model.team.Team t: tournament.getTeamsList()) {
-				<tr> 
-					<td>@(t.getName())</td>
-				</tr>
-			}
-			</tbody>
-	    </table>
+	<body> 
+		<h2> TOURNAMENT: @(tournament.getName()) </h2> 
+	    
+	    <br><br>   
+	    
+	    <div class="card-group">
+			<div class="card">
+				<img src="statics/IMG/teams.png" class="card-img-top" align="center" alt="...">
+				<div class="card-body">
+					<h5 class="card-title"> Teams </h5>
+					<p class="card-text"> Teams whose play in this tournament. </p>
+					<a href="teams" class="btn btn-primary"> View </a>
+				</div>
+			</div>
+		
+			<div class="card">
+				<img src="statics/IMG/group.png" class="card-img-top" align="center" alt="...">
+				<div class="card-body">
+					<h5 class="card-title"> Group </h5>
+					<p class="card-text"> The group of the tournament with ranking + schedule. </p>
+					<a href="#" class="btn btn-primary"> Enter </a>
+				</div>
+			</div>
+		
+			<div class="card">
+				<img src="statics/IMG/board.jpg" class="card-img-top" align="center" alt="...">
+				<div class="card-body">
+					<h5 class="card-title"> Board </h5>
+					<p class="card-text"> The board of the tournament with brackets + schedule. </p>
+					<a href="#" class="btn btn-primary"> Enter </a>
+				</div>
+			</div>
+		</div>
     
   </body> 
 </html>

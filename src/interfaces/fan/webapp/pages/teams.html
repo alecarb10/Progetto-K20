@@ -1,5 +1,5 @@
 @args() {
-	List<domain.tournament.Tournament> tournaments
+	domain.tournament.Tournament tournament
 }
 <!DOCTYPE html> 
 <html>
@@ -8,12 +8,14 @@
   		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   	</head>
   	
-  	<body> 
-	    <h2> HOME </h2> 
-	    
-	    <br><br>
-	    
-	    <table class="table">
+	  <body> 
+	  	<h2> TOURNAMENT: @(tournament.getName()) </h2>
+	  	
+	  	<br>
+	  	
+	    <h2> TEAMS: </h2> 
+	        
+	     <table class="table">
 		    <thead>
 		      <tr>
 		        <th scope="col"> Name </th>
@@ -21,19 +23,19 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		    @for (domain.tournament.Tournament t: tournaments) {
+		    @for (domain.team.Team t: tournament.getTeamsList()) {
 				<tr> 
-					<td>@(t.getName())</td>
+					<td> @(t.getName()) </td>
 					<td>
-						<form method="post" action="/view" class="noreturn">
+						<form method="post" action="/viewteams" class="noreturn">
 							<input type="hidden" name="id" value="@(t.getId())" />
 							<button type="submit" class="btn btn-primary"> Enter </button>
 						</form>
-					</td> 
+					</td>
 				</tr>
 			}
 			</tbody>
-	     </table>
+	    </table>
     
-  	</body> 
+  </body> 
 </html>

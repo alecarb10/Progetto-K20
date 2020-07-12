@@ -1,0 +1,41 @@
+@args() {
+	domain.team.Team team
+}
+<!DOCTYPE html> 
+<html>
+	 
+	<head>	
+  		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  	</head>
+  	
+	  <body> 
+	    <h2> TEAM: @(team.getName()) </h2> 
+	    
+	    <h2> STADIUM: @if (team.getStadium() == null) { - } else { @(team.getStadium().getName()) } </h2>
+	    
+	    <br>
+	    
+	    <h2> PLAYERS: </h2>    
+	     <table class="table">
+		    <thead>
+		      <tr>
+		        <th scope="col"> Name </th>
+		        <th scope="col"> Surname </th>
+		        <th scope="col"> Number </th>
+		        <th scope="col"> Position </th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		    @for (domain.team.Player p: team.getPlayers()) {
+				<tr> 
+					<td> @(p.getName()) </td>
+					<td> @(p.getSurname()) </td>
+					<td> @(p.getNumber()) </td>
+					<td> @(p.getPosition()) </td>
+				</tr>
+			}
+			</tbody>
+	    </table>
+    
+  </body> 
+</html>
