@@ -4,6 +4,12 @@ import java.util.Date;
 
 import domain.team.*;
 
+/**
+ * This class represents a match played by a home team and a away team, whit their corresponding scores.
+ * It has also information about the stadium where it's played and the date.
+ * A unique ID identify the match.
+ * 
+ */
 public class Match {
 
 	private int id;
@@ -15,6 +21,13 @@ public class Match {
 	private int awayScore;
 	private boolean played;
 
+	/**
+	 * Team constructor.
+	 * @param date
+	 * @param homeTeam
+	 * @param awayTeam
+	 * 
+	 */
 	public Match(Date date, Team homeTeam, Team awayTeam) {
 		this.date = date;
 		this.homeTeam = homeTeam;
@@ -65,6 +78,13 @@ public class Match {
 		return stadium;
 	}
 
+	/**
+	 * Method to record the result of a match. 
+	 * It turn the state of the match to 'played' and updates each team's points.
+	 * @param homeScore
+	 * @param awayScore
+	 * 
+	 */
 	public void setScore(int homeScore, int awayScore) {
 		this.homeScore = homeScore;
 		homeTeam.setGoalsScored(homeTeam.getGoalsScored() + homeScore);
@@ -78,6 +98,10 @@ public class Match {
 		setPoints();
 	}
 
+	/**
+	 * Method to update points of the teams: +1 to each team in case of a tie, +3 to the winner otherwise.
+	 * 
+	 */
 	private void setPoints() {
 		if (played) {
 			Team winnerTeam = getWinner();
@@ -92,6 +116,11 @@ public class Match {
 		}
 	}
 	
+	/**
+	 * Method to decree the winner of the match.
+	 * @return team
+	 * 
+	 */
 	public Team getWinner() {
 		if(played) {
 			if (homeScore > awayScore) {
