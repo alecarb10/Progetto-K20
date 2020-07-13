@@ -3,16 +3,24 @@ package domain.team;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Team class.
+ * 
+ */
 public class Team {
 	
 	private int id;
-	private String name;
 	private int goalsScored;
 	private int goalsConceded;
 	private int points;
 	private Stadium stadium;
 	private ArrayList<Player> players;
 
+	/**
+	 * Team constructor.
+	 * @param name
+	 * 
+	 */
 	public Team(String name) {
 		this.name = name;
 		this.players = new ArrayList<>();
