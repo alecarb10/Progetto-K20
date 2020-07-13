@@ -1,10 +1,20 @@
 package domain.team;
 
+/**
+ * Stadium class.
+ * 
+ */
 public class Stadium {
 	private String name;
-	private String city;
 	private int capacity;
 
+	/**
+	 * Stadium constructor.
+	 * @param name 
+	 * @param city City where it's located
+	 * @param capacity Places avaliable for fans
+	 * 
+	 */
 	public Stadium(String name, String city, int capacity) {
 		this.name = name;
 		this.city = city;
