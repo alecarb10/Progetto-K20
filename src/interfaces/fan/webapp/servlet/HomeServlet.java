@@ -38,6 +38,9 @@ public class HomeServlet extends WebServlet {
 		if (req.getPathInfo().equals("/teams") || req.getPathInfo().equals("/teams.html")) {
 			resp.getWriter().write(Rythm.render("teams.html", tournament));
 		}
+		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html")) {
+			resp.getWriter().write(Rythm.render("group.html", tournament, null));
+		}
 	}
 	
 	@Override
@@ -49,6 +52,10 @@ public class HomeServlet extends WebServlet {
 			try {
 				if (tournament.getTeamsList().size() == 0)
 					tournament.addTeams(FacadeImpl.getInstance().getTeamsByTournament(tournament));
+				if (tournament.getGroupSchedule() == null)
+					tournament.setGroupSchedule(FacadeImpl.getInstance().getGroupSchedule(tournament));
+				if (tournament.getBoardSchedule() == null)
+					tournament.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(tournament));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -62,5 +69,10 @@ public class HomeServlet extends WebServlet {
 		
 			resp.getWriter().write(Rythm.render("team-detail.html", team));	
 		} 
+		
+		if (req.getPathInfo().equals("/group")) {
+			int day = Integer.parseInt(req.getParameter("daySelect"));
+			resp.getWriter().write(Rythm.render("group.html", tournament, tournament.getGroupSchedule().get(day - 1)));
+		}
 	}
 }
