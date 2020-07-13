@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Team {
 	
+	private String name;
 	private int id;
 	private int goalsScored;
 	private int goalsConceded;
