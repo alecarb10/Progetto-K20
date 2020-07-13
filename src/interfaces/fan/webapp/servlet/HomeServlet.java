@@ -46,7 +46,7 @@ public class HomeServlet extends WebServlet {
 		}
 		if (req.getPathInfo().equals("/board") || req.getPathInfo().equals("/board.html")) {
 			if (tournament.getBoard() != null)
-				resp.getWriter().write(Rythm.render("board.html", tournament));
+				resp.getWriter().write(Rythm.render("board4.html", tournament));
 			else
 				resp.getWriter().write(Rythm.render("error.html"));
 		}
