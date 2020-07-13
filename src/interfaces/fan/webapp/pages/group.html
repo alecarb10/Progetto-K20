@@ -1,0 +1,105 @@
+@args() {
+	domain.tournament.Tournament tournament
+	domain.element.Day day
+}
+<!DOCTYPE html> 
+<html>
+	<head>	
+  		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  	</head>
+  	
+	<body>   	
+	    <h2> TOURNAMENT: @(tournament.getName()) </h2> 
+	    
+	    <br>
+	    
+	    <div class="container">
+			<div class="row">
+			    <div class="col-md-4">
+			    	<h1> RANKING </h1> <br>
+			    	
+					<table class="table">
+					    <thead>
+					    	<tr>
+						        <th scope="col"> Team </th>
+						        <th scope="col"> Points </th>
+						        <th scope="col"> GS </th>
+						        <th scope="col"> GC </th>
+					      	</tr>
+					    </thead>
+					    <tbody>
+					    @for (domain.team.Team t: tournament.getTeamsList()) {
+							<tr> 
+								<td> @(t.getName()) </td>
+								<td> @(t.getPoints()) </td>
+								<td> @(t.getGoalsScored()) </td>
+								<td> @(t.getGoalsConceded()) </td>
+							</tr>
+						}
+						</tbody>
+			    	</table>
+			    </div>		
+			    
+			    <div class="col-md-2"> </div>
+			        	
+			    <div class="col-md-6">
+			    	<h1> SCHEDULE </h1> <br>
+			    	
+			    	<form method="post" action="/group" class="form-inline">
+				    	<div class="form-group mx-sm-3 mb-2">
+				    		<label for="daySelect"> Choose a day </label>
+				    	</div>
+				    	
+				    	<div class="form-group mx-sm-3 mb-8">
+						    <select class="form-control" name="daySelect">
+						    	@for (domain.element.Day d: tournament.getGroupSchedule()) {
+						    		@if (day != null) {
+						    			@if (d.getNumber() == day.getNumber()) {
+						    				<option selected="selected"> @(d.getNumber()) </option>
+						    			}
+						    			else {
+						    				<option> @(d.getNumber()) </option>
+						    			}
+						    		}
+						    		else {
+						    			<option> @(d.getNumber()) </option>
+						    		}
+						    	}
+						    </select>
+					    </div>
+					    
+					    <button type="submit" class="btn btn-primary"> Show </button>
+			    	</form>
+			    	
+			    	<br>
+			    	 
+			    	@if (day != null) {
+			    		<table class="table">
+						    <thead>
+						    	<tr>
+							        <th scope="col"> HomeTeam </th>
+							        <th scope="col"> AwayTeam </th>
+							        <th scope="col"> HomeScore </th>
+							        <th scope="col"> AwayScore </th>
+							        <th scope="col"> Date </th>
+						      	</tr>
+						    </thead>
+						    <tbody>
+						    @for (domain.match.Match m: day.getMatchesList()) {
+								<tr> 
+									<td> @(m.getHomeTeam().getName()) </td>
+									<td> @(m.getAwayTeam().getName()) </td>
+									<td> @(m.getHomeScore()) </td>
+									<td> @(m.getAwayScore()) </td>
+									<td> @(m.getDate()) </td>
+								</tr>
+							}
+							</tbody>
+			    		</table> 
+			    	} 
+			    	
+			    </div>
+		  	</div>
+		</div>    
+  	</body> 
+</html>
