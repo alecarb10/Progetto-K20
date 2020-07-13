@@ -244,7 +244,7 @@ public class ManagerTextUI {
 	private void insertResult() throws SQLException {
 		while(true) {
 			System.out.println("\nChoose a day: \n");
-			for (Day d: tournament.getGroupSchedule())
+			for (Day d: tournament.getSchedule())
 				System.out.println("Day " + d.getNumber() + " - " + d.getDate());
 			
 			System.out.println("Enter \"e\" to exit, \"b\" to go back.\n");
@@ -307,8 +307,8 @@ public class ManagerTextUI {
 							System.out.println("\nResult entered");
 							
 							if (tournament.getSchedule().size() > scheduleSize) {
-								tournament.getTournamentElement().setId(facade.getBoardIDByTournament(tournament));
-								if (facade.storeDay(tournament.getSchedule().get(tournament.getSchedule().size() - 1), tournament))
+								tournament.getBoard().setId(facade.getBoardIDByTournament(tournament));
+								if (facade.storeDay(tournament.getBoardSchedule().get(tournament.getBoardSchedule().size() - 1), tournament))
 									System.out.println("Day added");
 							}
 								
