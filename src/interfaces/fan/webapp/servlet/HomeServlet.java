@@ -39,7 +39,16 @@ public class HomeServlet extends WebServlet {
 			resp.getWriter().write(Rythm.render("teams.html", tournament));
 		}
 		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html")) {
-			resp.getWriter().write(Rythm.render("group.html", tournament, null));
+			if (tournament.getGroup() != null)
+				resp.getWriter().write(Rythm.render("group.html", tournament, null));
+			else
+				resp.getWriter().write(Rythm.render("error.html"));
+		}
+		if (req.getPathInfo().equals("/board") || req.getPathInfo().equals("/board.html")) {
+			if (tournament.getBoard() != null)
+				resp.getWriter().write(Rythm.render("board.html", tournament));
+			else
+				resp.getWriter().write(Rythm.render("error.html"));
 		}
 	}
 	
