@@ -1,5 +1,9 @@
 package domain.team;
 
+/**
+ * Player class.
+ * 
+ */
 public class Player {
 	
 	private int id;
@@ -8,6 +12,15 @@ public class Player {
 	private int number;
 	private PlayerPositionType position;
 
+
+	/**
+	 * Player constructor.
+	 * @param name 
+	 * @param surname
+	 * @param number
+	 * @param position
+	 * 
+	 */
 	public Player(String name, String surname, int number, PlayerPositionType position) {
 		this.name = name;
 		this.surname = surname;
