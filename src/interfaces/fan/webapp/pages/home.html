@@ -1,39 +1,56 @@
 @args() {
-	List<domain.tournament.Tournament> tournaments
-}
-<!DOCTYPE html> 
-<html>
-	 
-	<head>	
-  		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  	</head>
-  	
-  	<body> 
-	    <h2> HOME </h2> 
-	    
-	    <br><br>
-	    
-	    <table class="table">
-		    <thead>
-		      <tr>
-		        <th scope="col"> Name </th>
-		        <th scope="col"> </th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		    @for (domain.tournament.Tournament t: tournaments) {
-				<tr> 
-					<td>@(t.getName())</td>
-					<td>
-						<form method="post" action="/view" class="noreturn">
-							<input type="hidden" name="id" value="@(t.getId())" />
-							<button type="submit" class="btn btn-primary"> Enter </button>
-						</form>
-					</td> 
-				</tr>
-			}
-			</tbody>
-	     </table>
-    
-  	</body> 
-</html>
+List<domain.tournament.Tournament> tournaments
+	}
+	<!DOCTYPE html> 
+	<html>
+		
+		<head>	
+			<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+		</head>
+		
+		<body>
+			<nav class="navbar fixed-top navbar-dark bg-primary">
+  				<a class="navbar-brand" href="/" style="margin: auto"> 
+					<img src="statics/IMG/tournament.png" width="30" height="30" class="d-inline-block align-top" alt="Home">
+					&nbsp; Progetto K-20 
+				</a>
+			</nav>
+			
+			<div class="container" style="margin-top: 130px; height: 500px; overflow-y: scroll;">
+    			<div class="row">
+      				<div class="col-md-12">
+      					<table class="table">
+							<thead>
+								<tr>
+									<th scope="col"> Tournament </th>
+									<th scope="col"> </th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (domain.tournament.Tournament t: tournaments) {
+								<tr> 
+									<td>@(t.getName())</td>
+									<td>
+										<form method="post" action="/view" class="noreturn">
+											<input type="hidden" name="id" value="@(t.getId())" />
+											<button type="submit" class="btn btn-primary"> Enter </button>
+										</form>
+									</td> 
+								</tr>
+								}
+							</tbody>
+						</table>
+      				</div>
+      			</div>
+      		</div>
+			
+			
+			<nav class="navbar fixed-bottom navbar-dark bg-primary">
+  				<a class="navbar-brand" href="/" style="margin: auto"> 
+  					<h6> @ Made by K-Team </h6>
+  				</a>
+			</nav>
+			
+			
+		</body> 
+	</html>		
