@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] argv) throws Exception {
     	List<WebServlet> servlets = new ArrayList<WebServlet>();
     	
-    	servlets.add(new HomeServlet("home", "/*"));
+    	servlets.add(new MainServlet("home", "/*"));
     	
     	new ApplicationServer(8080, servlets).start();
     }

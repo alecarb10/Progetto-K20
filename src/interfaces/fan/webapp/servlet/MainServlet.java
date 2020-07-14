@@ -15,13 +15,13 @@ import domain.tournament.Tournament;
 import services.persistence.dao.impl.FacadeImpl;
 
 @SuppressWarnings("serial")
-public class HomeServlet extends WebServlet {
+public class MainServlet extends WebServlet {
 
 	private List<Tournament> tournaments;
 	private Tournament tournament;
 	private Team team;
 	
-	public HomeServlet(String name, String url) {
+	public MainServlet(String name, String url) {
 		super(name, url);
 	}
 	
