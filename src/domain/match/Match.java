@@ -22,7 +22,7 @@ public class Match {
 	private boolean played;
 
 	/**
-	 * Team constructor.
+	 * Match constructor.
 	 * @param date
 	 * @param homeTeam
 	 * @param awayTeam
