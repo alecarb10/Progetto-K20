@@ -7,6 +7,10 @@ import java.util.List;
 import domain.team.Team;
 import domain.util.ScheduleGenerator;
 
+/**
+ * Group class.
+ * 
+ */
 public class Group extends TournamentElement {
 
 	public Group() {}
@@ -22,6 +26,10 @@ public class Group extends TournamentElement {
 		return teamsList;
 	}
 
+	/**
+	 * Method to get the ranking of teams.
+	 * 
+	 */
 	private void sortTeamsList() {
 		Collections.sort(teamsList, new Comparator<Team>() {
 			@Override

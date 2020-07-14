@@ -9,6 +9,10 @@ import domain.match.Match;
 import domain.team.Team;
 import domain.util.ScheduleGenerator;
 
+/**
+ * Board class.
+ * 
+ */
 public class Board extends TournamentElement {
 
 	public Board() {}
@@ -28,6 +32,10 @@ public class Board extends TournamentElement {
 		return false;
 	}
 	
+	/**
+	 * Method to add the next day of the board, whit new matches to play.
+	 * 
+	 */
 	private boolean addNextDay() {
 		int prevDayNumber = schedule.size() - 1;
 		Day prevDay = schedule.get(prevDayNumber);
@@ -53,6 +61,14 @@ public class Board extends TournamentElement {
 		return calendar;
 	}
 	
+	/**
+	 * Method to get the list of winner teams of a day.
+	 * 
+	 * @param day 
+	 * 
+	 * @return dayWinnersList
+	 * 
+	 */
 	private List<Team> getDayWinnersList(Day day){
 		List<Match> matchesList=day.getMatchesList();
 		List<Team> dayWinnersList=new ArrayList<>();

@@ -6,6 +6,10 @@ import java.util.List;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * Tournament Element class.
+ * 
+ */
 public abstract class TournamentElement implements IElement {
 
 	private int id;
@@ -13,6 +17,10 @@ public abstract class TournamentElement implements IElement {
 	protected List<Day> schedule;
 	protected boolean completed;
 	
+	/**
+	 * Tournament Element constructor, that create a list of teams subscribed to the tournament.
+	 * 
+	 */
 	public TournamentElement() {
 		this.teamsList = new ArrayList<>();
 		this.completed = false;
@@ -26,6 +34,10 @@ public abstract class TournamentElement implements IElement {
 		return teamsList.remove(team);
 	}
 
+	/**
+	 * This method returns true if each day of the element's schedule has been played.
+	 * 
+	 */
 	public boolean isCompleted() {
 		int counter = 0;
 		

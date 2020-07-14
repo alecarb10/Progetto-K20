@@ -5,6 +5,10 @@ import java.util.List;
 
 import domain.match.Match;
 
+/**
+ * It's part of a tournament element in which matches are played.
+ * 
+ */
 public class Day {
 	
 	private int id;
@@ -12,6 +16,14 @@ public class Day {
 	private List<Match> matchesList;
 	private Date date;
 	
+	/**
+	 * Day constructor.
+	 * 
+	 * @param number
+	 * @param matchesList
+	 * @param date
+	 * 
+	 */
 	public Day(int number, List<Match> matchesList, Date date) {
 		this.number = number;
 		this.matchesList = matchesList;
