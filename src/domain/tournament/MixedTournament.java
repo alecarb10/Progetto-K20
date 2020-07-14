@@ -9,10 +9,19 @@ import domain.element.TournamentElement;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * Mixed Tournament class.
+ * 
+ */
 public class MixedTournament extends Tournament {
 
 	private TournamentElement group, board;
 
+	/**
+	 * Mixed Tournament constructor.
+	 * @param name
+	 * 
+	 */
 	public MixedTournament(String name) {
 		super(name);
 		this.group= new Group();

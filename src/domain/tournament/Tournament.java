@@ -4,11 +4,20 @@ import java.util.List;
 
 import domain.team.Team;
 
+/**
+ * Tournament class.
+ * 
+ */
 public abstract class Tournament implements ITournament {
 	
 	private int id;
 	private String name;
 
+	/**
+	 * Tournament constructor.
+	 * @param name
+	 * 
+	 */
 	public Tournament(String name) {
 		this.name = name;
 	}

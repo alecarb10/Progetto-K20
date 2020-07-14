@@ -8,9 +8,18 @@ import domain.element.TournamentElement;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * League Tournament class.
+ * 
+ */
 public class League extends Tournament {
 	private TournamentElement group; 
 
+	/**
+	 * League Tournament constructor.
+	 * @param name
+	 * 
+	 */
 	public League(String name) {
 		super(name);
 		this.group = new Group();

@@ -7,18 +7,50 @@ import domain.element.TournamentElement;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * Used to define common features to all tournament types.
+ */
+
 public interface ITournament {
 
+	/**
+	 * @return TournamentType
+	 * 
+	 * @see {@link TournamentType}
+	 */
 	public TournamentType getTournamentType();
 
+	/**
+	 * @param teamsList
+	 * 
+	 * @see {@link Team}
+	 * @see {@link Group}
+	 */
 	public void initGroup(List<Team> teamsList);
 	
+	/**
+	 * @param teamsList
+	 * 
+	 * @see {@link Team}
+	 * @see {@link Board}
+	 */
 	public void initBoard(List<Team> teamsList);
 
 	public boolean addTeamInTournament(Team t);
 	
 	public List<Team> getTeamsList();
 	
+	/**
+	 * Method to insert the final result of a match played in a specific day.
+	 * @param dayNumber
+	 * @param match
+	 * @param homeScore
+	 * @param awayScore
+	 * 
+	 * @see {@link Board}
+	 * @see {@link Group}
+	 * 
+	 */
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore);
 	
 	public List<Day> getGroupSchedule();

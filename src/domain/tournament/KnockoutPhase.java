@@ -8,10 +8,19 @@ import domain.element.TournamentElement;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * Knockout Phase Tournament class.
+ * 
+ */
 public class KnockoutPhase extends Tournament {
 
 	private TournamentElement board;
 
+	/**
+	 * Knockout Phase Tournament constructor.
+	 * @param name
+	 * 
+	 */
 	public KnockoutPhase(String name) {
 		super(name);
 		this.board = new Board();
