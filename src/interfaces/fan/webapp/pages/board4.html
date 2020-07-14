@@ -13,11 +13,19 @@
         <link href='https://fonts.googleapis.com/css?family=Kaushan+Script|Herr+Von+Muellerhoff' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Istok+Web|Roboto+Condensed:700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="statics/CSS/board.css">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link href='statics/CSS/board.css' rel='stylesheet' type='text/css'>
   	</head>
     
-    <body>            
-        <section id="bracket">
+    <body>
+    	<nav class="navbar fixed-top navbar-dark bg-primary">
+			<a class="navbar-brand" href="/" style="margin: auto"> 
+				<img src="statics/IMG/tournament.png" width="30" height="30" class="d-inline-block align-top" alt="Home">
+				&nbsp; @(tournament.getName())
+			</a>
+		</nav>
+		 
+		<section id="bracket">
             <div class="container">
                 <div class="split split-one">
                     <div class="round round-three current">
@@ -55,6 +63,14 @@
                     </div>
                 </div>
             </div>
-        </section>
+    	</section>
+                
+        
+        <nav class="navbar fixed-bottom navbar-dark bg-primary">
+			<a class="navbar-brand" href="/" style="margin: auto"> 
+				<h6> @ Made by K-Team </h6>
+			</a>
+		</nav>
+		
     </body>
 </html>
