@@ -6,6 +6,7 @@ package domain.team;
  */
 public class Stadium {
 	private String name;
+	private String city;
 	private int capacity;
 
 	/**
@@ -33,8 +34,8 @@ public class Stadium {
 		return city;
 	}
 
-	public void setCity(String location) {
-		this.city = location;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public int getCapacity() {
