@@ -195,6 +195,16 @@ body {
   }
 }
 
+
+@media screen and (min-width: 1100px) {
+  .container { margin: 0 1%; }
+  .champion { width: 14%; }
+  .split { width: 70%; }
+  .split-one .vote-box { margin-left: 138px; }
+  .hero p.intro { font-size: 28px; }
+  .hero p.year { margin: 5px 0 10px; }
+}
+
 @media screen and (min-width: 981px) and (max-width: 1099px) {
   .container { margin: 0 1%; }
   .champion { width: 14%; }
