@@ -43,10 +43,6 @@ public class InsertResultController implements Initializable {
 	private RadioButton radioBtnGroup,radioBtnBoard;
 	@FXML
 	private ListView<String> listViewMatches;
-	@FXML
-	private Button btnAddNextDay;
-	@FXML
-	private CheckBox checkBoxPlayed;
 	
 	private ToggleGroup toggleGrp;
 	private ObservableList<String> tournaments,days,matches;
@@ -66,7 +62,6 @@ public class InsertResultController implements Initializable {
 		days=FXCollections.observableArrayList();
 		matches=FXCollections.observableArrayList();
 		facadeImpl= FacadeImpl.getInstance();
-		btnAddNextDay.setDisable(true);
 		cmbBoxTournament.setOnAction((ActionEvent)->{
 			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
 			radioBtnAutoSelection(tournament);
@@ -86,7 +81,6 @@ public class InsertResultController implements Initializable {
 			matches.clear();
 			int indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;
 			Day selectedDay=tournament.getSchedule().get(indexDay);
-			btnAddNextDay.setDisable(selectedDay.isCompleted()&&radioBtnBoard.isSelected()?false:true);
 			for(Match m: selectedDay.getMatchesList()){
 				matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
 			}
@@ -99,7 +93,6 @@ public class InsertResultController implements Initializable {
 					if(event.getClickCount()==2) {
 						int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
 						Match match = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
-						checkBoxPlayed.setSelected(match.isPlayed()?true:false);
 						Optional<Pair<String,String>> result=getDialogResult(match);
 						result.ifPresent(score-> {
 							String matchScore[]=score.getValue().trim().split("-");
@@ -203,8 +196,5 @@ public class InsertResultController implements Initializable {
 		return spinner;
 	}
 	
-	public void addNextDay(ActionEvent event) {
-		System.out.println("add next day");
-	}
 	
 }

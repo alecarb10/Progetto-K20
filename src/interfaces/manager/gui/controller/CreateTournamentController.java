@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import domain.element.TournamentElement;
 import domain.team.Team;
 import domain.tournament.KnockoutPhase;
 import domain.tournament.League;
@@ -87,17 +88,27 @@ public class CreateTournamentController implements Initializable {
 				tournament=getTournament(name);
 				if(facadeImpl.storeTournament(tournament, username)) {
 						int tournamentId=facadeImpl.getLastTournamentID();
+						System.out.println(tournamentId);
 						tournament.setId(tournamentId);
-						tournament.initTournament(teamsList);
-						facadeImpl.storeElement(tournament);
-						int elementId=facadeImpl.getLastElementID(tournament.getTournamentElement());
-						tournament.getTournamentElement().setId(elementId);
+						tournament.initGroup(teamsList);
+						tournament.initBoard(teamsList);
+						if(tournament.getGroup()!=null) {
+							facadeImpl.storeGroup(tournament);
+							tournament.getGroup().setId(facadeImpl.getLastElementID(tournament.getGroup()));
+						}
+						else {
+							facadeImpl.storeBoard(tournament);
+							tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
+						}
 						for(Team team:teamsList) {
 							facadeImpl.storeTeam(team, tournament);
 							int teamId=facadeImpl.getLastTeamID();
 							team.setId(teamId);
 						}
-						facadeImpl.storeSchedule(tournament.getSchedule(), tournament);
+						if(tournament.getGroup()!=null) 
+						facadeImpl.storeSchedule(tournament.getGroupSchedule(), tournament);
+						else 
+						facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
 					}
 					restoreComponents();
 			}
