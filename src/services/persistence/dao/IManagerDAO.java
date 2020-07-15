@@ -1,7 +1,15 @@
 package services.persistence.dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
+
+import services.persistence.dao.impl.ManagerDAOImpl;
+
+/**
+ * Interface used for defining methods associated with managers, that are implemented in ManagerDAOImpl
+ * @see ManagerDAOImpl
+ */
 
 public interface IManagerDAO {
 

@@ -1,9 +1,18 @@
 package services.persistence.dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 import domain.tournament.Tournament;
+
+import services.persistence.dao.impl.TournamentDAOImpl;
+
+/**
+ * Interface used for defining methods associated with tournaments, that are implemented in TournamentDAOImpl
+ * @see TournamentDAOImpl
+ * @see Tournament
+ */
 
 public interface ITournamentDAO {
 

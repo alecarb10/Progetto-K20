@@ -1,12 +1,24 @@
 package services.persistence.dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 import domain.element.Day;
 import domain.element.TournamentElement;
 import domain.match.Match;
 import domain.tournament.Tournament;
+
+import services.persistence.dao.impl.ElementDAOImpl;
+
+/**
+ * Interface used for defining methods associated with tournament elements and match, that are implemented in ElementDAOImpl
+ * @see ElementDAOImpl
+ * @see TournamentElement
+ * @see Day
+ * @see Match
+ * @see Tournament
+ */
 
 public interface IElementDAO {
 	

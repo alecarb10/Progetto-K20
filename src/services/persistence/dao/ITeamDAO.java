@@ -1,12 +1,24 @@
 package services.persistence.dao;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
 import domain.team.Player;
 import domain.team.Stadium;
 import domain.team.Team;
 import domain.tournament.Tournament;
+
+import services.persistence.dao.impl.TeamDAOImpl;
+
+/**
+ * Interface used for defining methods associated with teams, players and stadiums, that are implemented in TeamDAOImpl
+ * @see TeamDAOImpl
+ * @see Team
+ * @see Player
+ * @see Stadium
+ * @see Tournament
+ */
 
 public interface ITeamDAO {
 	
