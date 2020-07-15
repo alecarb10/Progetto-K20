@@ -54,7 +54,7 @@ public class TeamDAOImpl implements ITeamDAO {
 
 		if (t.getGroup() == null)
 			ps.setNull(7, Types.INTEGER);
-		else
+		else 
 			ps.setInt(7, t.getGroup().getId());
 		
 		if (t.getBoard() == null)
