@@ -1,6 +1,7 @@
 package domain.util;
 
 import java.util.ArrayList;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -10,6 +11,10 @@ import domain.element.Day;
 import domain.match.Match;
 import domain.team.Team;
 
+/**
+ * Singleton class.
+ * A Pure Fabrication class to generate a tournament's schedule using Berger's Algorithm.
+ */
 public class ScheduleGenerator {
 
 	private static ScheduleGenerator scheduleGenerator;
@@ -23,13 +28,19 @@ public class ScheduleGenerator {
 		return scheduleGenerator;
 	}
 
+	/**
+	 * Generates the schedule given the teams and days number
+	 * @param teamsList list of teams
+	 * @param maxDays number of schedule's days
+	 * @return a list containing days: schedule
+	 */
 	public List<Day> generateSchedule(List<Team> teamsList, int maxDays) {
 		List<Day> schedule = new ArrayList<>();
 		List<Match> matches = new ArrayList<>();
 		Calendar calendar = initDate();
 		int numTeams = teamsList.size();
 		
-		Collections.shuffle(teamsList); 	// random shuffle
+		Collections.shuffle(teamsList); 	// random shuffle the list
 		
 		if (teamsList.size() < 2)			// schedule not generated
 			return null;
@@ -78,6 +89,12 @@ public class ScheduleGenerator {
 		return schedule;
 	}
 
+	/**
+	 * Adds a team into the list and shifts it to the left
+	 * @param data list of teams
+	 * @param add team to shift
+	 * @return the new list of teams
+	 */
 	private List<Team> shiftLeft(List<Team> data, Team add) {
 		List<Team> temp = new ArrayList<>(data.size());
 		
@@ -88,6 +105,12 @@ public class ScheduleGenerator {
 		return temp;
 	}
 
+	/**
+	 * Adds a team into the list and shifts it to the right
+	 * @param data list of teams
+	 * @param add team to shift
+	 * @return the new list of teams
+	 */
 	private List<Team> shiftRight(List<Team> data, Team add) {
 		List<Team> temp = new ArrayList<>(data.size());
 		
@@ -99,6 +122,10 @@ public class ScheduleGenerator {
 		return temp;
 	}
 
+	/**
+	 * Initialize a date to 3 pm
+	 * @return Calendar object containing the date
+	 */
 	private Calendar initDate() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(new Date());
