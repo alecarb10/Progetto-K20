@@ -1,4 +1,5 @@
-/* Script per pulire il db */
+/* Script to clean the db */
+
 DELETE FROM tournament.match;
 ALTER TABLE tournament.match AUTO_INCREMENT = 1;
 DELETE from day;
@@ -15,7 +16,8 @@ DELETE FROM player;
 ALTER TABLE player AUTO_INCREMENT = 1;
 DELETE FROM stadium;
 
-/* Script per riempire il db */
+/* Script to fill db tables */
+
 INSERT INTO `stadium` VALUES ('Allianz','Turin','50000'),('Artemio Franchi','Firenze','60000'),('Giuseppe Meazza','Milan','70000'),
 							 ('Olimpico','Turin','60000'),('Provinciale','Trapani','7500'),('San Paolo','Napoli','70000');
 

@@ -1,3 +1,5 @@
+/* Script to create the db and his tables */
+
 CREATE DATABASE  IF NOT EXISTS `tournament`;
 USE `tournament`;
 
@@ -137,6 +139,8 @@ CREATE TABLE `player` (
   CONSTRAINT `position_type` FOREIGN KEY (`PlayerPositionType`) REFERENCES `player_position_type` (`IDPlayerPositionType`) ON UPDATE CASCADE,
   CONSTRAINT `team_player` FOREIGN KEY (`IDTeam`) REFERENCES `team` (`IDTeam`) ON DELETE SET NULL ON UPDATE CASCADE
 );
+
+/* Script to insert constants */
 
 LOCK TABLES `player_position_type` WRITE;
 INSERT INTO `player_position_type` VALUES (1,'GK'),(2,'CB'),(3,'MF'),(4,'CF');
