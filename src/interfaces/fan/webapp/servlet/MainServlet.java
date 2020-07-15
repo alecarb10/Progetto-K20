@@ -21,6 +21,10 @@ public class MainServlet extends WebServlet {
 	private Tournament tournament;
 	private Team team;
 	
+	private final int FIRST_TEAMS_SIZE = 4;
+	private final int SECOND_TEAMS_SIZE = 4;
+	private final int THIRD_TEAMS_SIZE = 4;
+	
 	public MainServlet(String name, String url) {
 		super(name, url);
 	}
@@ -31,30 +35,31 @@ public class MainServlet extends WebServlet {
 			try {
 				tournaments = FacadeImpl.getInstance().getAllTournaments();
 				resp.getWriter().write(Rythm.render("home.html", tournaments));
-			} catch (SQLException e) {
+			} 
+			catch (SQLException | NullPointerException e) {
+				resp.getWriter().write(Rythm.render("error.html"));
 				e.printStackTrace();
 			}
 		}
-		if (req.getPathInfo().equals("/teams") || req.getPathInfo().equals("/teams.html")) {
+		
+		if (req.getPathInfo().equals("/teams") || req.getPathInfo().equals("/teams.html"))
 			resp.getWriter().write(Rythm.render("teams.html", tournament));
-		}
-		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html")) {
+		
+		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html"))
 			if (tournament.getGroup() != null)
 				resp.getWriter().write(Rythm.render("group.html", tournament, null));
-			else
-				resp.getWriter().write(Rythm.render("error.html"));
-		}
+			
 		if (req.getPathInfo().equals("/board") || req.getPathInfo().equals("/board.html")) {
 			if (tournament.getBoard() != null) {
-				if (tournament.getBoard().getTeamsList().size() == 4)
+				if (tournament.getBoard().getTeamsList().size() == FIRST_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board4.html", tournament));
-				if (tournament.getBoard().getTeamsList().size() == 8)
+				
+				if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board8.html", tournament));
-				if (tournament.getBoard().getTeamsList().size() == 16)
+				
+				if (tournament.getBoard().getTeamsList().size() == THIRD_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board16.html", tournament));
 			}
-			else
-				resp.getWriter().write(Rythm.render("error.html"));
 		}
 	}
 	
@@ -71,9 +76,12 @@ public class MainServlet extends WebServlet {
 					tournament.setGroupSchedule(FacadeImpl.getInstance().getGroupSchedule(tournament));
 				if (tournament.getBoardSchedule() == null)
 					tournament.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(tournament));
-			} catch (SQLException e) {
+			} 
+			catch (SQLException | NullPointerException e) {
+				resp.getWriter().write(Rythm.render("error.html"));
 				e.printStackTrace();
 			}
+			
 			resp.getWriter().write(Rythm.render("tournament-detail.html", tournament));	
 		} 
 		
