@@ -37,11 +37,11 @@ public class ElementDAOImpl implements IElementDAO {
 	
 	/**
 	 * Stores a group into the db
-	 * @param t the tournament element to store
+	 * @param t the tournament that contains the group 
 	 * @return a boolean that indicates success/insuccess
 	 */
 	@Override
-	public boolean storeGroup(TournamentElement t) throws SQLException {
+	public boolean storeGroup(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;
@@ -65,11 +65,11 @@ public class ElementDAOImpl implements IElementDAO {
 	
 	/**
 	 * Stores a board into the db
-	 * @param t the tournament element to store
+	 * @param t the tournament that contains the board
 	 * @return a boolean that indicates success/insuccess
 	 */
 	@Override
-	public boolean storeBoard(TournamentElement t) throws SQLException {
+	public boolean storeBoard(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
 		boolean rs;

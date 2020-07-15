@@ -184,13 +184,13 @@ public class FacadeImpl implements IFacade {
 	// ----------------------------------- Element methods ------------------------------
 	
 	@Override
-	public boolean storeGroup(TournamentElement t) throws SQLException {
+	public boolean storeGroup(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.storeGroup(t);
 	}
 	
 	@Override
-	public boolean storeBoard(TournamentElement t) throws SQLException {
+	public boolean storeBoard(Tournament t) throws SQLException {
 		IElementDAO ed = new ElementDAOImpl();
 		return ed.storeBoard(t);
 	}

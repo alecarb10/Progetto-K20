@@ -22,9 +22,9 @@ import services.persistence.dao.impl.ElementDAOImpl;
 
 public interface IElementDAO {
 	
-	public boolean storeGroup(TournamentElement t) throws SQLException;
+	public boolean storeGroup(Tournament t) throws SQLException;
 	
-	public boolean storeBoard(TournamentElement t) throws SQLException;
+	public boolean storeBoard(Tournament t) throws SQLException;
 	
 	public int getBoardIDByTournament(Tournament t) throws SQLException;
 	
