@@ -22,8 +22,8 @@ public class MainServlet extends WebServlet {
 	private Team team;
 	
 	private final int FIRST_TEAMS_SIZE = 4;
-	private final int SECOND_TEAMS_SIZE = 4;
-	private final int THIRD_TEAMS_SIZE = 4;
+	private final int SECOND_TEAMS_SIZE = 8;
+	private final int THIRD_TEAMS_SIZE = 16;
 	
 	public MainServlet(String name, String url) {
 		super(name, url);
@@ -54,10 +54,10 @@ public class MainServlet extends WebServlet {
 				if (tournament.getBoard().getTeamsList().size() == FIRST_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board4.html", tournament));
 				
-				if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
+				else if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board8.html", tournament));
 				
-				if (tournament.getBoard().getTeamsList().size() == THIRD_TEAMS_SIZE)
+				else if (tournament.getBoard().getTeamsList().size() == THIRD_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board16.html", tournament));
 			}
 		}
