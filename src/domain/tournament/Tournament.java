@@ -59,7 +59,7 @@ public abstract class Tournament implements ITournament {
 		
 		for (int i = 0; i < teamsList.size() - 1; i++)
 			for (int j = i + 1; j < teamsList.size(); j++)
-				if (teamsList.get(i).getName().equals(teamsList.get(j).getName()))
+				if (teamsList.get(i).getName().equalsIgnoreCase(teamsList.get(j).getName()))
 					check = true;
 		
 		if (check)
@@ -71,4 +71,5 @@ public abstract class Tournament implements ITournament {
 	public String toString() {
 		return String.format("Tournament name: %s\n", this.name);
 	}
+	
 }
