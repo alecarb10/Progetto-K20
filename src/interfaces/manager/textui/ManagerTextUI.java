@@ -790,16 +790,28 @@ public class ManagerTextUI {
 			if (facade.storeTournament(tournament, username)) {
 				int tournamentId = facade.getLastTournamentID();
 				tournament.setId(tournamentId);
-				tournament.initTournament(teamsList);
-				facade.storeElement(tournament);
-				int elementId = facade.getLastElementID(tournament.getTournamentElement());
-				tournament.getTournamentElement().setId(elementId);
-				for (Team team:teamsList) {
+				
+				tournament.initGroup(teamsList);
+				tournament.initBoard(teamsList);
+				
+				if (tournament.getGroup() != null) {
+					facade.storeGroup(tournament);
+					tournament.getGroup().setId(facade.getLastElementID(tournament.getGroup()));
+				}
+				else {
+					facade.storeBoard(tournament);
+					tournament.getBoard().setId(facade.getLastElementID(tournament.getBoard()));
+				}
+				for(Team team:teamsList) {
 					facade.storeTeam(team, tournament);
 					int teamId = facade.getLastTeamID();
 					team.setId(teamId);
 				}
-				facade.storeSchedule(tournament.getSchedule(), tournament);
+				if(tournament.getGroup() != null) 
+					facade.storeSchedule(tournament.getGroupSchedule(), tournament);
+				else 
+					facade.storeSchedule(tournament.getBoardSchedule(), tournament);
+				
 				return true;
 			}
 		}
