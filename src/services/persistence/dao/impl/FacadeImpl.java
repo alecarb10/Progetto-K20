@@ -11,7 +11,18 @@ import domain.team.Player;
 import domain.team.Stadium;
 import domain.team.Team;
 import domain.tournament.Tournament;
+
 import services.persistence.dao.*;
+
+/**
+ * Singleton class.
+ * It groups all DAO's methods, to have only one access point to the persistence level
+ * @see IFacade
+ * @see ManagerDAOImpl
+ * @see TeamDAOImpl
+ * @see TournamentDAOImpl
+ * @see ElementDAOImpl
+ */
 
 public class FacadeImpl implements IFacade {
 
@@ -25,6 +36,8 @@ public class FacadeImpl implements IFacade {
 			facade = new FacadeImpl();
 		return facade;
 	}
+	
+	// ----------------------------------- Manager methods ------------------------------
 	
 	@Override
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException {
@@ -61,6 +74,8 @@ public class FacadeImpl implements IFacade {
 		IManagerDAO md = new ManagerDAOImpl();
 		return md.getManagerByUsername(username);
 	}
+	
+	// ----------------------------------- Tournament methods ------------------------------
 
 	@Override
 	public boolean storeTournament(Tournament t, String username) throws SQLException {
@@ -92,6 +107,8 @@ public class FacadeImpl implements IFacade {
 		return td.getAllTournamentsByManager(username);
 	}
 
+	// ----------------------------------- Team methods ------------------------------
+	
 	@Override
 	public boolean storeTeam(Team team, Tournament t) throws SQLException {
 		ITeamDAO tmd = new TeamDAOImpl();
@@ -163,6 +180,8 @@ public class FacadeImpl implements IFacade {
 		ITeamDAO tmd = new TeamDAOImpl();
 		return tmd.getStadiums();
 	}
+	
+	// ----------------------------------- Element methods ------------------------------
 	
 	@Override
 	public boolean storeGroup(TournamentElement t) throws SQLException {

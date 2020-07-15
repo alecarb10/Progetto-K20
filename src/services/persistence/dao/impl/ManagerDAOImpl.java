@@ -11,6 +11,12 @@ import services.persistence.dao.IManagerDAO;
 import services.persistence.util.DBConnection;
 import services.persistence.util.MD5;
 
+/**
+ * Implementation of IManagerDAO
+ * @param conn Connection object to manage the access to the db
+ * @see IManagerDAO
+ */
+
 public class ManagerDAOImpl implements IManagerDAO {
 
 	private Connection conn;
@@ -19,6 +25,14 @@ public class ManagerDAOImpl implements IManagerDAO {
 		super();
 	}
 
+	/**
+	 * Stores a manager into the db, crypting his password
+	 * @param username
+	 * @param name
+	 * @param surname
+	 * @param password
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeManager(String username, String name, String surname, String password) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -43,6 +57,13 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 	
+	/**
+	 * Updates name,surname of a manager passing his username
+	 * @param username
+	 * @param name
+	 * @param surname
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updateManager(String username, String name, String surname) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -65,6 +86,11 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 
+	/**
+	 * Removes a manager from the db by username
+	 * @param username
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean removeManager(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -85,6 +111,12 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 
+	/**
+	 * Checks if a manager is registered, so to ensure login
+	 * @param username
+	 * @param password
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean checkManagerLogin(String username, String password) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -108,6 +140,11 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 
+	/**
+	 * Checks if a manager username is already present into the db
+	 * @param username
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean checkUnique(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -132,6 +169,11 @@ public class ManagerDAOImpl implements IManagerDAO {
 		return false;
 	}
 
+	/**
+	 * Gets all informations about a manager
+	 * @param username
+	 * @return a list containing manager informations
+	 */
 	@Override
 	public List<String> getManagerByUsername(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);

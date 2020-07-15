@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,29 @@ import domain.match.Match;
 import domain.team.Stadium;
 import domain.team.Team;
 import domain.tournament.Tournament;
+
 import services.persistence.dao.IElementDAO;
 import services.persistence.util.DBConnection;
+
+/**
+ * Implementation of IElementDAO
+ * @param conn Connection object to manage the access to the db
+ * @see IElementDAO
+ * @see TournamentElement
+ * @see Day
+ * @see Match
+ * @see Tournament
+ */
 
 public class ElementDAOImpl implements IElementDAO {
 
 	private Connection conn;
 	
+	/**
+	 * Stores a group into the db
+	 * @param t the tournament element to store
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeGroup(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -46,6 +63,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return false;
 	}
 	
+	/**
+	 * Stores a board into the db
+	 * @param t the tournament element to store
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeBoard(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -69,6 +91,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return false;
 	}
 
+	/**
+	 * Gets the id of the board, given the tournament
+	 * @param t the tournament that owns the board
+	 * @return board's id
+	 */
 	@Override
 	public int getBoardIDByTournament(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -87,6 +114,10 @@ public class ElementDAOImpl implements IElementDAO {
 		return ID;
 	}
 	
+	/**
+	 * Gets the id of the last element stored
+	 * @return element's id
+	 */
 	@Override
 	public int getLastElementID(TournamentElement t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -119,6 +150,10 @@ public class ElementDAOImpl implements IElementDAO {
 		}
 	}
 	
+	/**
+	 * Gets the id of the last day stored
+	 * @return day's id
+	 */
 	private int getLastDayID() throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		
@@ -138,6 +173,12 @@ public class ElementDAOImpl implements IElementDAO {
 		return ID;
 	}
 
+	/**
+	 * Stores a tournament's schedule into the db
+	 * @param schedule
+	 * @param t the tournament that owns the schedule
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeSchedule(List<Day> schedule, Tournament t) throws SQLException {
 		boolean stored = false;
@@ -146,6 +187,12 @@ public class ElementDAOImpl implements IElementDAO {
 		return stored;
 	}
 	
+	/**
+	 * Stores a day into the db
+	 * @param d the day to store
+	 * @param t the tournament
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeDay(Day d, Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -183,6 +230,12 @@ public class ElementDAOImpl implements IElementDAO {
 		return false;
 	}
 	
+	/**
+	 * Stores a match into the db
+	 * @param m the match to store
+	 * @param d the day that contains the match
+	 * @return a boolean that indicates success/insuccess
+	 */
 	private boolean storeMatch(Match m, Day d) throws SQLException {
 		conn = DBConnection.startConnection(conn);
 		PreparedStatement ps;
@@ -213,6 +266,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return false;
 	}
 	
+	/**
+	 * Gets the schedule of a group given the tournament
+	 * @param t the tournament
+	 * @return a list containing days: schedule
+	 */
 	@Override
 	public List<Day> getGroupSchedule(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -260,6 +318,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return schedule;
 	}
 	
+	/**
+	 * Gets the schedule of a board given the tournament
+	 * @param t the tournament
+	 * @return a list containing days: schedule
+	 */
 	@Override
 	public List<Day> getBoardSchedule(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -307,6 +370,12 @@ public class ElementDAOImpl implements IElementDAO {
 		return schedule;
 	}
 	
+	/**
+	 * Gets all matches given the day's id and date
+	 * @param id day's id
+	 * @param date day's date
+	 * @return a list containing matches
+	 */
 	private List<Match> getMatchesByDay(int id, Timestamp date) throws SQLException {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -342,6 +411,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return matches;
 	}
 	
+	/**
+	 * Gets a team given the id
+	 * @param id team's id
+	 * @return the team
+	 */
 	private Team getTeamByID(int id) throws SQLException {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -387,6 +461,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return team;
 	}
 
+	/**
+	 * Updates a match infos, given his id
+	 * @param match
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updateMatch(Match match) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -418,6 +497,11 @@ public class ElementDAOImpl implements IElementDAO {
 		return false;
 	}
 	
+	/**
+	 * Updates team informations after match update, given his id
+	 * @param team
+	 * @return a boolean that indicates success/insuccess
+	 */
 	private boolean updateTeamInfo(Team team) throws SQLException {
 		PreparedStatement ps;
 		

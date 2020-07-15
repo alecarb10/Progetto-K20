@@ -17,10 +17,26 @@ import domain.tournament.Tournament;
 import services.persistence.dao.ITeamDAO;
 import services.persistence.util.DBConnection;
 
+/**
+ * Implementation of ITeamDAO
+ * @param conn Connection object to manage the access to the db
+ * @see ITeamDAO
+ * @see Team
+ * @see Player
+ * @see Stadium
+ * @see Tournament
+ */
+
 public class TeamDAOImpl implements ITeamDAO {
 
 	private Connection conn;
 
+	/**
+	 * Stores a team into the db
+	 * @param team
+	 * @param t the tournament where team is playing
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeTeam(Team team, Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -56,6 +72,10 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
+	/**
+	 * Gets the id of the last team stored
+	 * @return team's id
+	 */
 	@Override
 	public int getLastTeamID() throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -76,6 +96,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return ID;
 	}
 	
+	/**
+	 * Updates a team
+	 * @param team
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updateTeam(Team t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -98,6 +123,12 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
+	/**
+	 * Stores a player into the db
+	 * @param p the player to be stored
+	 * @param t the team where player is playing
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storePlayer(Player p, Team t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -124,6 +155,10 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 	
+	/**
+	 * Gets the id of the last player stored
+	 * @return player's id
+	 */
 	@Override
 	public int getLastPlayerID() throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -144,6 +179,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return ID;
 	}
 
+	/**
+	 * Stores a stadium into the db
+	 * @param s the stadium to store
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeStadium(Stadium s) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -165,7 +205,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		DBConnection.closeConnection(conn);
 		return false;
 	}
-	
+	/**
+	 * Checks if a stadium name is already present into the db
+	 * @param s the stadium to check
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean checkUniqueStadium(Stadium s) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -190,6 +234,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 	
+	/**
+	 * Updates a stadium
+	 * @param s the stadium to update
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updateStadium(Stadium s) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -213,6 +262,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
+	/**
+	 * Removes a player from the db by id
+	 * @param p the player to remove
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean removePlayer(Player p) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -233,6 +287,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 	
+	/**
+	 * Updates a player
+	 * @param p the player to update
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updatePlayer(Player p) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -257,6 +316,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
+	/**
+	 * Gets all players of a team
+	 * @param t the team
+	 * @return a list containing players
+	 */
 	private List<Player> getPlayersByTeam(Team t) throws SQLException {
 		PreparedStatement ps;
 		ResultSet rs;
@@ -285,6 +349,11 @@ public class TeamDAOImpl implements ITeamDAO {
 		return players;
 	}
 
+	/**
+	 * Gets all teams of a tournament
+	 * @param t the tournament
+	 * @return a list containing teams
+	 */
 	@Override
 	public List<Team> getTeamsByTournament(Tournament t) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -339,6 +408,10 @@ public class TeamDAOImpl implements ITeamDAO {
 		return teams;
 	}
 
+	/**
+	 * Gets all stadiums
+	 * @return a list containing stadiums
+	 */
 	@Override
 	public List<Stadium> getStadiums() throws SQLException {
 		conn = DBConnection.startConnection(conn);

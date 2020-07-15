@@ -10,13 +10,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.tournament.*;
+
 import services.persistence.dao.ITournamentDAO;
 import services.persistence.util.DBConnection;
 
+/**
+ * Implementation of ITournamentDAO
+ * @param conn Connection object to manage the access to the db
+ * @see ITournamentDAO
+ * @see Tournament
+ */
 public class TournamentDAOImpl implements ITournamentDAO {
 
 	private Connection conn;
 	
+	/**
+	 * Stores a tournament into the db
+	 * @param t the tournament to store
+	 * @param username the username of this tournament's manager
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean storeTournament(Tournament t, String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -39,6 +52,10 @@ public class TournamentDAOImpl implements ITournamentDAO {
 		return false;
 	}
 	
+	/**
+	 * Gets the id of the last tournament stored
+	 * @return tournament's id
+	 */
 	@Override
 	public int getLastTournamentID() throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -59,6 +76,12 @@ public class TournamentDAOImpl implements ITournamentDAO {
 		return ID;
 	}
 	
+	/**
+	 * Checks if a tournament name, for a specific manager, is already present into the db
+	 * @param name the name of the tournament
+	 * @param username the username of the tournament's manager
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean checkUnique(String name, String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -84,6 +107,10 @@ public class TournamentDAOImpl implements ITournamentDAO {
 		return false;
 	}
 	
+	/**
+	 * Gets all tournaments
+	 * @return a list containing tournaments
+	 */
 	@Override
 	public List<Tournament> getAllTournaments() throws SQLException {
 		conn = DBConnection.startConnection(conn);
@@ -127,6 +154,11 @@ public class TournamentDAOImpl implements ITournamentDAO {
 		return list;
 	}
 	
+	/**
+	 * Gets all tournaments of a specific manager
+	 * @param username the username of the manager
+	 * @return a list containing teams
+	 */
 	@Override
 	public List<Tournament> getAllTournamentsByManager(String username) throws SQLException {
 		conn = DBConnection.startConnection(conn);
