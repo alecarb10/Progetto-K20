@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="borderPaneHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.HomeController">
+<BorderPane fx:id="borderPaneHome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.HomeController">
    <left>
       <VBox fx:id="vboxMenu" prefHeight="500.0" prefWidth="150.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,7 +17,7 @@
                   <ComboBox fx:id="cmbBoxProfile" layoutX="34.0" layoutY="28.0" onAction="#profile" prefHeight="25.0" prefWidth="112.0" />
                   <ImageView fx:id="imgViewProfile" fitHeight="25.0" fitWidth="25.0" layoutX="5.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/mvc/view/manager/gui/images/profile.jpg" />
+                        <Image url="@/interfaces/manager/gui/images/profile.jpg" />
                      </image>
                   </ImageView>
                </children>

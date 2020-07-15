@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.AddStadiumController">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.AddStadiumController">
    <children>
       <TableView fx:id="tblViewStadium" layoutX="248.0" layoutY="111.0" prefHeight="375.0" prefWidth="227.0">
         <columns>

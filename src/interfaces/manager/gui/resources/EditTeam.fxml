@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.EditTeamController">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.EditTeamController">
    <children>
       <ComboBox fx:id="cmbBoxTournament" layoutX="30.0" layoutY="11.0" prefWidth="150.0" promptText="Select Tournament" />
       <ComboBox fx:id="cmbBoxTeam" layoutX="30.0" layoutY="50.0" prefWidth="150.0" promptText="Select Team" />

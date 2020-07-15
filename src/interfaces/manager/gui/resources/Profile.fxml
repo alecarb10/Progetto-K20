@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mvc.view.manager.gui.controller.ProfileController">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.ProfileController">
    <children>
       <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="54.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
          <image>
-             <Image url="@/mvc/view/manager/gui/images/profile.jpg" />
+             <Image url="@/interfaces/manager/gui/images/profile.jpg" />
          </image></ImageView>
       <Text fx:id="txtUsername" layoutX="304.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
       <TextField fx:id="txtFldName" layoutX="304.0" layoutY="83.0" promptText="Name" /> 
