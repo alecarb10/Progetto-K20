@@ -33,6 +33,7 @@
 		<br><br>   
 	    
 	    <div class="card-group" style="margin-top: 150px">
+	    
 			<div class="card">
 				<img src="statics/IMG/teams.png" class="card-img-top" align="center" alt="...">
 				<div class="card-body">
@@ -42,23 +43,28 @@
 				</div>
 			</div>
 		
-			<div class="card">
-				<img src="statics/IMG/ranking.png" class="card-img-top" align="center" alt="...">
-				<div class="card-body">
-					<h5 class="card-title"> Group </h5>
-					<p class="card-text"> Group of the tournament with ranking and schedule. </p>
-					<a href="group" class="btn btn-primary"> View </a>
-				</div>
-			</div>
+			@if (tournament.getGroup() != null) {
+				<div class="card">
+					<img src="statics/IMG/ranking.png" class="card-img-top" align="center" alt="...">
+					<div class="card-body">
+						<h5 class="card-title"> Group </h5>
+						<p class="card-text"> Group of the tournament with ranking and schedule. </p>
+						<a href="group" class="btn btn-primary"> View </a>
+					</div>
+				</div>	
+			}
 		
-			<div class="card">
-				<img src="statics/IMG/board.png" class="card-img-top" align="center" alt="...">
-				<div class="card-body">
-					<h5 class="card-title"> Board </h5>
-					<p class="card-text"> Board of the tournament with brackets/schedule. </p>
-					<a href="board" class="btn btn-primary"> View </a>
+			@if (tournament.getBoard() != null) {
+				<div class="card">
+					<img src="statics/IMG/board.png" class="card-img-top" align="center" alt="...">
+					<div class="card-body">
+						<h5 class="card-title"> Board </h5>
+						<p class="card-text"> Board of the tournament with brackets/schedule. </p>
+						<a href="board" class="btn btn-primary"> View </a>
+					</div>
 				</div>
-			</div>
+			}
+			
 		</div>
     
     	<nav class="navbar fixed-bottom navbar-dark bg-primary">
