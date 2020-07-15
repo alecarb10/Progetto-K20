@@ -1,16 +1,24 @@
 package interfaces.manager.gui.controller;
 
+
+import static org.junit.Assert.assertNotNull;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import org.rythmengine.extension.IFormatter;
+
 import domain.element.Day;
 import domain.match.Match;
 import domain.team.Team;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
+import interfaces.manager.gui.util.GraphicControlsHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +35,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +60,8 @@ public class InsertResultController implements Initializable {
 	private FacadeImpl facadeImpl;
 	private List<Tournament> tournamentsList;
 	private Tournament tournament;
+	private Match match;
+	private int indexDay;
 	//private List<Day> daysList;
 	
 	@Override
@@ -63,56 +74,120 @@ public class InsertResultController implements Initializable {
 		matches=FXCollections.observableArrayList();
 		facadeImpl= FacadeImpl.getInstance();
 		cmbBoxTournament.setOnAction((ActionEvent)->{
+			GraphicControlsHandler.resetComboBox(cmbBoxDay, "Select Day");
 			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
 			radioBtnAutoSelection(tournament);
-			try {
-				days.clear();
-				tournament.setSchedule(facadeImpl.getSchedule(tournament,false));
-				for(Day d:tournament.getSchedule())
-					days.add(Integer.toString(d.getNumber()));
-				cmbBoxDay.setItems(days);
-			
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+//			try {
+//				days.clear();
+//				if(radioBtnGroup.isSelected()) {
+//					tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
+//					for(Day d:tournament.getGroupSchedule()) 
+//						days.add(Integer.toString(d.getNumber()));
+//				}
+//				else if(radioBtnBoard.isSelected()) {
+//					tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
+//					for(Day d:tournament.getBoardSchedule())
+//						days.add(Integer.toString(d.getNumber()));			
+//				}
+//				cmbBoxDay.setItems(days);
+//			
+//			} catch (Exception ex) {
+//				ex.printStackTrace();
+//			}
 			
 		});
-		cmbBoxDay.setOnAction((ActionEvent)->{
-			matches.clear();
-			int indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;
-			Day selectedDay=tournament.getSchedule().get(indexDay);
-			for(Match m: selectedDay.getMatchesList()){
-				matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
-			}
-			this.listViewMatches.setItems(matches);
-			this.listViewMatches.setCellFactory(TextFieldListCell.forListView());
-			this.listViewMatches.setOnMouseClicked(new EventHandler<MouseEvent>(){
-
-				@Override
-				public void handle(MouseEvent event) {
-					if(event.getClickCount()==2) {
-						int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
-						Match match = tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch);
-						Optional<Pair<String,String>> result=getDialogResult(match);
-						result.ifPresent(score-> {
-							String matchScore[]=score.getValue().trim().split("-");
-							int homeScore=Integer.parseInt(matchScore[0]);
-							int awayScore=Integer.parseInt(matchScore[1]);
-							try {
-								if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
-									if (facadeImpl.updateMatch(tournament.getSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
-										tournament.setSchedule(facadeImpl.getSchedule(tournament, false));
-									}
-								}
-							}catch (Exception ex) {
-								ex.printStackTrace();
-							}
-							
-						});
+		toggleGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			  @Override
+		      public void changed(ObservableValue<? extends Toggle> ov,Toggle old_toggle, Toggle new_toggle) {
+		        if (toggleGrp.getSelectedToggle() != null) {
+		        	try {
+						days.clear();
+						if(radioBtnGroup.isSelected()) {
+							tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
+							for(Day d:tournament.getGroupSchedule()) 
+								days.add(Integer.toString(d.getNumber()));
+						}
+						else if(radioBtnBoard.isSelected()) {
+							tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
+							for(Day d:tournament.getBoardSchedule())
+								days.add(Integer.toString(d.getNumber()));			
+						}
+						cmbBoxDay.setItems(days);
+					
+					} catch (Exception ex) {
+						ex.printStackTrace();
 					}
+		        }
+		      }
+		    });
+		cmbBoxDay.setOnAction((ActionEvent)->{
+			matches.clear();		
+			Day selectedDay=null;
+			if(cmbBoxDay.getValue()!=null) {
+				indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;	
+				System.out.println(indexDay);
+				if(radioBtnGroup.isSelected()) 
+					selectedDay=tournament.getGroupSchedule().get(indexDay);
+				else if(radioBtnBoard.isSelected())
+					selectedDay=tournament.getBoardSchedule().get(indexDay);
+				for(Match m: selectedDay.getMatchesList()){
+					matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
 				}
-				
-			});
+				this.listViewMatches.setItems(matches);
+				this.listViewMatches.setCellFactory(TextFieldListCell.forListView());
+				this.listViewMatches.setOnMouseClicked(new EventHandler<MouseEvent>(){
+
+					@Override
+					public void handle(MouseEvent event) {
+						if(event.getClickCount()==2) {
+							int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
+								if(radioBtnGroup.isSelected())	
+									match= tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch);
+								else if(radioBtnBoard.isSelected())
+								match= tournament.getBoardSchedule().get(indexDay).getMatchesList().get(indexMatch);
+							Optional<Pair<String,String>> result=getDialogResult(match);
+							result.ifPresent(score-> {
+								String matchScore[]=score.getValue().trim().split("-");
+								int homeScore=Integer.parseInt(matchScore[0]);
+								int awayScore=Integer.parseInt(matchScore[1]);
+								try {
+									int scheduleSize=-1;
+									if(radioBtnBoard.isSelected())
+										scheduleSize=tournament.getBoardSchedule().size();
+									if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
+										if(radioBtnGroup.isSelected()) {
+											if (facadeImpl.updateMatch(tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
+												tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
+											}
+										}
+										else if(radioBtnBoard.isSelected()) {
+											if (facadeImpl.updateMatch(tournament.getBoardSchedule().get(indexDay).getMatchesList().get(indexMatch))) {				
+												if (tournament.getBoardSchedule().size() > scheduleSize) {
+													tournament.getBoard().setId(facadeImpl.getBoardIDByTournament(tournament));
+													if (facadeImpl.storeDay(tournament.getBoardSchedule().get(tournament.getBoardSchedule().size() - 1), tournament)) {
+														days.clear();
+														for(Day d:tournament.getBoardSchedule())
+															days.add(Integer.toString(d.getNumber()));	
+														cmbBoxDay.getSelectionModel().selectLast();
+													}
+														
+												}
+												tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
+											}
+											
+										}									
+									}
+								}catch (Exception ex) {
+									ex.printStackTrace();
+								}
+								
+							});
+						}
+					}
+					
+				});
+			}
+			
 		});
 		
 	}
