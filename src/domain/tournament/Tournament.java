@@ -2,6 +2,8 @@ package domain.tournament;
 
 import java.util.List;
 
+import domain.exception.IllegalTeamsSizeException;
+import domain.exception.SameTeamNameException;
 import domain.team.Team;
 
 /**
@@ -43,8 +45,26 @@ public abstract class Tournament implements ITournament {
 			addTeamInTournament(t);
 	}
 	
-	public boolean checkTournamentSize(int size,List<Team> teamsList) {
-		return size==teamsList.size()?true:false;
+	@Override
+	public boolean checkTournamentSize(int size, List<Team> teamsList) throws IllegalTeamsSizeException {
+		if (size == teamsList.size())
+			return true;
+		else
+			throw new IllegalTeamsSizeException("Tournament size doesn't match teams list size!");
+	}
+	
+	@Override
+	public boolean checkNamesInTeams(List<Team> teamsList) throws SameTeamNameException {
+		boolean check = false;
+		
+		for (int i = 0; i < teamsList.size() - 1; i++)
+			for (int j = i + 1; j < teamsList.size(); j++)
+				if (teamsList.get(i).getName().equals(teamsList.get(j).getName()))
+					check = true;
+		
+		if (check)
+			throw new SameTeamNameException("There are two teams with the same name!");
+		return true;
 	}
 	
 	@Override

@@ -4,6 +4,8 @@ import java.util.List;
 
 import domain.element.Day;
 import domain.element.TournamentElement;
+import domain.exception.IllegalTeamsSizeException;
+import domain.exception.SameTeamNameException;
 import domain.match.Match;
 import domain.team.Team;
 
@@ -64,4 +66,8 @@ public interface ITournament {
 	public TournamentElement getGroup();
 	
 	public TournamentElement getBoard();
+	
+	public boolean checkTournamentSize(int size,List<Team> teamsList) throws IllegalTeamsSizeException;
+	
+	public boolean checkNamesInTeams(List<Team> teamsList) throws SameTeamNameException;
 }
