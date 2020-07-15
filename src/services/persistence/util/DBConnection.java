@@ -4,6 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class used to manage the connection to the MySQL database
+ * @param schema database's name
+ * @param username database user's username
+ * @param passowrd database user's password
+ * @see Connection
+ */
 public class DBConnection {
 
 	public static Connection startConnection(Connection conn) {
