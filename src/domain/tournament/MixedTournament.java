@@ -74,7 +74,7 @@ public class MixedTournament extends Tournament {
 	
 	@Override
 	public TournamentElement getBoard() {
-		return this.board;
+		return !isGroupCompleted()?null:board;
 	}
 
 	@Override

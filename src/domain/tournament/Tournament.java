@@ -35,13 +35,16 @@ public abstract class Tournament implements ITournament {
 	}
 
 	public void setName(String name) {
-		if (!name.isBlank())
-			this.name = name;
+		this.name = name;
 	}
 	
 	public void addTeams(List<Team> teamsList) {
 		for (Team t: teamsList)
 			addTeamInTournament(t);
+	}
+	
+	public boolean checkTournamentSize(int size,List<Team> teamsList) {
+		return size==teamsList.size()?true:false;
 	}
 	
 	@Override
