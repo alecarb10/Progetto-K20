@@ -1,4 +1,4 @@
-package interfaces.manager.gui.main;
+package interfaces.manager.gui;
 
 import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicHandler;
@@ -6,7 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class LoginMain extends Application {
+public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
