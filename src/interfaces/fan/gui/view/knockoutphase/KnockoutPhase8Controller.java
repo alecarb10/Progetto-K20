@@ -12,6 +12,7 @@ import domain.match.Match;
 import domain.tournament.KnockoutPhase;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
+import interfaces.fan.gui.view.util.PopulateBrackets;
 import interfaces.fan.gui.view.util.StageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,12 +65,10 @@ public class KnockoutPhase8Controller implements Initializable {
 	Label label15;
 	
 
-	List<Label> labelDay1c = new ArrayList<>();
-	List<Label> labelDay1f = new ArrayList<>();	
-	List<Label> labelDay2c = new ArrayList<>();
-	List<Label> labelDay2f = new ArrayList<>();
-	List<Label> labelDay3c = new ArrayList<>();
-	List<Label> labelDay3f = new ArrayList<>();	
+	List<Label> labelDay1 = new ArrayList<>();
+	List<Label> labelDay2 = new ArrayList<>();	
+	List<Label> labelDay3 = new ArrayList<>();
+	
 	
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
@@ -77,7 +76,91 @@ public class KnockoutPhase8Controller implements Initializable {
 	public void passingDataToKnock8(Tournament k8) throws SQLException {
 		textBoard.setText(k8.getName());
 		days = facade.getBoardSchedule(k8);
+		PopulateBrackets PB = new PopulateBrackets();
+		labelDay1.add(label1);
+		labelDay1.add(label2);
+		labelDay1.add(label3);
+		labelDay1.add(label4);
+		labelDay1.add(label5);
+		labelDay1.add(label6);
+		labelDay1.add(label7);
+		labelDay1.add(label8);
+		PB.populate(days, 0, 0, labelDay1);
 		
+		/*int idx1 = 0;
+		Day day1 = days.get(0);
+		if(day1.isCompleted()) {
+			for(Match match: day1.getMatchesList()) {
+				labelDay1.get(idx1).setText(match.getHomeTeam().getName() +"    " + match.getHomeScore());
+				idx1++;
+				labelDay1.get(idx1).setText(match.getAwayTeam().getName() +"    "+ match.getAwayScore());
+				idx1++;
+			}	
+		}
+		*/
+		
+		labelDay2.add(label9);
+		labelDay2.add(label10);
+		labelDay2.add(label11);
+		labelDay2.add(label12);
+		PB.populate(days, 1, 1, labelDay2);
+		/*int idx2 = 0;
+		if(days.size() > 1) {
+		Day day2 = days.get(1);
+		if(day2.isCompleted()) {
+			for(Match match: day2.getMatchesList()) {
+				labelDay2.get(idx2).setText(match.getHomeTeam().getName() +"    " + match.getHomeScore());
+				idx2++;
+				labelDay2.get(idx2).setText(match.getAwayTeam().getName() +"    "+ match.getAwayScore());
+				idx2++;
+				}
+			
+			}
+		}
+		*/
+		labelDay3.add(label13);
+		labelDay3.add(label14);
+		PB.populate(days, 2, 2, labelDay3);
+		if(days.size() >2 ){
+			if(days.get(2).getMatchesList().get(0).isPlayed()) {
+			label15.setText((days.get(2).getMatchesList().get(0).getWinner().getName()));		
+			}
+		}
+		/*int idx3 = 0;
+		if(days.size() > 2) {
+		Day day3 = days.get(2);
+		if(day3.isCompleted()) {
+			for(Match match: day3.getMatchesList()) {
+				labelDay3.get(idx3).setText(match.getHomeTeam().getName() +"    " + match.getHomeScore());
+				idx3++;
+				labelDay3.get(idx3).setText(match.getAwayTeam().getName() +"    "+ match.getAwayScore());
+				idx3++;
+				}
+			label15.setText((days.get(2).getMatchesList().get(0).getWinner().getName()));
+			}
+		}
+		*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
 		List<Label> labelsList= new ArrayList<>();
 		labelsList.add(label1);
 		labelsList.add(label2);
@@ -118,7 +201,7 @@ public class KnockoutPhase8Controller implements Initializable {
 			}
 		}
 	
-		
+		*/
 //		label1.setText(days.get(0).getMatchesList().get(0).getHomeTeam().getName() +"            "+ days.get(0).getMatchesList().get(0).getHomeScore());
 //		label2.setText(days.get(0).getMatchesList().get(0).getAwayTeam().getName() +"            " +days.get(0).getMatchesList().get(0).getAwayScore());
 //		
