@@ -27,4 +27,10 @@ _________________________________
        &nbsp;&nbsp;(assicurarsi di aver inserito gli argomenti VM per javaFX)
 
        o	TextUI, lanciare src/interfaces/manager/textui/Main.java
+       
+       &nbsp;&nbsp;&nbsp;Come test per autenticarsi inserire:
+       
+       &nbsp;&nbsp;&nbsp;Username: admin
+        
+       &nbsp;&nbsp;&nbsp;Password: admin
 
