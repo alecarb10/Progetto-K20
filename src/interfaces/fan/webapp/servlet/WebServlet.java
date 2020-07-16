@@ -2,6 +2,13 @@ package interfaces.fan.webapp.servlet;
 
 import javax.servlet.http.HttpServlet;
 
+
+/**
+ * Abstract servlet for defining attributes used by concrete servlets
+ * @param name base path of webapp
+ * @param url base path of a servlet
+ */
+
 @SuppressWarnings("serial")
 public abstract class WebServlet extends HttpServlet {
 	private String name;

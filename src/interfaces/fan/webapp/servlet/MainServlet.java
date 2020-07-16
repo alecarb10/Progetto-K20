@@ -14,6 +14,10 @@ import domain.team.Team;
 import domain.tournament.Tournament;
 import services.persistence.dao.impl.FacadeImpl;
 
+/**
+ * Concrete servlet to manage get and post request of the entire webapp
+ */
+
 @SuppressWarnings("serial")
 public class MainServlet extends WebServlet {
 
@@ -21,9 +25,9 @@ public class MainServlet extends WebServlet {
 	private Tournament tournament;
 	private Team team;
 	
-	private final int FIRST_TEAMS_SIZE = 4;
-	private final int SECOND_TEAMS_SIZE = 8;
-	private final int THIRD_TEAMS_SIZE = 16;
+	private final int FIRST_TEAMS_SIZE = 4;		// for board with 4 teams
+	private final int SECOND_TEAMS_SIZE = 8;	// for board with 8 teams
+	private final int THIRD_TEAMS_SIZE = 16;	// for board with 16 teams
 	
 	public MainServlet(String name, String url) {
 		super(name, url);

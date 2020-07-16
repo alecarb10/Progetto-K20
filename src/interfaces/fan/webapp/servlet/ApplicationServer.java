@@ -10,6 +10,13 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.rythmengine.Rythm;
 
+/**
+ * Manages servlets and pages style.
+ * @param port port used by Server to accept requests from clients (browser)
+ * @param servlets list of servlets used to manage requests
+ * @param server server to manage the webapp
+ */
+
 public class ApplicationServer {
 	private int port;
 	private List<WebServlet> servlets;
