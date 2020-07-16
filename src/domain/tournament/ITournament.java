@@ -67,7 +67,20 @@ public interface ITournament {
 	
 	public TournamentElement getBoard();
 	
+	/**
+	 * Checks if the tournament's teams list size matches with the wanted size
+	 * @param size
+	 * @param teamsList
+	 * @return true or false
+	 * @throws IllegalTeamsSizeException
+	 */
 	public boolean checkTournamentSize(int size,List<Team> teamsList) throws IllegalTeamsSizeException;
 	
+	/**
+	 * Checks if there are two teams with the same name in the tournament
+	 * @param teamsList
+	 * @return true or false
+	 * @throws SameTeamNameException
+	 */
 	public boolean checkNamesInTeams(List<Team> teamsList) throws SameTeamNameException;
 }
