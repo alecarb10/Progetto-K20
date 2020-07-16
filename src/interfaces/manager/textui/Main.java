@@ -2,7 +2,7 @@ package interfaces.manager.textui;
 
 import java.sql.SQLException;
 
-public class Tester {
+public class Main {
 
 	public static void main(String[] args) {
 		ManagerTextUI m = new ManagerTextUI();
