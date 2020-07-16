@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import domain.element.Day;
-import domain.match.Match;
 import domain.team.Player;
 import domain.team.PlayerPositionType;
 import domain.team.Stadium;
@@ -196,6 +194,7 @@ public class ManagerTextUI {
 		}
 	}
 	
+	/* TODO correggere inserimento risultato */
 	private void manageTournament() throws SQLException {
 		while(true) {
 			System.out.println("\nTournament: " + tournament.getName() + "\n");
@@ -218,13 +217,15 @@ public class ManagerTextUI {
 			try {
 				switch (Integer.parseInt(inputString)) {
 				case 1:
-					if (tournament.getTournamentType() == TournamentType.MIXED)
+					System.out.println("Not yet implemented");
+					/* if (tournament.getTournamentType() == TournamentType.MIXED) {
 						insertResultForMixed();
+					}
 					else {
 						tournament.setGroupSchedule(facade.getGroupSchedule(tournament));
 						tournament.setBoardSchedule(facade.getBoardSchedule(tournament));
 						insertResult();
-					}
+					} */
 					break;
 				case 2:
 					addStadium();
@@ -241,7 +242,7 @@ public class ManagerTextUI {
 		}
 	}
 	
-	private void insertResult() throws SQLException {
+	/* private void insertResult() throws SQLException {
 		while(true) {
 			System.out.println("\nChoose a day: \n");
 			for (Day d: tournament.getSchedule())
@@ -270,9 +271,9 @@ public class ManagerTextUI {
 				System.out.println("Invalid input.\n");
 			}
 		}
-	}
+	} */
 	
-	private void selectMatch(int indexDay) throws SQLException {
+	/* private void selectMatch(int indexDay) throws SQLException {
 		while (true) {
 			System.out.println("\nDay " + (indexDay + 1) + ". Choose a match: \n");
 			for (int i = 0; i < tournament.getSchedule().get(indexDay).getMatchesList().size(); i++)
@@ -323,9 +324,9 @@ public class ManagerTextUI {
 				System.out.println("Invalid input.\n");
 			}
 		}
-	}
+	} */
 	
-	private void insertResultForMixed() throws SQLException {
+	/* private void insertResultForMixed() throws SQLException {
 		while(true) {
 			System.out.println("\nChoose: \n");
 			System.out.println("1) Manage group");
@@ -367,7 +368,7 @@ public class ManagerTextUI {
 								System.out.println(day);
 						}
 						else {
-							/* setSchedule da db */
+							// setSchedule da db //
 						}
 					}
 				}
@@ -377,7 +378,7 @@ public class ManagerTextUI {
 				System.out.println("Invalid input.\n");
 			}
 		}
-	}
+	} */
 	
 	private void addStadium() throws SQLException {
 		while (true) {
