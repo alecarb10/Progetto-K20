@@ -3,7 +3,12 @@ package interfaces.manager.gui.util;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+/**
+ * Class used to manage the transition between scenes
+ */
 
 public class GraphicHandler {
 	
@@ -56,9 +61,11 @@ public class GraphicHandler {
 	}
 	
 	public static void loadStage(Scene scene,Stage primaryStage) {
+		primaryStage.getIcons().add(new Image("interfaces/manager/gui/images/favicon.png"));
 		primaryStage.setTitle("Manager");
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
+		primaryStage.centerOnScreen();
 		primaryStage.show();
 	}
 }
