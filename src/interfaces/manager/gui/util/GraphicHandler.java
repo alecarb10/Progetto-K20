@@ -6,6 +6,10 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Class used to manage the transition between scenes
+ */
+
 public class GraphicHandler {
 	
 	public static Scene getScene(String resource) {

@@ -6,6 +6,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 
+/**
+ * Class used to reset graphic components
+ */
+
 public class GraphicControlsHandler {
 
 	public static void resetComboBox(ComboBox<String> cmbBox,String promptText) {
