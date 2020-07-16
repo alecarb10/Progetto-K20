@@ -11,7 +11,8 @@ _________________________________
 -	Fan
 
        o	GUI, lanciare src/interfaces/fan/gui/FanMain.java
-       (assicurarsi di aver inserito gli argomenti VM per javaFX)
+       <br>
+       &nbsp;&nbsp;(assicurarsi di aver inserito gli argomenti VM per javaFX)
 
        o	Webapp
        
@@ -22,7 +23,8 @@ _________________________________
 -	Manager
 
        o	GUI, lanciare src/interfaces/manager/gui/Main.java
-       (assicurarsi di aver inserito gli argomenti VM per javaFX)
+       <br>
+       &nbsp;&nbsp;(assicurarsi di aver inserito gli argomenti VM per javaFX)
 
        o	TextUI, lanciare src/interfaces/manager/textui/Main.java
 
