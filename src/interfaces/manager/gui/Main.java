@@ -6,6 +6,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Class to run the manager gui
+ */
+
 public class Main extends Application {
 
 	@Override
