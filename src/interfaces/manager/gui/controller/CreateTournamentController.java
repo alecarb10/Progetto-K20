@@ -12,13 +12,17 @@ import domain.tournament.KnockoutPhase;
 import domain.tournament.League;
 import domain.tournament.MixedTournament;
 import domain.tournament.Tournament;
+import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicControlsHandler;
+import interfaces.manager.gui.util.GraphicHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -29,6 +33,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
 
 /**
@@ -127,21 +132,24 @@ public class CreateTournamentController implements Initializable {
 								else 
 								facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
 							}
-							restoreComponents();
+							Alert alert=new Alert(AlertType.INFORMATION,"Tournament successfully created.",ButtonType.OK);
+							alert.showAndWait();
+							if(alert.getResult()==ButtonType.OK) 
+								restoreComponents();
 					}
 				}
-				else createAlert("Tournament name already exists."); 
+				else new Alert(AlertType.ERROR,"Tournament name already exists.",ButtonType.OK).show();
 			}
-			else createAlert("Tournament name field cannot be empty."); 
+			else new Alert(AlertType.ERROR,"Tournament name cannot be empty.",ButtonType.OK).show();
 			
 		} catch (IllegalTeamsSizeException itse) {			
-			createAlert(itse.getMessage());
+			new Alert(AlertType.ERROR,itse.getMessage(),ButtonType.OK).show();
 		}		
 		catch (SameTeamNameException stne) {
-			createAlert(stne.getMessage());
+			new Alert(AlertType.ERROR,stne.getMessage(),ButtonType.OK).show();
 		}
 		catch (Exception e) {
-			createAlert(e.getMessage());
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 
@@ -188,9 +196,4 @@ public class CreateTournamentController implements Initializable {
 		this.listViewTeams.getItems().add(this.txtFldTeam.getText());
 		GraphicControlsHandler.resetTextField(this.txtFldTeam, "Team Name");
 	}
-
-	private void createAlert(String message) {
-		new Alert(AlertType.ERROR, message, ButtonType.OK).show();
-	}
-
 }
