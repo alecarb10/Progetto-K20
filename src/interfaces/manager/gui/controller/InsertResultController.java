@@ -76,6 +76,8 @@ public class InsertResultController implements Initializable {
 		matches=FXCollections.observableArrayList();
 		facadeImpl= FacadeImpl.getInstance();
 		cmbBoxTournament.setOnAction((ActionEvent)->{
+			if(toggleGrp.getSelectedToggle()!=null)
+				toggleGrp.getSelectedToggle().setSelected(false);
 			GraphicControlsHandler.resetComboBox(cmbBoxDay, "Select Day");
 			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
 			radioBtnAutoSelection(tournament);
@@ -160,6 +162,12 @@ public class InsertResultController implements Initializable {
 										if(radioBtnGroup.isSelected()) {
 											if (facadeImpl.updateMatch(tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
 												tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
+												if(tournament.getGroup().isCompleted()&&!radioBtnGroup.isDisable()) {
+													tournament.initBoard(tournament.getTeamsList());
+													facadeImpl.storeBoard(tournament);
+													tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
+													facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
+												}
 											}
 										}
 										else if(radioBtnBoard.isSelected()) {
