@@ -25,6 +25,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Controller for manager's authentication to the home menu
+ * @see Initializable
+ */
+
 public class LoginController implements Initializable {
 
 	@FXML

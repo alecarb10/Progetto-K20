@@ -1,19 +1,14 @@
 package interfaces.manager.gui.controller;
 
-
-import static org.junit.Assert.assertNotNull;
-
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import org.rythmengine.extension.IFormatter;
-
 import domain.element.Day;
 import domain.match.Match;
-import domain.team.Team;
+import domain.team.Player;
+import domain.team.Stadium;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
 import interfaces.manager.gui.util.GraphicControlsHandler;
@@ -21,14 +16,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
@@ -43,6 +35,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 import services.persistence.dao.impl.FacadeImpl;
+
+/**
+ * Controller for insert the results of matches that played into a particular tournament
+ * @see Initializable
+ * @see Tournament
+ * @see Match
+ * @see Day
+ * @see Player
+ * @see Stadium
+ */
 
 public class InsertResultController implements Initializable {
 	

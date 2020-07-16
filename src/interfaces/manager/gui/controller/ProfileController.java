@@ -5,18 +5,21 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import interfaces.manager.gui.util.Constants;
-import interfaces.manager.gui.util.GraphicControlsHandler;
 import interfaces.manager.gui.util.GraphicHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
+
+/**
+ * Controller for edit the informations of manager
+ * @see Initializable
+ */
 
 public class ProfileController implements Initializable {
 

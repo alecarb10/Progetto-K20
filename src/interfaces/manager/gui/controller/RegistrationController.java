@@ -22,6 +22,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Controller for manager's registration
+ * @see Initializable
+ */
+
 public class RegistrationController implements Initializable {
 
 	@FXML

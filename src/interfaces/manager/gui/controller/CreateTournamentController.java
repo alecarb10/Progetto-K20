@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import domain.element.TournamentElement;
 import domain.team.Team;
 import domain.tournament.KnockoutPhase;
 import domain.tournament.League;
@@ -26,6 +25,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
 import services.persistence.dao.impl.FacadeImpl;
+
+/**
+ * Controller for create the tournament
+ * @see Initializable
+ * @see Tournament
+ * @see Team
+ */
 
 public class CreateTournamentController implements Initializable {
 	

@@ -4,8 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.sun.jdi.event.Event;
-
+import domain.team.Team;
 import domain.tournament.Tournament;
 import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicControlsHandler;
@@ -24,6 +23,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Controller for handle the home menu of the tournament's manager
+ * @see Initializable
+ * @see Tournament
+ * @see Team
+ */
 
 public class HomeController implements Initializable {
 	@FXML

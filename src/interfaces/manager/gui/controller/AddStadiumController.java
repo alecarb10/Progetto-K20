@@ -1,11 +1,9 @@
 package interfaces.manager.gui.controller;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import domain.team.Player;
 import domain.team.Stadium;
 import interfaces.manager.gui.util.GraphicControlsHandler;
 import javafx.collections.FXCollections;
@@ -14,12 +12,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import services.persistence.dao.impl.FacadeImpl;
+
+/**
+ * Controller for add the stadium
+ * @see Initializable
+ * @see Stadium
+ */
 
 public class AddStadiumController implements Initializable {
 	

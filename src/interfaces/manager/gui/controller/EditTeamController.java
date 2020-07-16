@@ -25,8 +25,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import services.persistence.dao.impl.FacadeImpl;
+
+/**
+ * Controller for edit the informations of a team that participates into a particular tournament
+ * @see Initializable
+ * @see Tournament
+ * @see Team
+ * @see Player
+ * @see Stadium
+ */
 
 public class EditTeamController implements Initializable {
 
