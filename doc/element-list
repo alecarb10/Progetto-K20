@@ -12,8 +12,8 @@ interfaces.fan.gui.view.league
 interfaces.fan.gui.view.util
 interfaces.fan.webapp
 interfaces.fan.webapp.servlet
+interfaces.manager.gui
 interfaces.manager.gui.controller
-interfaces.manager.gui.main
 interfaces.manager.gui.util
 interfaces.manager.textui
 services.persistence.dao
