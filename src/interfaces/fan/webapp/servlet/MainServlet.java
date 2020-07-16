@@ -33,11 +33,14 @@ public class MainServlet extends WebServlet {
 		super(name, url);
 	}
 	
+	/**
+	 * Manage get requests
+	 */
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		if (req.getPathInfo().equals("/") || req.getPathInfo().equals("/home.html")) {
 			try {
-				tournaments = FacadeImpl.getInstance().getAllTournaments();
+				getTournaments();
 				resp.getWriter().write(Rythm.render("home.html", tournaments));
 			} 
 			catch (SQLException | NullPointerException e) {
@@ -67,33 +70,27 @@ public class MainServlet extends WebServlet {
 		}
 	}
 	
+	/**
+	 * Manage post requests
+	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		
 		if (req.getPathInfo().equals("/view")) {
-			for (Tournament t: tournaments)
-				if (t.getId() == Integer.parseInt(req.getParameter("id")))
-					tournament = t;
+			findTournamentById(Integer.parseInt(req.getParameter("id")));
+			
 			try {
-				if (tournament.getTeamsList().size() == 0)
-					tournament.addTeams(FacadeImpl.getInstance().getTeamsByTournament(tournament));
-				if (tournament.getGroupSchedule() == null)
-					tournament.setGroupSchedule(FacadeImpl.getInstance().getGroupSchedule(tournament));
-				if (tournament.getBoardSchedule() == null)
-					tournament.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(tournament));
+				initTournament();
+				resp.getWriter().write(Rythm.render("tournament-detail.html", tournament));
 			} 
 			catch (SQLException | NullPointerException e) {
 				resp.getWriter().write(Rythm.render("error.html"));
 				e.printStackTrace();
 			}
-			
-			resp.getWriter().write(Rythm.render("tournament-detail.html", tournament));	
 		} 
 		
 		if (req.getPathInfo().equals("/viewteams")) {
-			for (Team t: tournament.getTeamsList())
-				if (t.getId() == Integer.parseInt(req.getParameter("id")))
-					team = t;
-		
+			findTeamById(Integer.parseInt(req.getParameter("id")));
 			resp.getWriter().write(Rythm.render("team-detail.html", team));	
 		} 
 		
@@ -101,5 +98,46 @@ public class MainServlet extends WebServlet {
 			int day = Integer.parseInt(req.getParameter("daySelect"));
 			resp.getWriter().write(Rythm.render("group.html", tournament, tournament.getGroupSchedule().get(day - 1)));
 		}
+	}
+	
+	/**
+	 * Gets tournaments from db
+	 * @throws SQLException
+	 */
+	private void getTournaments() throws SQLException {
+		tournaments = FacadeImpl.getInstance().getAllTournaments();
+	}
+	
+	/**
+	 * Finds a tournament given id
+	 * @param id
+	 */
+	private void findTournamentById(int id) {
+		for (Tournament t: tournaments)
+			if (t.getId() == id)
+				this.tournament = t;
+	}
+	
+	/**
+	 * Inits all components of the tournament
+	 * @throws SQLException
+	 */
+	private void initTournament() throws SQLException {
+		if (this.tournament.getTeamsList().size() == 0)
+			tournament.addTeams(FacadeImpl.getInstance().getTeamsByTournament(this.tournament));
+		if (this.tournament.getGroupSchedule() == null)
+			tournament.setGroupSchedule(FacadeImpl.getInstance().getGroupSchedule(this.tournament));
+		if (this.tournament.getBoardSchedule() == null)
+			tournament.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(this.tournament));
+	}
+	
+	/**
+	 * Finds a team given id
+	 * @param id
+	 */
+	private void findTeamById(int id) {
+		for (Team t: tournament.getTeamsList())
+			if (t.getId() == id)
+				this.team = t;
 	}
 }
