@@ -28,6 +28,8 @@ public interface ITeamDAO {
 	
 	public boolean updateTeam(Team t) throws SQLException;
 	
+	public boolean updateTeam(Tournament t, Team team) throws SQLException;
+	
 	public boolean storePlayer(Player p, Team t) throws SQLException;
 	
 	public int getLastPlayerID() throws SQLException;

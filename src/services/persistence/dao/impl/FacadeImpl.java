@@ -120,6 +120,12 @@ public class FacadeImpl implements IFacade {
 		ITeamDAO tmd = new TeamDAOImpl();
 		return tmd.updateTeam(t);
 	}
+	
+	@Override
+	public boolean updateTeam(Tournament t,Team team) throws SQLException {
+		ITeamDAO tmd = new TeamDAOImpl();
+		return tmd.updateTeam(t,team);
+	}
 
 	@Override
 	public boolean storePlayer(Player p, Team t) throws SQLException {

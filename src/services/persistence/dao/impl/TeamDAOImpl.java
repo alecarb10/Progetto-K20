@@ -14,6 +14,7 @@ import domain.team.PlayerPositionType;
 import domain.team.Stadium;
 import domain.team.Team;
 import domain.tournament.Tournament;
+import domain.tournament.TournamentType;
 import services.persistence.dao.ITeamDAO;
 import services.persistence.util.DBConnection;
 
@@ -123,6 +124,27 @@ public class TeamDAOImpl implements ITeamDAO {
 		return false;
 	}
 
+	@Override
+	public boolean updateTeam(Tournament t , Team team) throws SQLException {
+		conn = DBConnection.startConnection(conn);
+		PreparedStatement ps;
+		boolean rs;
+		
+		String query = "UPDATE team SET Board=? WHERE IDTeam=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, t.getBoard().getId());
+		ps.setInt(2, team.getId());
+		rs = ps.execute();
+		
+		if (!rs) {
+			DBConnection.closeConnection(conn);
+			return true;
+		}	
+
+		DBConnection.closeConnection(conn);
+		return false;
+	}
+	
 	/**
 	 * Stores a player into the db
 	 * @param p the player to be stored
