@@ -49,14 +49,7 @@ public class KnockoutPhase4Controller implements Initializable {
 	Label label7;
 	
 	List<Label> labelDay1 = new ArrayList<>();
-	List<Label> labelDay2 = new ArrayList<>();
-	/*
-	List<Label> labelDay1c = new ArrayList<>();
-	List<Label> labelDay1f = new ArrayList<>();
-	List<Label> labelDay2c = new ArrayList<>();
-	List<Label> labelDay2f = new ArrayList<>();
-*/
-	
+	List<Label> labelDay2 = new ArrayList<>();	
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
 
@@ -73,55 +66,13 @@ public class KnockoutPhase4Controller implements Initializable {
 		labelDay2.add(label5);
 		labelDay2.add(label6);
 		PB.populate(days, 1, 1, labelDay2);
+		
 		if(days.size() >1 ){
 			if(days.get(1).getMatchesList().get(0).isPlayed()) {
 			label7.setText((days.get(1).getMatchesList().get(0).getWinner().getName()));		
 			}
 		}
-		/*
-		labelDay1c.add(label1);
-		labelDay1f.add(label2);
-		labelDay1c.add(label3);
-		labelDay1f.add(label4);
-		labelDay2c.add(label5);
-		labelDay2f.add(label6);
-		for (Label labelc : labelDay1c) {
-			for (Label labelf : labelDay1f) {
-				for (Day day : days) {
-					for (Match match : day.getMatchesList()) {
-						if (day.getNumber() == 1) {
 
-							labelc.setText(match.getHomeTeam().getName() + "          " + match.getHomeScore());
-							labelf.setText(match.getAwayTeam().getName() + "          " + match.getAwayScore());
-							labelDay1c.iterator().next()
-									.setText(day.getMatchesList().iterator().next().getHomeTeam().getName()
-											+ "          " + day.getMatchesList().iterator().next().getHomeScore());
-							labelDay1f.iterator().next()
-									.setText(day.getMatchesList().iterator().next().getAwayTeam().getName()
-											+ "          " + day.getMatchesList().iterator().next().getAwayScore());
-						}
-					}
-				}
-
-			}
-		}
-
-		for (Label labelc : labelDay2c) {
-			for (Label labelf : labelDay2f) {
-				for (Day day : days) {
-					if (day.getNumber() == 2) {
-						for (Match match : day.getMatchesList()) {
-							labelc.setText(match.getHomeTeam().getName() + "          " + match.getHomeScore());
-							labelf.setText(match.getAwayTeam().getName() + "          " + match.getAwayScore());
-							label7.setText(match.getWinner().getName());
-							break;
-						}
-					}
-				}
-
-			}
-		}
-*/
 	}
 
 	public void backButtonClicked(ActionEvent event) throws IOException {
