@@ -9,6 +9,7 @@ import domain.element.Day;
 import domain.match.Match;
 import domain.team.Player;
 import domain.team.Stadium;
+import domain.team.Team;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
 import interfaces.manager.gui.util.GraphicControlsHandler;
@@ -163,9 +164,15 @@ public class InsertResultController implements Initializable {
 											if (facadeImpl.updateMatch(tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
 												tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
 												if(tournament.getGroup().isCompleted()&&!radioBtnGroup.isDisable()) {
-													tournament.initBoard(tournament.getTeamsList());
+													tournament.addTeams(facadeImpl.getTeamsByTournament(tournament));
+													tournament.initBoard(tournament.getTeamsList());												
+													for(Day d:tournament.getBoard().getSchedule()) {
+														System.out.println(d);
+													}
 													facadeImpl.storeBoard(tournament);
 													tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
+													for(Team team:tournament.getTeamsList())
+														facadeImpl.updateTeam(tournament, team);
 													facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
 												}
 											}
