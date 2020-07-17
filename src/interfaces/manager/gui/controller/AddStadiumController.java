@@ -81,7 +81,8 @@ public class AddStadiumController implements Initializable {
 				alert.showAndWait();
 				if(alert.getResult()==ButtonType.OK) 
 					restoreComponents();
-			} else
+			} 
+			else 
 				new Alert(AlertType.ERROR, "Fields cannot be empty.", ButtonType.OK).show();
 		} catch (NumberFormatException nfe) {
 			new Alert(AlertType.ERROR, "Stadium capacity must be a number.", ButtonType.OK).show();
