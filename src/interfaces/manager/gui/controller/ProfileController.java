@@ -11,7 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
@@ -45,10 +48,15 @@ public class ProfileController implements Initializable {
 	
 	public void deleteManager(ActionEvent event) {
 		try {
-			facadeImpl.removeManager(username);
-			Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
-			Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			GraphicHandler.loadStage(scene, primaryStage);
+			Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want to permanently remove this manager account?", ButtonType.YES, ButtonType.CANCEL);
+			alert.showAndWait();
+			if (alert.getResult() == ButtonType.YES) {
+				facadeImpl.removeManager(username);
+				Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
+				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				GraphicHandler.loadStage(scene, primaryStage);
+			}
+			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -57,11 +65,18 @@ public class ProfileController implements Initializable {
 	
 	public void saveManagerInfo(ActionEvent event) {
 		try {
-			if(facadeImpl.updateManager(username, txtFldName.getText(), txtFldSurname.getText())) {
-				setManagerInfo();
+			if(isNotBlankControl()) {
+				if(facadeImpl.updateManager(username, txtFldName.getText(), txtFldSurname.getText())) {
+					Alert alert=new Alert(AlertType.INFORMATION,"Manager informations successfully updated.",ButtonType.OK);
+					alert.showAndWait();
+					if(alert.getResult()==ButtonType.OK) 
+						setManagerInfo();
+				}
 			}
-		}catch (Exception ex) {
-			ex.printStackTrace();
+			else 
+				new Alert(AlertType.ERROR, "Fields cannot be empty.", ButtonType.OK).show();
+		}catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -73,5 +88,9 @@ public class ProfileController implements Initializable {
 		}catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	private boolean isNotBlankControl() {
+		return !this.txtFldName.getText().isBlank() && !this.txtFldSurname.getText().isBlank();
 	}
 }
