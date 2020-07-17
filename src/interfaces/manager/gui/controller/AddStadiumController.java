@@ -74,9 +74,9 @@ public class AddStadiumController implements Initializable {
 		try {
 			if (isNotBlankControl()) {
 				Stadium stadium = new Stadium(txtFldStadiumName.getText(), txtFldStadiumCity.getText(), Integer.parseInt(txtFldStadiumCapacity.getText()));
+				facadeImpl.storeStadium(stadium);
 				stadiumsList.add(stadium);
 				stadiums.add(stadium);
-				facadeImpl.storeStadium(stadium);
 				Alert alert=new Alert(AlertType.INFORMATION,"Stadium successfully created.",ButtonType.OK);
 				alert.showAndWait();
 				if(alert.getResult()==ButtonType.OK) 
@@ -100,4 +100,5 @@ public class AddStadiumController implements Initializable {
 	private boolean isNotBlankControl() {
 		return !txtFldStadiumName.getText().isBlank() && !txtFldStadiumCity.getText().isBlank() && !txtFldStadiumCapacity.getText().isBlank();
 	}
+	
 }
