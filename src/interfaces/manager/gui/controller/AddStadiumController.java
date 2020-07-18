@@ -53,12 +53,7 @@ public class AddStadiumController implements Initializable {
 		facadeImpl = FacadeImpl.getInstance();
 		stadiums = FXCollections.observableArrayList();
 		stadiumsList = getStadiums();
-		for (Stadium s : stadiumsList)
-			stadiums.add(s);
-		tblClmnStadiumName.setCellValueFactory(new PropertyValueFactory<Stadium, String>("Name"));
-		tblClmnStadiumCity.setCellValueFactory(new PropertyValueFactory<Stadium, String>("City"));
-		tblClmnStadiumCapacity.setCellValueFactory(new PropertyValueFactory<Stadium, String>("Capacity"));
-		tblViewStadium.setItems(stadiums);
+		populateTblViewStadium();
 	}
 
 	private List<Stadium> getStadiums() {
@@ -84,9 +79,11 @@ public class AddStadiumController implements Initializable {
 			} 
 			else 
 				new Alert(AlertType.ERROR, "Fields cannot be empty.", ButtonType.OK).show();
-		} catch (NumberFormatException nfe) {
+		} 
+		catch (NumberFormatException nfe) {
 			new Alert(AlertType.ERROR, "Stadium capacity must be a number.", ButtonType.OK).show();
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
 		}
 	}
@@ -99,6 +96,15 @@ public class AddStadiumController implements Initializable {
 
 	private boolean isNotBlankControl() {
 		return !txtFldStadiumName.getText().isBlank() && !txtFldStadiumCity.getText().isBlank() && !txtFldStadiumCapacity.getText().isBlank();
+	}
+	
+	private void populateTblViewStadium() {
+		tblClmnStadiumName.setCellValueFactory(new PropertyValueFactory<Stadium, String>("Name"));
+		tblClmnStadiumCity.setCellValueFactory(new PropertyValueFactory<Stadium, String>("City"));
+		tblClmnStadiumCapacity.setCellValueFactory(new PropertyValueFactory<Stadium, String>("Capacity"));
+		for (Stadium s : stadiumsList)
+			stadiums.add(s);
+		tblViewStadium.setItems(stadiums);
 	}
 	
 }
