@@ -55,10 +55,9 @@ public class ProfileController implements Initializable {
 				Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
 				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				GraphicHandler.loadStage(scene, primaryStage);
-			}
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			}			
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 		
 	}
@@ -85,7 +84,7 @@ public class ProfileController implements Initializable {
 			managerInfoList=facadeImpl.getManagerByUsername(username);
 			txtFldName.setText(managerInfoList.get(0));
 			txtFldSurname.setText(managerInfoList.get(1));
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
