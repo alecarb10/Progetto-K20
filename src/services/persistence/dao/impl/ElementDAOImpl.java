@@ -206,8 +206,12 @@ public class ElementDAOImpl implements IElementDAO {
 
 		if (t.getGroup() == null)
 			ps.setNull(3, Types.INTEGER);
-		else
-			ps.setInt(3, t.getGroup().getId());
+		else {
+			if(t.getGroup().isCompleted())
+				ps.setNull(3, Types.INTEGER);
+			else 
+				ps.setInt(3, t.getGroup().getId());
+		}
 		
 		if (t.getBoard() == null)
 			ps.setNull(4, Types.INTEGER);
