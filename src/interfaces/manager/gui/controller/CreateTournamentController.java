@@ -1,6 +1,7 @@
 package interfaces.manager.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,26 +58,27 @@ public class CreateTournamentController implements Initializable {
 
 	private ObservableList<String> teams;
 	private String username;
+	private FacadeImpl facadeImpl;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		facadeImpl=FacadeImpl.getInstance();
 		this.cmbBoxType.setItems(FXCollections.observableArrayList("League", "Knockout Phase", "Mixed"));
-		this.cmbBoxType.setOnAction((ActionEvent) -> {
-			this.cmbBoxSize.setItems(this.getSizesList());
-		});
+//		this.cmbBoxType.setOnAction((ActionEvent) -> {
+//			this.cmbBoxSize.setItems(this.getSizesList());
+//		});
 		teams = FXCollections.observableArrayList();
-		this.listViewTeams.setItems(teams);
-		this.listViewTeams.setCellFactory(TextFieldListCell.forListView());
-		txtFldTeam.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent keyEvent) {
-				if (keyEvent.getCode().equals(KeyCode.ENTER))
-					addTeam();
-			}
-		});
-		this.btnAddTeam.setOnAction((ActionEvent) -> {
-			addTeam();
-		});
+		initListViewTeams();
+//		txtFldTeam.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//			@Override
+//			public void handle(KeyEvent keyEvent) {
+//				if (keyEvent.getCode().equals(KeyCode.ENTER))
+//					addTeam();
+//			}
+//		});
+//		this.btnAddTeam.setOnAction((ActionEvent) -> {
+//			addTeam();
+//		});
 	}
 
 	public void removeTeamFromList(ActionEvent event) {
@@ -110,43 +112,27 @@ public class CreateTournamentController implements Initializable {
 				if(facadeImpl.checkUnique(name, username)) {
 					tournament=getTournament(name);
 					if(tournament.checkTournamentSize(Integer.parseInt(cmbBoxSize.getSelectionModel().getSelectedItem()), teamsList)&&tournament.checkNamesInTeams(teamsList)) {
-						if(facadeImpl.storeTournament(tournament, username)) {
-								int tournamentId=facadeImpl.getLastTournamentID();
-								tournament.setId(tournamentId);
-								tournament.initGroup(teamsList);
-								tournament.initBoard(teamsList);
-								if(tournament.getGroup()!=null) {
-									facadeImpl.storeGroup(tournament);
-									tournament.getGroup().setId(facadeImpl.getLastElementID(tournament.getGroup()));
-								}
-								else {
-									facadeImpl.storeBoard(tournament);
-									tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
-								}
-								for(Team team:teamsList) {
-									facadeImpl.storeTeam(team, tournament);
-									team.setId(facadeImpl.getLastTeamID());
-								}
-								if(tournament.getGroup()!=null) 
-								facadeImpl.storeSchedule(tournament.getGroupSchedule(), tournament);
-								else 
-								facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
-							}
-							Alert alert=new Alert(AlertType.INFORMATION,"Tournament successfully created.",ButtonType.OK);
-							alert.showAndWait();
-							if(alert.getResult()==ButtonType.OK) 
-								restoreComponents();
+						if(facadeImpl.storeTournament(tournament, username)) 
+							store(tournament, teamsList);
+						Alert alert=new Alert(AlertType.INFORMATION,"Tournament successfully created.",ButtonType.OK);
+						alert.showAndWait();
+						if(alert.getResult()==ButtonType.OK) 
+							restoreComponents();
 					}
 				}
 				else new Alert(AlertType.ERROR,"Tournament name already exists.",ButtonType.OK).show();
 			}
 			else new Alert(AlertType.ERROR,"Tournament name cannot be empty.",ButtonType.OK).show();
 			
-		} catch (IllegalTeamsSizeException itse) {			
+		} 
+		catch (IllegalTeamsSizeException itse) {			
 			new Alert(AlertType.ERROR,itse.getMessage(),ButtonType.OK).show();
 		}		
 		catch (SameTeamNameException stne) {
 			new Alert(AlertType.ERROR,stne.getMessage(),ButtonType.OK).show();
+		}
+		catch (NumberFormatException nfe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
 		}
 		catch (Exception e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
@@ -195,5 +181,47 @@ public class CreateTournamentController implements Initializable {
 	private void addTeam() {
 		this.listViewTeams.getItems().add(this.txtFldTeam.getText());
 		GraphicControlsHandler.resetTextField(this.txtFldTeam, "Team Name");
+	}
+	
+	public void setCmbBoxSize(ActionEvent event) {
+		GraphicControlsHandler.resetComboBox(cmbBoxSize, "Size");
+		this.cmbBoxSize.setItems(this.getSizesList());
+	}
+	
+	public void handleEnterOnAddTeam(KeyEvent keyEvent) {
+		if (keyEvent.getCode().equals(KeyCode.ENTER))
+			addTeam();
+	}
+	
+	public void addTeamInList(ActionEvent event) {
+		addTeam();
+	}
+	
+	private void initListViewTeams() {
+		this.listViewTeams.setItems(teams);
+		this.listViewTeams.setCellFactory(TextFieldListCell.forListView());
+	}
+	
+	private void store(Tournament tournament, List<Team> teamsList) throws SQLException {
+		int tournamentId=facadeImpl.getLastTournamentID();
+		tournament.setId(tournamentId);
+		tournament.initGroup(teamsList);
+		tournament.initBoard(teamsList);
+		if(tournament.getGroup()!=null) {
+			facadeImpl.storeGroup(tournament);
+			tournament.getGroup().setId(facadeImpl.getLastElementID(tournament.getGroup()));
+		}
+		else {
+			facadeImpl.storeBoard(tournament);
+			tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
+		}
+		for(Team team:teamsList) {
+			facadeImpl.storeTeam(team, tournament);
+			team.setId(facadeImpl.getLastTeamID());
+		}
+		if(tournament.getGroup()!=null) 
+			facadeImpl.storeSchedule(tournament.getGroupSchedule(), tournament);
+		else 
+			facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
 	}
 }
