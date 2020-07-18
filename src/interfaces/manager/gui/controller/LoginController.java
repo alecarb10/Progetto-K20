@@ -51,7 +51,9 @@ public class LoginController implements Initializable {
 				Scene scene = GraphicHandler.getScene(root, Constants.STYLE_PATH);
 				Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 				GraphicHandler.loadStage(scene, primaryStage);							
-			} else new Alert(AlertType.ERROR,"Incorrect credentials.",ButtonType.OK).show(); 
+			} 
+			else 
+				new Alert(AlertType.ERROR,"Incorrect credentials.",ButtonType.OK).show(); 
 
 		} catch (Exception e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
