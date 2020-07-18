@@ -8,24 +8,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import domain.element.Day;
-import domain.match.Match;
-import domain.tournament.KnockoutPhase;
 import domain.tournament.Tournament;
-import domain.tournament.TournamentType;
 import interfaces.fan.gui.view.util.PopulateBrackets;
 import interfaces.fan.gui.view.util.StageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class KnockoutPhase16Controller implements Initializable {
@@ -104,7 +95,6 @@ public class KnockoutPhase16Controller implements Initializable {
 	public void passingDataToKnock16(Tournament k16) throws SQLException {
 		textBoard.setText(k16.getName());
 		days = facade.getBoardSchedule(k16);
-		PopulateBrackets PB = new PopulateBrackets();
 
 		labelDay1.add(label1);
 		labelDay1.add(label2);
@@ -122,7 +112,7 @@ public class KnockoutPhase16Controller implements Initializable {
 		labelDay1.add(label14);
 		labelDay1.add(label15);
 		labelDay1.add(label16);
-		PB.populate(days, 0, 0, labelDay1);
+		PopulateBrackets.populate(days, 0, 0, labelDay1);
 
 		labelDay2.add(label17);
 		labelDay2.add(label18);
@@ -132,17 +122,17 @@ public class KnockoutPhase16Controller implements Initializable {
 		labelDay2.add(label22);
 		labelDay2.add(label23);
 		labelDay2.add(label24);
-		PB.populate(days, 1, 1, labelDay2);
+		PopulateBrackets.populate(days, 1, 1, labelDay2);
 
 		labelDay3.add(label25);
 		labelDay3.add(label26);
 		labelDay3.add(label27);
 		labelDay3.add(label28);
-		PB.populate(days, 2, 2, labelDay3);
+		PopulateBrackets.populate(days, 2, 2, labelDay3);
 
 		labelDay4.add(label29);
 		labelDay4.add(label30);
-		PB.populate(days, 3, 3, labelDay4);
+		PopulateBrackets.populate(days, 3, 3, labelDay4);
 		
 		if(days.size() > 3){
 			if(days.get(3).getMatchesList().get(0).isPlayed()) {

@@ -6,7 +6,7 @@ import domain.match.Match;
 import javafx.scene.control.Label;
 
 public class PopulateBrackets {
-	public void populate(List<Day> days, int nDay, int nM, List<Label> labels) {
+	public static void populate(List<Day> days, int nDay, int nM, List<Label> labels) {
 		int idx = 0;
 		if (days.size() > nM) {
 			Day day = days.get(nDay);

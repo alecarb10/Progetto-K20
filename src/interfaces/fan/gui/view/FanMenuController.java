@@ -5,7 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import domain.element.Group;
+
 import domain.team.*;
 import domain.tournament.*;
 import interfaces.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
@@ -13,19 +13,11 @@ import interfaces.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
 import interfaces.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
 import interfaces.fan.gui.view.league.LeagueRankingController;
 import interfaces.fan.gui.view.util.StageLoader;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import services.persistence.dao.impl.FacadeImpl;
 
 import java.util.ArrayList;

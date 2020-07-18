@@ -3,18 +3,10 @@ package interfaces.fan.gui.view.league;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import domain.element.Day;
-import domain.element.Group;
-import domain.match.Match;
-import domain.team.Player;
 import domain.team.Team;
-import domain.tournament.KnockoutPhase;
-import domain.tournament.League;
-import domain.tournament.MixedTournament;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
 import interfaces.fan.gui.view.element.dayViewController;
@@ -27,21 +19,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class LeagueRankingController implements Initializable {
@@ -86,6 +70,20 @@ public class LeagueRankingController implements Initializable {
 			boardButton.setVisible(false);
 		} else if (tournamentPass.getTournamentType() == TournamentType.MIXED) {
 			boardButton.setVisible(true);
+			int n = 0;
+			List<Day> days = facade.getGroupSchedule(tournamentPass);
+			int m = days.size();
+			for(Day day: days) {
+				if(day.isCompleted()) {
+				n++;
+			}
+			if(n == m ) {
+				boardButton.setDisable(false);
+				}	
+			else 
+				boardButton.setDisable(true);
+			}
+				
 
 		}
 
@@ -173,8 +171,8 @@ public class LeagueRankingController implements Initializable {
 		case 16:
 			StageLoader SLM16 = new StageLoader();
 			SLM16.show("interfaces/fan/gui/view/knockoutphase/knockoutphase16.fxml", "Board", event);
-			KnockoutPhase8Controller kp16c = SLM16.getLoader().getController();
-			kp16c.passingDataToKnock8(tournament);
+			KnockoutPhase16Controller kp16c = SLM16.getLoader().getController();
+			kp16c.passingDataToKnock16(tournament);
 			break;
 
 		}

@@ -8,24 +8,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import domain.element.Day;
-import domain.match.Match;
-import domain.tournament.KnockoutPhase;
 import domain.tournament.Tournament;
-import domain.tournament.TournamentType;
 import interfaces.fan.gui.view.util.PopulateBrackets;
 import interfaces.fan.gui.view.util.StageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
 
 public class KnockoutPhase8Controller implements Initializable {
@@ -76,7 +67,6 @@ public class KnockoutPhase8Controller implements Initializable {
 	public void passingDataToKnock8(Tournament k8) throws SQLException {
 		textBoard.setText(k8.getName());
 		days = facade.getBoardSchedule(k8);
-		PopulateBrackets PB = new PopulateBrackets();
 		
 		labelDay1.add(label1);
 		labelDay1.add(label2);
@@ -86,17 +76,17 @@ public class KnockoutPhase8Controller implements Initializable {
 		labelDay1.add(label6);
 		labelDay1.add(label7);
 		labelDay1.add(label8);
-		PB.populate(days, 0, 0, labelDay1);
+		PopulateBrackets.populate(days, 0, 0, labelDay1);
 		
 		labelDay2.add(label9);
 		labelDay2.add(label10);
 		labelDay2.add(label11);
 		labelDay2.add(label12);
-		PB.populate(days, 1, 1, labelDay2);
+		PopulateBrackets.populate(days, 1, 1, labelDay2);
 
 		labelDay3.add(label13);
 		labelDay3.add(label14);
-		PB.populate(days, 2, 2, labelDay3);
+		PopulateBrackets.populate(days, 2, 2, labelDay3);
 		
 		if(days.size() >2 ){
 			if(days.get(2).getMatchesList().get(0).isPlayed()) {

@@ -17,7 +17,7 @@
       </Text>
       <Button fx:id="menuButton" layoutX="499.0" layoutY="267.0" mnemonicParsing="false" onAction="#menuButtonClicked" text="Menu" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="30.0" />
       <ComboBox fx:id="dayComboBox" layoutX="480.0" layoutY="100.0" onAction="#daySelected" prefHeight="25.0" prefWidth="70.0" promptText="Day" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="100.0" />
-      <Button fx:id="boardButton" layoutX="521.0" layoutY="175.0" mnemonicParsing="false" text="Board" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="175.0" />
+      <Button fx:id="boardButton" layoutX="521.0" layoutY="175.0" mnemonicParsing="false" onAction="#boardButtonCliccked" text="Board" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="175.0" />
       <TableView fx:id="table" layoutX="132.0" layoutY="125.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="100.0">
         <columns>
           <TableColumn fx:id="teamName" prefWidth="179.5" text="team" />

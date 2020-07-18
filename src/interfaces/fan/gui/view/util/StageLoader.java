@@ -8,7 +8,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class StageLoader {
@@ -24,13 +24,13 @@ public class StageLoader {
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
 		root = loader.load();
 		scene = new Scene(root);
+		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
 		primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		primaryStage.getIcons().add(new Image("interfaces/manager/gui/images/favicon.png"));
 		primaryStage.setTitle(title);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primScreenBounds = Screen.getPrimary().getVisualBounds();
-		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+		primaryStage.centerOnScreen();
 		primaryStage.show();		
 	}
 	
@@ -39,12 +39,12 @@ public class StageLoader {
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
 		root = loader.load();
 		scene = new Scene(root);
+		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
+		primaryStage.getIcons().add(new Image("interfaces/manager/gui/images/favicon.png"));
 		primaryStage.setTitle(title);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primScreenBounds = Screen.getPrimary().getVisualBounds();
-		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+		primaryStage.centerOnScreen();
 		primaryStage.show();		
 	}
 	public void showDaySelected(String URL, String title, ActionEvent event) throws IOException {
@@ -52,13 +52,13 @@ public class StageLoader {
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
 		root = loader.load();
 		scene = new Scene(root);
+		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
 		primaryStage = new Stage();
+		primaryStage.getIcons().add(new Image("interfaces/manager/gui/images/favicon.png"));
 		primaryStage.setTitle(title);
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primScreenBounds = Screen.getPrimary().getVisualBounds();
-		primaryStage.setX((primScreenBounds.getWidth() - primaryStage.getWidth()) / 2);
-		primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 2);
+		primaryStage.centerOnScreen();
 		primaryStage.show();
 	}
 	
