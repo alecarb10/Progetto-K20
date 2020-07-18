@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
@@ -30,6 +31,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -106,16 +108,23 @@ public class InsertResultController implements Initializable {
 		      public void changed(ObservableValue<? extends Toggle> ov,Toggle old_toggle, Toggle new_toggle) {
 		        if (toggleGrp.getSelectedToggle() != null) {
 		        	try {
-						days.clear();
+						days.clear();					
 						if(radioBtnGroup.isSelected()) {
 							tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
 							for(Day d:tournament.getGroupSchedule()) 
 								days.add(Integer.toString(d.getNumber()));
 						}
 						else if(radioBtnBoard.isSelected()) {
-							tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
-							for(Day d:tournament.getBoardSchedule())
-								days.add(Integer.toString(d.getNumber()));			
+							try {
+								if(!radioBtnBoard.isDisable()) 
+									tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
+								tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
+								for(Day d:tournament.getBoardSchedule())
+									days.add(Integer.toString(d.getNumber()));	
+							}
+							catch (NullPointerException npe) {
+								new Alert(AlertType.ERROR,"Group is not completed yet.",ButtonType.OK).show();
+							}
 						}
 						cmbBoxDay.setItems(days);
 					
@@ -157,8 +166,14 @@ public class InsertResultController implements Initializable {
 								int awayScore=Integer.parseInt(matchScore[1]);
 								try {
 									int scheduleSize=-1;
-									if(radioBtnBoard.isSelected())
+									if(radioBtnBoard.isSelected()) {
 										scheduleSize=tournament.getBoardSchedule().size();
+										if(homeScore==awayScore) {
+											new Alert(AlertType.ERROR,"You can't insert a draw in board.",ButtonType.OK).show();
+											dialog.close();
+											return;
+										}
+									}
 									if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
 										if(radioBtnGroup.isSelected()) {
 											if (facadeImpl.updateMatch(tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
