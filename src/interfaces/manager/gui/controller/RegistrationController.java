@@ -35,8 +35,9 @@ public class RegistrationController implements Initializable {
 	private PasswordField pwdFldPassword,pwdFldRepeatPassword;
 	
 	public void registration(ActionEvent event) throws IOException {
-		FacadeImpl facadeImpl= FacadeImpl.getInstance();
+		FacadeImpl facadeImpl = null;
 		try {
+			facadeImpl = FacadeImpl.getInstance();
 			if(this.pwdMatching()&&this.isNotBlankControl()) {
 				if(facadeImpl.checkUnique(this.txtFldUsername.getText())) {
 					facadeImpl.storeManager(this.txtFldUsername.getText(), this.txtFldName.getText(), this.txtFldSurname.getText(),this.pwdFldPassword.getText());				
@@ -70,8 +71,7 @@ public class RegistrationController implements Initializable {
 		return !this.txtFldName.getText().isBlank() && !this.txtFldSurname.getText().isBlank() && !this.txtFldUsername.getText().isBlank()&& !this.pwdFldPassword.getText().isBlank()&& !this.pwdFldRepeatPassword.getText().isBlank();
 	}
 	
-	public void signIn(MouseEvent event)
-	{	        
+	public void signIn(MouseEvent event){	        
 		Scene scene=GraphicHandler.getScene(Constants.PATH_PREFIX+"/resources/Login.fxml",Constants.STYLE_LOGREG_PATH);
 		Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		GraphicHandler.loadStage(scene, primaryStage);
