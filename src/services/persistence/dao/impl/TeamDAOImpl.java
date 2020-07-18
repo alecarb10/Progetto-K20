@@ -123,7 +123,13 @@ public class TeamDAOImpl implements ITeamDAO {
 		DBConnection.closeConnection(conn);
 		return false;
 	}
-
+	
+	/**
+	 * Updates a board id of a team
+	 * @param t tournament
+	 * @param team
+	 * @return a boolean that indicates success/insuccess
+	 */
 	@Override
 	public boolean updateTeam(Tournament t , Team team) throws SQLException {
 		conn = DBConnection.startConnection(conn);
