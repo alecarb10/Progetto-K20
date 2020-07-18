@@ -19,7 +19,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -53,11 +56,9 @@ public class HomeController implements Initializable {
 			controller.setUsername(username);
 			controller.populateCmbBoxTournament(this.getTournamentsList(username));	
 			controller.setTournamentsList(tournamentsList);
-			this.borderPaneHome.setCenter(root);
-			
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+			this.borderPaneHome.setCenter(root);		
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -65,9 +66,8 @@ public class HomeController implements Initializable {
 		try {
 			GraphicControlsHandler.resetComboBox(cmbBoxProfile, username);
 			this.borderPaneHome.setCenter(GraphicHandler.getParent(Constants.PATH_PREFIX+"/resources/AddStadium.fxml"));
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -81,9 +81,8 @@ public class HomeController implements Initializable {
 			controller.populateCmbBoxTournament(this.getTournamentsList(username));	
 			controller.setTournamentsList(tournamentsList);
 			this.borderPaneHome.setCenter(root);
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -95,19 +94,17 @@ public class HomeController implements Initializable {
 			CreateTournamentController controller= loader.getController();
 			controller.setUsername(username);
 			this.borderPaneHome.setCenter(root);
-		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
-	public void setUsername(String username) {
-		
+	public void setUsername(String username) {	
 		try {
 			this.username=username;
 			this.cmbBoxProfile.setPromptText(username);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -118,8 +115,8 @@ public class HomeController implements Initializable {
 			for(Tournament t: tournamentsList) {
 				tournaments.add(t.getName());
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}		
 		return tournaments;
 	}
@@ -132,8 +129,8 @@ public class HomeController implements Initializable {
 				ProfileController controller= loader.getController();
 				controller.setUsername(username);
 				this.borderPaneHome.setCenter(root);
-			} catch (Exception ex) {
-				ex.printStackTrace();
+			} catch (Exception e) {
+				new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 			}
 		}
 		else if(this.cmbBoxProfile.getSelectionModel().getSelectedIndex()==1) {
