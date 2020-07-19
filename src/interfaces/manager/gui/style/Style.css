@@ -60,3 +60,19 @@
     -fx-background-color: #3F2863;
     -fx-text-fill: white;
 }
+
+.table-view .column-header {
+    -fx-background-color: #3F2863;
+}
+
+.table-view .column-header-background .label{
+    -fx-text-fill: white;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #3F2863;
+    -fx-text-fill: white;
+}
+
+
+
