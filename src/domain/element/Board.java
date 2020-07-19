@@ -25,8 +25,12 @@ public class Board extends TournamentElement {
 	@Override
 	public boolean insertScore(int dayNumber, Match match, int homeScore, int awayScore) {
 		if (super.insertScore(dayNumber, match, homeScore, awayScore)) {
+			if (schedule.get(schedule.size() - 1).getMatchesList().size() == 1)
+				return true;
+			
 			if (isCompleted())
 				return addNextDay();
+			
 			return true;
 		}
 		return false;
