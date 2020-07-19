@@ -14,7 +14,6 @@ import domain.team.PlayerPositionType;
 import domain.team.Stadium;
 import domain.team.Team;
 import domain.tournament.Tournament;
-import domain.tournament.TournamentType;
 import services.persistence.dao.ITeamDAO;
 import services.persistence.util.DBConnection;
 
