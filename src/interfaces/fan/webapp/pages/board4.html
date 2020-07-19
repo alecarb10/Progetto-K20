@@ -26,45 +26,67 @@
 			</a>
 		</nav>
 		
-		<section id="bracket">
-            <div class="container">
-                <div class="split split-one">
-                    <div class="round round-three current">
-                        <div class="round-details"> Semi-Finals <br/> <span class="date"> @(tournament.getBoardSchedule().get(0).getDate().toString()) </span> </div>  
-                        @for (domain.match.Match m: tournament.getBoardSchedule().get(0).getMatchesList())  {     
-                        <ul class="matchup">
-                            <li class="team team-top"> @(m.getHomeTeam().getName()) <span class="score"> @(m.getHomeScore()) </span> </li>
-                            <li class="team team-bottom"> @(m.getAwayTeam().getName()) <span class="score"> @(m.getAwayScore()) </span> </li>
-                        </ul>         
-                        }                               
-                    </div>         
-                </div> 
-
-                <div class="champion">
-                    <div class="final current">
-                        <i class="fa fa-trophy"> </i>  
-	                    @if (tournament.getBoardSchedule().size() > 1) {
-	                    	<div class="round-details"> Final <br/> <span class="date"> @(tournament.getBoardSchedule().get(1).getDate().toString()) </span> </div>
-	                        @for (domain.match.Match m: tournament.getBoardSchedule().get(1).getMatchesList())  {  
-		                        <ul class ="matchup championship">          
-		                            <li class="team team-top"> @(m.getHomeTeam().getName()) <span class="score"> @(m.getHomeScore()) </span> </li>
-		                            <li class="team team-bottom"> @(m.getAwayTeam().getName()) <span class="score"> @(m.getAwayScore()) </span> </li>
-		                        </ul>
-	                        }
-	                    }
-                        else {
-                        	<div class="round-details"> Final <br/> <span class="date"> &nbsp; </span> </div>
-                        	@for (int i = 0; i < 1; i++) {
-                        		<ul class="matchup">
-	                                <li class="team team-top"> &nbsp; <span class="score"> &nbsp; </span> </li>
-	                                <li class="team team-bottom"> &nbsp; <span class="score"> &nbsp; </span> </li>
-	                            </ul> 
-                        	}
-                        }    
-                    </div>
-                </div>
-            </div>
-    	</section>             
+		@if (tournament.getBoardSchedule().size() == 1 && tournament.getBoardSchedule().get(0).getMatchesList().size() == 1) {
+			<section id="bracket">
+	            <div class="container">
+					<div class="champion">
+		                    <div class="final current">
+		                        <i class="fa fa-trophy"> </i> 
+			                    <div class="round-details"> Final <br/> <span class="date"> @(tournament.getBoardSchedule().get(0).getDate().toString()) </span> </div>
+			                        @for (domain.match.Match m: tournament.getBoardSchedule().get(0).getMatchesList())  {  
+				                        <ul class ="matchup championship">          
+				                            <li class="team team-top"> @(m.getHomeTeam().getName()) <span class="score"> @(m.getHomeScore()) </span> </li>
+				                            <li class="team team-bottom"> @(m.getAwayTeam().getName()) <span class="score"> @(m.getAwayScore()) </span> </li>
+				                        </ul>
+			                        }
+			                    </div>
+			                </div>
+			    	</div>	
+				</div>
+			</section>
+		}
+		
+		else {
+			<section id="bracket">
+	            <div class="container">
+	                <div class="split split-one">
+	                    <div class="round round-three current">
+	                        <div class="round-details"> Semi-Finals <br/> <span class="date"> @(tournament.getBoardSchedule().get(0).getDate().toString()) </span> </div>  
+	                        @for (domain.match.Match m: tournament.getBoardSchedule().get(0).getMatchesList())  {     
+	                        <ul class="matchup">
+	                            <li class="team team-top"> @(m.getHomeTeam().getName()) <span class="score"> @(m.getHomeScore()) </span> </li>
+	                            <li class="team team-bottom"> @(m.getAwayTeam().getName()) <span class="score"> @(m.getAwayScore()) </span> </li>
+	                        </ul>         
+	                        }                               
+	                    </div>         
+	                </div> 
+	
+	                <div class="champion">
+	                    <div class="final current">
+	                        <i class="fa fa-trophy"> </i>  
+		                    @if (tournament.getBoardSchedule().size() > 1) {
+		                    	<div class="round-details"> Final <br/> <span class="date"> @(tournament.getBoardSchedule().get(1).getDate().toString()) </span> </div>
+		                        @for (domain.match.Match m: tournament.getBoardSchedule().get(1).getMatchesList())  {  
+			                        <ul class ="matchup championship">          
+			                            <li class="team team-top"> @(m.getHomeTeam().getName()) <span class="score"> @(m.getHomeScore()) </span> </li>
+			                            <li class="team team-bottom"> @(m.getAwayTeam().getName()) <span class="score"> @(m.getAwayScore()) </span> </li>
+			                        </ul>
+		                        }
+		                    }
+	                        else {
+	                        	<div class="round-details"> Final <br/> <span class="date"> &nbsp; </span> </div>
+	                        	@for (int i = 0; i < 1; i++) {
+	                        		<ul class="matchup">
+		                                <li class="team team-top"> &nbsp; <span class="score"> &nbsp; </span> </li>
+		                                <li class="team team-bottom"> &nbsp; <span class="score"> &nbsp; </span> </li>
+		                            </ul> 
+	                        	}
+	                        }    
+	                    </div>
+	                </div>
+	            </div>
+	    	</section>
+		}             
         
         <nav class="navbar fixed-bottom navbar-dark bg-primary">
 			<a class="navbar-brand" href="/" style="margin: auto"> 

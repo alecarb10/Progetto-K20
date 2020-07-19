@@ -58,7 +58,7 @@ public class MainServlet extends WebServlet {
 			
 		if (req.getPathInfo().equals("/board") || req.getPathInfo().equals("/board.html")) {
 			if (tournament.getBoard() != null) {
-				if (tournament.getBoard().getTeamsList().size() == FIRST_TEAMS_SIZE)
+				if (tournament.getBoard().getTeamsList().size() <= FIRST_TEAMS_SIZE)
 					resp.getWriter().write(Rythm.render("board4.html", tournament));
 				
 				else if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
