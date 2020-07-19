@@ -134,6 +134,9 @@ public class CreateTournamentController implements Initializable {
 		catch (NumberFormatException nfe) {
 			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
 		}
+		catch (NullPointerException npe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
+		}
 		catch (Exception e) {
 			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
