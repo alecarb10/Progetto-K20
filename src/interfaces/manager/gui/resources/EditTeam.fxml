@@ -11,13 +11,13 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.EditTeamController">
    <children>
-      <ComboBox fx:id="cmbBoxTournament" layoutX="30.0" layoutY="11.0" prefWidth="150.0" promptText="Select Tournament" />
-      <ComboBox fx:id="cmbBoxTeam" layoutX="30.0" layoutY="50.0" prefWidth="150.0" promptText="Select Team" />
+      <ComboBox fx:id="cmbBoxTournament" layoutX="30.0" layoutY="11.0" onAction="#setCmbBoxTeam" prefWidth="150.0" promptText="Select Tournament" />
+      <ComboBox fx:id="cmbBoxTeam" layoutX="30.0" layoutY="50.0" onAction="#setTeamInformations" prefWidth="150.0" promptText="Select Team" />
       <TitledPane animated="false" collapsible="false" layoutX="348.0" layoutY="115.0" prefHeight="172.0" prefWidth="215.0" text="Stadium">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="230.0">
                <children>         
-                  <ComboBox fx:id="cmbBoxStadium" layoutX="16.0" layoutY="10.0" prefHeight="25.0" prefWidth="117.0" promptText="Select" />
+                  <ComboBox fx:id="cmbBoxStadium" layoutX="16.0" layoutY="10.0" onAction="#setStadiumInformations" prefHeight="25.0" prefWidth="117.0" promptText="Select" />
                   <Button layoutX="143.0" layoutY="10.0" mnemonicParsing="false" onAction="#setStadium" prefHeight="25.0" prefWidth="60.0" text="Set" />
                   <TextField fx:id="txtFldStadiumName" layoutX="16.0" layoutY="45.0" promptText="Name" />
                   <TextField fx:id="txtFldStadiumCity" layoutX="16.0" layoutY="77.0" promptText="City" />
