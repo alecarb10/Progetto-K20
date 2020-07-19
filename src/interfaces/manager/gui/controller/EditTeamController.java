@@ -17,13 +17,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import services.persistence.dao.impl.FacadeImpl;
 
@@ -65,60 +68,57 @@ public class EditTeamController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		facadeImpl= FacadeImpl.getInstance();
 		tournaments= FXCollections.observableArrayList();
 		players=FXCollections.observableArrayList();
-		txtFldStadiumName.setEditable(false);
-		txtFldStadiumCity.setEditable(false);
-		txtFldStadiumCapacity.setEditable(false);
-		numbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
+		setDisableStadiumTxtFields();
 		cmbBoxPlayerPosition.setItems(FXCollections.observableArrayList("GK","CB","MF","CF"));	
-		spinnerPlayerNumber.setValueFactory(numbers);
-		spinnerPlayerNumber.setEditable(true);
-		facadeImpl= FacadeImpl.getInstance();
-		this.cmbBoxTournament.setOnAction((ActionEvent)->{
-			teams=getTeamsList();
-			if(teams !=null)
-				this.cmbBoxTeam.setItems(teams);
-		});
-		this.cmbBoxTeam.setOnAction((ActionEvent)->{
-			team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
-			Stadium stadium=null;
-			if(team!=null) {
-				stadiums=getStadiumsList();
-				cmbBoxStadium.setItems(stadiums);
-				stadium=team.getStadium();	
-				if(stadium!=null) {			
-					cmbBoxStadium.setValue(team.getStadium().getName());
-					txtFldStadiumName.setText(stadium.getName());
-					txtFldStadiumCity.setText(stadium.getCity());
-					txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
-				}
-				else if(stadium==null) {
-					GraphicControlsHandler.resetComboBox(cmbBoxStadium, "Select");
-					GraphicControlsHandler.resetTextField(txtFldStadiumName,"Name");
-					GraphicControlsHandler.resetTextField(txtFldStadiumCity,"City");
-					GraphicControlsHandler.resetTextField(txtFldStadiumCapacity,"Capacity");
-				}
-				players.clear();
-				playersList=team.getPlayers();
-				for(Player p:playersList) {
-					players.add(p);
-				}				
-				tblClmnPlayerName.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
-				tblClmnPlayerSurname.setCellValueFactory(new PropertyValueFactory<Player, String>("Surname"));
-				tblClmnPlayerNumber.setCellValueFactory(new PropertyValueFactory<Player, String>("Number"));
-				tblClmnPlayerPosition.setCellValueFactory(new PropertyValueFactory<Player, String>("Position"));
-				tblViewPlayer.setItems(players);
-			}
-		});
-		this.cmbBoxStadium.setOnAction((ActionEvent)->{
-			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
-			if(stadium!=null) {
-				txtFldStadiumName.setText(stadium.getName());
-				txtFldStadiumCity.setText(stadium.getCity());
-				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
-			}
-		});
+		setSpinner();
+			
+//		this.cmbBoxTournament.setOnAction((ActionEvent)->{
+//			teams=getTeamsList();
+//			if(teams !=null)
+//				this.cmbBoxTeam.setItems(teams);
+//		});
+//		this.cmbBoxTeam.setOnAction((ActionEvent)->{
+//			team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
+//			Stadium stadium=null;
+//			if(team!=null) {
+//				stadiums=getStadiumsList();
+//				cmbBoxStadium.setItems(stadiums);
+//				stadium=team.getStadium();	
+//				if(stadium!=null) {			
+//					cmbBoxStadium.setValue(team.getStadium().getName());
+//					txtFldStadiumName.setText(stadium.getName());
+//					txtFldStadiumCity.setText(stadium.getCity());
+//					txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+//				}
+//				else if(stadium==null) {
+//					GraphicControlsHandler.resetComboBox(cmbBoxStadium, "Select");
+//					GraphicControlsHandler.resetTextField(txtFldStadiumName,"Name");
+//					GraphicControlsHandler.resetTextField(txtFldStadiumCity,"City");
+//					GraphicControlsHandler.resetTextField(txtFldStadiumCapacity,"Capacity");
+//				}
+//				players.clear();
+//				playersList=team.getPlayers();
+//				for(Player p:playersList) {
+//					players.add(p);
+//				}				
+//				tblClmnPlayerName.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
+//				tblClmnPlayerSurname.setCellValueFactory(new PropertyValueFactory<Player, String>("Surname"));
+//				tblClmnPlayerNumber.setCellValueFactory(new PropertyValueFactory<Player, String>("Number"));
+//				tblClmnPlayerPosition.setCellValueFactory(new PropertyValueFactory<Player, String>("Position"));
+//				tblViewPlayer.setItems(players);
+//			}
+//		});
+//		this.cmbBoxStadium.setOnAction((ActionEvent)->{
+//			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
+//			if(stadium!=null) {
+//				txtFldStadiumName.setText(stadium.getName());
+//				txtFldStadiumCity.setText(stadium.getCity());
+//				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+//			}
+//		});
 //		tblViewPlayer.setOnMouseClicked((MouseEvent)->{
 //			Player player=tblViewPlayer.getSelectionModel().getSelectedItem();
 //			txtFldPlayerName.setText(player.getName());
@@ -193,9 +193,13 @@ public class EditTeamController implements Initializable {
 			Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
 			team.setStadium(stadium);
 			facadeImpl.updateTeam(team);
+			new Alert(AlertType.INFORMATION,"Stadium successfully setted or updated.",ButtonType.OK).show();		
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		catch(NullPointerException npe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
+		}
+		catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 		
 	}
@@ -203,13 +207,19 @@ public class EditTeamController implements Initializable {
 	public void addPlayer(ActionEvent event) {
 		try {
 			Player player= new Player(txtFldPlayerName.getText(), txtFldPlayerSurname.getText(),spinnerPlayerNumber.getValue(),getPlayerPosition());
-			team.insertPlayer(player);
-			players.add(player);
+			team.insertPlayer(player);		
 			facadeImpl.storePlayer(player, team);
-			restoreComponents();
+			players.add(player);
+			restorePlayerComponents();
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		catch(NullPointerException npe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
+		}
+		catch(NumberFormatException nfe) {
+			new Alert(AlertType.ERROR,"Invalid input.",ButtonType.OK).show();
+		}
+		catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 		
 	}
@@ -217,13 +227,19 @@ public class EditTeamController implements Initializable {
 	public void deletePlayer(ActionEvent event) {
 		try {
 			Player player= tblViewPlayer.getSelectionModel().getSelectedItem();
-			team.removePlayer(player);
-			players.remove(player);
+			team.removePlayer(player);			
 			facadeImpl.removePlayer(player);
-			restoreComponents();
+			players.remove(player);
+			restorePlayerComponents();
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		catch(NullPointerException npe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
+		}
+		catch(NumberFormatException nfe) {
+			new Alert(AlertType.ERROR,"Invalid input.",ButtonType.OK).show();
+		}
+		catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 		
 	}
@@ -242,11 +258,17 @@ public class EditTeamController implements Initializable {
 				players.add(p);
 			}
 			tblViewPlayer.setItems(players);
-			restoreComponents();
+			restorePlayerComponents();
 			
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		catch(NullPointerException npe) {
+			new Alert(AlertType.ERROR,"Please select an option.",ButtonType.OK).show();
+		}
+		catch(NumberFormatException nfe) {
+			new Alert(AlertType.ERROR,"Invalid input.",ButtonType.OK).show();
+		}
+		catch (Exception e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 	}
 	
@@ -272,7 +294,7 @@ public class EditTeamController implements Initializable {
 		return position;
 	}
 	
-	private void restoreComponents() {
+	private void restorePlayerComponents() {
 //		GraphicControlsHandler.resetComboBox(this.cmbBoxStadium, "Select");
 //		GraphicControlsHandler.resetObservableList(this.teams);
 //		GraphicControlsHandler.resetTextField(this.txtFldStadiumName, "Name");
@@ -282,6 +304,13 @@ public class EditTeamController implements Initializable {
 		GraphicControlsHandler.resetTextField(this.txtFldPlayerSurname, "Surname");
 		GraphicControlsHandler.resetSpinner(this.spinnerPlayerNumber);
 		GraphicControlsHandler.resetComboBox(cmbBoxPlayerPosition, "Position");
+	}
+	
+	private void restoreStadiumComponents() {
+		GraphicControlsHandler.resetComboBox(cmbBoxStadium, "Select");
+		GraphicControlsHandler.resetTextField(txtFldStadiumName,"Name");
+		GraphicControlsHandler.resetTextField(txtFldStadiumCity,"City");
+		GraphicControlsHandler.resetTextField(txtFldStadiumCapacity,"Capacity");
 	}
 		
 	private ObservableList<String> getStadiumsList(){
@@ -305,4 +334,65 @@ public class EditTeamController implements Initializable {
 		return null;
 	}
 	
+	public void setCmbBoxTeam(ActionEvent event) {
+		players.clear();
+		GraphicControlsHandler.resetComboBox(cmbBoxTeam, "Select Team");
+		restoreStadiumComponents();
+		teams=getTeamsList();
+		if(teams !=null)
+			this.cmbBoxTeam.setItems(teams);
+	}
+	
+	private void setDisableStadiumTxtFields() {
+		txtFldStadiumName.setDisable(true);;
+		txtFldStadiumCity.setDisable(true);
+		txtFldStadiumCapacity.setDisable(true);
+	}
+	
+	private void setSpinner() {
+		numbers= new SpinnerValueFactory.IntegerSpinnerValueFactory(0,99);
+		spinnerPlayerNumber.setValueFactory(numbers);
+		spinnerPlayerNumber.setEditable(true);	
+	}
+	
+	public void setTeamInformations(ActionEvent event) {
+		team= getTeam(cmbBoxTeam.getSelectionModel().getSelectedItem());
+		Stadium stadium=null;
+		if(team!=null) {
+			stadiums=getStadiumsList();
+			cmbBoxStadium.setItems(stadiums);
+			stadium=team.getStadium();	
+			if(stadium!=null) {			
+				cmbBoxStadium.setValue(team.getStadium().getName());
+				txtFldStadiumName.setText(stadium.getName());
+				txtFldStadiumCity.setText(stadium.getCity());
+				txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+			}
+			else if(stadium==null) 
+				restoreStadiumComponents();
+			populateTblViewPlayer();		
+		}
+	}
+	
+	private void populateTblViewPlayer() {
+		players.clear();
+		playersList=team.getPlayers();
+		for(Player p:playersList) {
+			players.add(p);
+		}				
+		tblClmnPlayerName.setCellValueFactory(new PropertyValueFactory<Player, String>("Name"));
+		tblClmnPlayerSurname.setCellValueFactory(new PropertyValueFactory<Player, String>("Surname"));
+		tblClmnPlayerNumber.setCellValueFactory(new PropertyValueFactory<Player, String>("Number"));
+		tblClmnPlayerPosition.setCellValueFactory(new PropertyValueFactory<Player, String>("Position"));
+		tblViewPlayer.setItems(players);
+	}
+	
+	public void setStadiumInformations(ActionEvent event) {
+		Stadium stadium=getStadium(cmbBoxStadium.getSelectionModel().getSelectedItem());
+		if(stadium!=null) {
+			txtFldStadiumName.setText(stadium.getName());
+			txtFldStadiumCity.setText(stadium.getCity());
+			txtFldStadiumCapacity.setText(Integer.toString(stadium.getCapacity()));
+		}
+	}
 }
