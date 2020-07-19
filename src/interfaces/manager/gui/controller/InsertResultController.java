@@ -139,7 +139,6 @@ public class InsertResultController implements Initializable {
 			Day selectedDay=null;
 			if(cmbBoxDay.getValue()!=null) {
 				indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;	
-				System.out.println(indexDay);
 				if(radioBtnGroup.isSelected()) 
 					selectedDay=tournament.getGroupSchedule().get(indexDay);
 				else if(radioBtnBoard.isSelected())
@@ -181,9 +180,6 @@ public class InsertResultController implements Initializable {
 												if(tournament.getGroup().isCompleted()&&!radioBtnGroup.isDisable()) {
 													tournament.addTeams(facadeImpl.getTeamsByTournament(tournament));
 													tournament.initBoard(tournament.getTeamsList());												
-													for(Day d:tournament.getBoard().getSchedule()) {
-														System.out.println(d);
-													}
 													facadeImpl.storeBoard(tournament);
 													tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
 													for(Team team:tournament.getTeamsList())
