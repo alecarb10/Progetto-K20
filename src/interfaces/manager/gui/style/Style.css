@@ -61,6 +61,10 @@
     -fx-text-fill: white;
 }
 
+.table-view {
+	-fx-border-color: #3F2863;
+}
+
 .table-view .column-header {
     -fx-background-color: #3F2863;
 }
