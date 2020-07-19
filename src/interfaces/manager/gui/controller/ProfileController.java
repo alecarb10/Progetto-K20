@@ -84,8 +84,8 @@ public class ProfileController implements Initializable {
 			managerInfoList=facadeImpl.getManagerByUsername(username);
 			txtFldName.setText(managerInfoList.get(0));
 			txtFldSurname.setText(managerInfoList.get(1));
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
