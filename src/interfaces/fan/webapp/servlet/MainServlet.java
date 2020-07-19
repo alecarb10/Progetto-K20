@@ -1,6 +1,7 @@
 package interfaces.fan.webapp.servlet;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -43,31 +44,55 @@ public class MainServlet extends WebServlet {
 				getTournaments();
 				resp.getWriter().write(Rythm.render("home.html", tournaments));
 			} 
-			catch (SQLException | NullPointerException e) {
+			catch (Exception e) {
 				resp.getWriter().write(Rythm.render("error.html"));
 				e.printStackTrace();
 			}
+			return;
 		}
 		
-		if (req.getPathInfo().equals("/teams") || req.getPathInfo().equals("/teams.html"))
-			resp.getWriter().write(Rythm.render("teams.html", tournament));
+		if (req.getPathInfo().equals("/teams") || req.getPathInfo().equals("/teams.html")) {
+			if (tournament != null)
+				resp.getWriter().write(Rythm.render("teams.html", tournament));
+			else
+				resp.getWriter().write(Rythm.render("error.html"));
+			
+			return;
+		}
 		
-		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html"))
-			if (tournament.getGroup() != null)
-				resp.getWriter().write(Rythm.render("group.html", tournament, null));
+		if (req.getPathInfo().equals("/group") || req.getPathInfo().equals("/group.html")) {
+			try {
+				if (tournament.getGroup() != null)
+					resp.getWriter().write(Rythm.render("group.html", tournament, null));
+			}
+			catch(NullPointerException e) {
+				resp.getWriter().write(Rythm.render("error.html"));
+			}
+			
+			return;
+		}
 			
 		if (req.getPathInfo().equals("/board") || req.getPathInfo().equals("/board.html")) {
-			if (tournament.getBoard() != null) {
-				if (tournament.getBoard().getTeamsList().size() <= FIRST_TEAMS_SIZE)
-					resp.getWriter().write(Rythm.render("board4.html", tournament));
-				
-				else if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
-					resp.getWriter().write(Rythm.render("board8.html", tournament));
-				
-				else if (tournament.getBoard().getTeamsList().size() == THIRD_TEAMS_SIZE)
-					resp.getWriter().write(Rythm.render("board16.html", tournament));
+			try {
+				if (tournament.getBoard() != null) {
+					if (tournament.getBoard().getTeamsList().size() <= FIRST_TEAMS_SIZE)
+						resp.getWriter().write(Rythm.render("board4.html", tournament));
+					
+					else if (tournament.getBoard().getTeamsList().size() == SECOND_TEAMS_SIZE)
+						resp.getWriter().write(Rythm.render("board8.html", tournament));
+					
+					else if (tournament.getBoard().getTeamsList().size() == THIRD_TEAMS_SIZE)
+						resp.getWriter().write(Rythm.render("board16.html", tournament));
+				}
 			}
+			catch(NullPointerException e) {
+				resp.getWriter().write(Rythm.render("error.html"));
+			}
+			
+			return;
 		}
+		
+		resp.getWriter().write(Rythm.render("404.html"));
 	}
 	
 	/**
@@ -83,21 +108,39 @@ public class MainServlet extends WebServlet {
 				initTournament();
 				resp.getWriter().write(Rythm.render("tournament-detail.html", tournament));
 			} 
-			catch (SQLException | NullPointerException e) {
+			catch (Exception e) {
 				resp.getWriter().write(Rythm.render("error.html"));
 				e.printStackTrace();
 			}
+			
+			return;
 		} 
 		
-		if (req.getPathInfo().equals("/viewteams")) {
+		else if (req.getPathInfo().equals("/viewteams")) {
 			findTeamById(Integer.parseInt(req.getParameter("id")));
-			resp.getWriter().write(Rythm.render("team-detail.html", team));	
+			
+			if (team != null) 
+				resp.getWriter().write(Rythm.render("team-detail.html", team));	
+			
+			else
+				resp.getWriter().write(Rythm.render("error.html"));
+			
+			return;
 		} 
 		
-		if (req.getPathInfo().equals("/group")) {
-			int day = Integer.parseInt(req.getParameter("daySelect"));
-			resp.getWriter().write(Rythm.render("group.html", tournament, tournament.getGroupSchedule().get(day - 1)));
+		else if (req.getPathInfo().equals("/group")) {
+			try {
+				int day = Integer.parseInt(req.getParameter("daySelect"));
+				resp.getWriter().write(Rythm.render("group.html", tournament, tournament.getGroupSchedule().get(day - 1)));
+			}
+			catch(NullPointerException e) {
+				resp.getWriter().write(Rythm.render("error.html"));
+			}
+			
+			return;
 		}
+		
+		resp.getWriter().write(Rythm.render("404.html"));
 	}
 	
 	/**
