@@ -1,4 +1,4 @@
-package interfaces.fan.gui.view.knockoutphase;
+package interfaces.fan.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,8 +9,8 @@ import java.util.ResourceBundle;
 
 import domain.element.Day;
 import domain.tournament.Tournament;
-import interfaces.fan.gui.view.util.PopulateBrackets;
-import interfaces.fan.gui.view.util.StageLoader;
+import interfaces.fan.gui.util.PopulateBrackets;
+import interfaces.fan.gui.util.StageLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -144,7 +144,7 @@ public class KnockoutPhase16Controller implements Initializable {
 	
 	public void backButtonClicked(ActionEvent event) throws IOException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
+		SLB.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
 	}
 
 

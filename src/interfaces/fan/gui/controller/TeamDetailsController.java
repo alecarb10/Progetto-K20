@@ -1,4 +1,4 @@
-package interfaces.fan.gui.view.element;
+package interfaces.fan.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,8 +10,7 @@ import domain.team.Player;
 import domain.team.PlayerPositionType;
 import domain.team.Team;
 import domain.tournament.Tournament;
-import interfaces.fan.gui.view.league.LeagueRankingController;
-import interfaces.fan.gui.view.util.StageLoader;
+import interfaces.fan.gui.util.StageLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
-public class teamDetailsController implements Initializable {
+public class TeamDetailsController implements Initializable {
 	@FXML
 	TableView<Player> table;
 	@FXML
@@ -77,7 +76,7 @@ public class teamDetailsController implements Initializable {
 
 	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("interfaces/fan/gui/view/league/LeagueRanking.fxml", "Ranking", event);
+		SLB.show("interfaces/fan/gui/resources/LeagueRanking.fxml", "Ranking", event);
 		LeagueRankingController lrc = SLB.getLoader().getController();
 		lrc.passingData(tournamentB);
 

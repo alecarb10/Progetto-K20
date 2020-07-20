@@ -1,4 +1,4 @@
-package interfaces.fan.gui.view.element;
+package interfaces.fan.gui.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
-public class dayViewController implements Initializable {
+public class DayViewController implements Initializable {
 	@FXML
 	private Text text;
 	@FXML

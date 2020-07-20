@@ -1,4 +1,4 @@
-package interfaces.fan.gui.view.league;
+package interfaces.fan.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,12 +9,7 @@ import domain.element.Day;
 import domain.team.Team;
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
-import interfaces.fan.gui.view.element.dayViewController;
-import interfaces.fan.gui.view.element.teamDetailsController;
-import interfaces.fan.gui.view.knockoutphase.KnockoutPhase16Controller;
-import interfaces.fan.gui.view.knockoutphase.KnockoutPhase4Controller;
-import interfaces.fan.gui.view.knockoutphase.KnockoutPhase8Controller;
-import interfaces.fan.gui.view.util.StageLoader;
+import interfaces.fan.gui.util.StageLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -59,7 +54,7 @@ public class LeagueRankingController implements Initializable {
 
 	public void menuButtonClicked(ActionEvent event) throws IOException {
 		StageLoader SLM = new StageLoader();
-		SLM.show("interfaces/fan/gui/view/FanMenu.fxml", "Fan menu", event);
+		SLM.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
 
 	}
 
@@ -127,8 +122,8 @@ public class LeagueRankingController implements Initializable {
 		}
 
 		StageLoader SLTS = new StageLoader();
-		SLTS.show("interfaces/fan/gui/view/element/teamDetails.fxml", "team details", event);
-		teamDetailsController tdc = SLTS.getLoader().getController();
+		SLTS.show("interfaces/fan/gui/resources/TeamDetails.fxml", "team details", event);
+		TeamDetailsController tdc = SLTS.getLoader().getController();
 		tdc.passingData(tournament, teamSelectedTS);
 
 	}
@@ -143,9 +138,9 @@ public class LeagueRankingController implements Initializable {
 		}
 
 		StageLoader SLD = new StageLoader();
-		SLD.showDaySelected("interfaces/fan/gui/view/element/dayView.fxml",
+		SLD.showDaySelected("interfaces/fan/gui/resources/DayView.fxml",
 				("DAY " + Integer.toString(dayS.getNumber())), event);
-		dayViewController dvc = SLD.getLoader().getController();
+		DayViewController dvc = SLD.getLoader().getController();
 		dvc.passingDataToDay(tournament, dayS);
 
 	}
@@ -156,21 +151,21 @@ public class LeagueRankingController implements Initializable {
 		
 		case 4:
 			StageLoader SLM4 = new StageLoader();
-			SLM4.show("interfaces/fan/gui/view/knockoutphase/knockoutphase4.fxml", "Board", event);
+			SLM4.show("interfaces/fan/gui/resources/KnockoutPhase4.fxml", "Board", event);
 			KnockoutPhase4Controller kp4c = SLM4.getLoader().getController();
 			kp4c.passingDataToKnock4(tournament);
 			break;
 			
 		case 8:
 			StageLoader SLM8 = new StageLoader();
-			SLM8.show("interfaces/fan/gui/view/knockoutphase/knockoutphase8.fxml", "Board", event);
+			SLM8.show("interfaces/fan/gui/resources/KnockoutPhase8.fxml", "Board", event);
 			KnockoutPhase8Controller kp8c = SLM8.getLoader().getController();
 			kp8c.passingDataToKnock8(tournament);
 			break;
 			
 		case 16:
 			StageLoader SLM16 = new StageLoader();
-			SLM16.show("interfaces/fan/gui/view/knockoutphase/knockoutphase16.fxml", "Board", event);
+			SLM16.show("interfaces/fan/gui/resources/KnockoutPhase16.fxml", "Board", event);
 			KnockoutPhase16Controller kp16c = SLM16.getLoader().getController();
 			kp16c.passingDataToKnock16(tournament);
 			break;

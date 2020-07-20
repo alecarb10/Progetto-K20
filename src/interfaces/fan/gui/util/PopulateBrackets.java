@@ -1,4 +1,4 @@
-package interfaces.fan.gui.view.util;
+package interfaces.fan.gui.util;
 
 import java.util.List;
 import domain.element.Day;
