@@ -1,13 +1,10 @@
 package interfaces.fan.gui.util;
 
-import java.sql.SQLException;
+
 import java.util.List;
 import domain.element.Day;
 import domain.match.Match;
-import domain.tournament.Tournament;
-import domain.tournament.TournamentType;
 import javafx.scene.control.Label;
-import services.persistence.dao.impl.FacadeImpl;
 
 public class TournamentUtil {
 	public static void populateBrackets(List<Day> days, int nDay, int nM, List<Label> labels) {
