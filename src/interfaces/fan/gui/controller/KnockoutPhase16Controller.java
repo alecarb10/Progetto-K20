@@ -9,8 +9,9 @@ import java.util.ResourceBundle;
 
 import domain.element.Day;
 import domain.tournament.Tournament;
-import interfaces.fan.gui.util.PopulateBrackets;
+import domain.tournament.TournamentType;
 import interfaces.fan.gui.util.StageLoader;
+import interfaces.fan.gui.util.TournamentUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -92,9 +93,19 @@ public class KnockoutPhase16Controller implements Initializable {
 	List<Label> labelDay2 = new ArrayList<>();	
 	List<Label> labelDay3 = new ArrayList<>();
 	List<Label> labelDay4 = new ArrayList<>();
+	Tournament tournament;
 	public void passingDataToKnock16(Tournament k16) throws SQLException {
+		tournament = k16;
 		textBoard.setText(k16.getName());
-		days = facade.getBoardSchedule(k16);
+		if(k16.getTournamentType() == TournamentType.MIXED) {
+			k16.setGroupSchedule(facade.getGroupSchedule(k16));
+			if(k16.getGroup().isCompleted()) {
+				k16.setBoardSchedule(facade.getBoardSchedule(k16));
+			}
+		}
+		if(k16.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			k16.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(k16));
+		}
 
 		labelDay1.add(label1);
 		labelDay1.add(label2);
@@ -112,7 +123,7 @@ public class KnockoutPhase16Controller implements Initializable {
 		labelDay1.add(label14);
 		labelDay1.add(label15);
 		labelDay1.add(label16);
-		PopulateBrackets.populate(days, 0, 0, labelDay1);
+		TournamentUtil.populateBrackets(k16.getBoardSchedule(), 0, 0, labelDay1);
 
 		labelDay2.add(label17);
 		labelDay2.add(label18);
@@ -122,29 +133,29 @@ public class KnockoutPhase16Controller implements Initializable {
 		labelDay2.add(label22);
 		labelDay2.add(label23);
 		labelDay2.add(label24);
-		PopulateBrackets.populate(days, 1, 1, labelDay2);
+		TournamentUtil.populateBrackets(k16.getBoardSchedule(), 1, 1, labelDay2);
 
 		labelDay3.add(label25);
 		labelDay3.add(label26);
 		labelDay3.add(label27);
 		labelDay3.add(label28);
-		PopulateBrackets.populate(days, 2, 2, labelDay3);
+		TournamentUtil.populateBrackets(k16.getBoardSchedule(), 2, 2, labelDay3);
 
 		labelDay4.add(label29);
 		labelDay4.add(label30);
-		PopulateBrackets.populate(days, 3, 3, labelDay4);
+		TournamentUtil.populateBrackets(k16.getBoardSchedule(), 3, 3, labelDay4);
 		
-		if(days.size() > 3){
-			if(days.get(3).getMatchesList().get(0).isPlayed()) {
-			label31.setText((days.get(3).getMatchesList().get(0).getWinner().getName()));		
+		if(k16.getBoardSchedule().size() > 3){
+			if(k16.getBoardSchedule().get(3).getMatchesList().get(0).isPlayed()) {
+			label31.setText((k16.getBoardSchedule().get(3).getMatchesList().get(0).getWinner().getName()));		
 			}
 		}
 		
 	}
 	
-	public void backButtonClicked(ActionEvent event) throws IOException {
+	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
+		SLB.backToFanMenuOrLeague(event, tournament);
 	}
 
 

@@ -9,8 +9,9 @@ import java.util.ResourceBundle;
 
 import domain.element.Day;
 import domain.tournament.Tournament;
-import interfaces.fan.gui.util.PopulateBrackets;
+import domain.tournament.TournamentType;
 import interfaces.fan.gui.util.StageLoader;
+import interfaces.fan.gui.util.TournamentUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -63,10 +64,21 @@ public class KnockoutPhase8Controller implements Initializable {
 	
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
+	Tournament tournament;
 	
 	public void passingDataToKnock8(Tournament k8) throws SQLException {
+		tournament = k8;
+	
 		textBoard.setText(k8.getName());
-		days = facade.getBoardSchedule(k8);
+		if(k8.getTournamentType() == TournamentType.MIXED) {
+			k8.setGroupSchedule(facade.getGroupSchedule(k8));
+			if(k8.getGroup().isCompleted()) {
+				k8.setBoardSchedule(facade.getBoardSchedule(k8));
+			}
+		}
+		if(k8.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			k8.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(k8));
+		}
 		
 		labelDay1.add(label1);
 		labelDay1.add(label2);
@@ -76,31 +88,31 @@ public class KnockoutPhase8Controller implements Initializable {
 		labelDay1.add(label6);
 		labelDay1.add(label7);
 		labelDay1.add(label8);
-		PopulateBrackets.populate(days, 0, 0, labelDay1);
+		TournamentUtil.populateBrackets(k8.getBoardSchedule(), 0, 0, labelDay1);
 		
 		labelDay2.add(label9);
 		labelDay2.add(label10);
 		labelDay2.add(label11);
 		labelDay2.add(label12);
-		PopulateBrackets.populate(days, 1, 1, labelDay2);
+		TournamentUtil.populateBrackets(k8.getBoardSchedule(), 1, 1, labelDay2);
 
 		labelDay3.add(label13);
 		labelDay3.add(label14);
-		PopulateBrackets.populate(days, 2, 2, labelDay3);
+		TournamentUtil.populateBrackets(k8.getBoardSchedule(), 2, 2, labelDay3);
 		
-		if(days.size() >2 ){
-			if(days.get(2).getMatchesList().get(0).isPlayed()) {
-			label15.setText((days.get(2).getMatchesList().get(0).getWinner().getName()));		
+		if(k8.getBoardSchedule().size() >2 ){
+			if(k8.getBoardSchedule().get(2).getMatchesList().get(0).isPlayed()) {
+			label15.setText((k8.getBoardSchedule().get(2).getMatchesList().get(0).getWinner().getName()));		
 			}
 		}
 
 	}
 	
-	public void backButtonClicked(ActionEvent event) throws IOException {
+	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
+		SLB.backToFanMenuOrLeague(event, tournament);
+			
 	}
-
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

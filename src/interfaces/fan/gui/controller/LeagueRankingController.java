@@ -30,9 +30,9 @@ public class LeagueRankingController implements Initializable {
 	@FXML
 	private Button menuButton;
 	@FXML
-	private ComboBox dayComboBox;
+	private ComboBox<Integer> dayComboBox;
 	@FXML
-	private ComboBox teamComboBox;
+	private ComboBox<String> teamComboBox;
 	@FXML
 	private Button boardButton;
 	@FXML
@@ -59,7 +59,13 @@ public class LeagueRankingController implements Initializable {
 	}
 
 	public void passingData(Tournament tournamentPass) throws SQLException {
-
+//		System.out.println(tournamentPass.getName());
+//		TournamentUtil.initTournament(tournament, tournamentPass);
+//		System.out.println(tournament.getName());
+//		for(Team team : tournament.getTeamsList()) {
+//			System.out.println(team.getName());
+//		}
+		
 		text.setText(tournamentPass.getName());
 		if (tournamentPass.getTournamentType() == TournamentType.LEAGUE) {
 			boardButton.setVisible(false);
@@ -100,7 +106,7 @@ public class LeagueRankingController implements Initializable {
 		for (Day day : facade.getGroupSchedule(tournament)) {
 			dayComboBox.getItems().add(day.getNumber());
 		}
-
+		
 	}
 
 	@Override
@@ -150,24 +156,24 @@ public class LeagueRankingController implements Initializable {
 		switch (c) {
 		
 		case 4:
+			StageLoader SLM2 = new StageLoader();
+			SLM2.show("interfaces/fan/gui/resources/KnockoutPhase2.fxml", "Board", event);
+			KnockoutPhase2Controller kp2c = SLM2.getLoader().getController();
+			kp2c.passingDataToKnock2(tournament);
+			break;
+			
+		case 8:
 			StageLoader SLM4 = new StageLoader();
 			SLM4.show("interfaces/fan/gui/resources/KnockoutPhase4.fxml", "Board", event);
 			KnockoutPhase4Controller kp4c = SLM4.getLoader().getController();
 			kp4c.passingDataToKnock4(tournament);
 			break;
 			
-		case 8:
+		case 16:
 			StageLoader SLM8 = new StageLoader();
 			SLM8.show("interfaces/fan/gui/resources/KnockoutPhase8.fxml", "Board", event);
 			KnockoutPhase8Controller kp8c = SLM8.getLoader().getController();
 			kp8c.passingDataToKnock8(tournament);
-			break;
-			
-		case 16:
-			StageLoader SLM16 = new StageLoader();
-			SLM16.show("interfaces/fan/gui/resources/KnockoutPhase16.fxml", "Board", event);
-			KnockoutPhase16Controller kp16c = SLM16.getLoader().getController();
-			kp16c.passingDataToKnock16(tournament);
 			break;
 
 		}

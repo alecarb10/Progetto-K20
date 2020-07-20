@@ -1,7 +1,11 @@
 package interfaces.fan.gui.util;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import domain.tournament.Tournament;
+import domain.tournament.TournamentType;
+import interfaces.fan.gui.controller.LeagueRankingController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -62,6 +66,21 @@ public class StageLoader {
 		primaryStage.show();
 	}
 	
+	public void backToLeague(ActionEvent event, Tournament tournament) throws IOException, SQLException {
+		StageLoader SLB = new StageLoader();
+		SLB.show("interfaces/fan/gui/resources/LeagueRanking.fxml", "Ranking", event);
+		LeagueRankingController lrc = SLB.getLoader().getController();
+		lrc.passingData(tournament);
+	}
+	public void backToFanMenuOrLeague(ActionEvent event, Tournament tournament) throws IOException, SQLException {
+		if(tournament.getTournamentType() == TournamentType.MIXED) {
+			backToLeague(event, tournament);
+		}
+		if(tournament.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+		StageLoader SLB = new StageLoader();
+		SLB.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
+			}
+	}
 	
 	public FXMLLoader getLoader() {
 		return loader;

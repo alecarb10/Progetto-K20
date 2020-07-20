@@ -6,6 +6,10 @@ import interfaces.fan.gui.util.StageLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Class to run the fan GUI
+ *
+ */
 public class Main extends Application {
 
 	@Override

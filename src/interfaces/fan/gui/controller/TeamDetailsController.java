@@ -47,6 +47,7 @@ public class TeamDetailsController implements Initializable {
 	FacadeImpl facade = FacadeImpl.getInstance();
 	ObservableList<Player> players = FXCollections.observableArrayList();
 	Tournament tournamentB;
+	
 
 	public void passingData(Tournament tournamentPass, Team teamPass) throws SQLException {
 		text.setText(teamPass.getName());
@@ -76,10 +77,8 @@ public class TeamDetailsController implements Initializable {
 
 	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
 		StageLoader SLB = new StageLoader();
-		SLB.show("interfaces/fan/gui/resources/LeagueRanking.fxml", "Ranking", event);
-		LeagueRankingController lrc = SLB.getLoader().getController();
-		lrc.passingData(tournamentB);
-
+		SLB.backToLeague(event, tournamentB);
+		
 	}
 
 	@Override
