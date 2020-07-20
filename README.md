@@ -10,7 +10,7 @@ _________________________________
 
 -	Fan
 
-       o	GUI, lanciare src/interfaces/fan/gui/FanMain.java
+       o	GUI, lanciare src/interfaces/fan/gui/Main.java
        <br>
        &nbsp;&nbsp;(assicurarsi di aver inserito gli argomenti VM per javaFX)
 
