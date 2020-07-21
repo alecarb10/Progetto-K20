@@ -7,10 +7,10 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.InsertResultController">
    <children>
-      <ComboBox fx:id="cmbBoxTournament" layoutX="14.0" layoutY="14.0" onAction="#setToggleGrp" prefWidth="150.0" promptText="Select Tournament" />
-      <RadioButton fx:id="radioBtnGroup" layoutX="14.0" layoutY="63.0" mnemonicParsing="false" text="Group" />
-      <RadioButton fx:id="radioBtnBoard" layoutX="110.0" layoutY="63.0" mnemonicParsing="false" text="Board" />
-      <ComboBox fx:id="cmbBoxDay" layoutX="14.0" layoutY="102.0" onAction="#populateListViewMatches" prefWidth="150.0" promptText="Select Day" />
+      <ComboBox fx:id="cmbBoxTournament" layoutX="48.0" layoutY="14.0" onAction="#setToggleGrp" prefWidth="150.0" promptText="Select Tournament" />
+      <RadioButton fx:id="radioBtnGroup" layoutX="48.0" layoutY="63.0" mnemonicParsing="false" text="Group" />
+      <RadioButton fx:id="radioBtnBoard" layoutX="144.0" layoutY="63.0" mnemonicParsing="false" text="Board" />
+      <ComboBox fx:id="cmbBoxDay" layoutX="48.0" layoutY="102.0" onAction="#populateListViewMatches" prefWidth="150.0" promptText="Select Day" />
       <ListView fx:id="listViewMatches" layoutX="48.0" layoutY="174.0" prefHeight="324.0" prefWidth="292.0" />
    </children>
 </AnchorPane>
