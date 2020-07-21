@@ -5,7 +5,10 @@ import java.util.List;
 import domain.element.Day;
 import domain.match.Match;
 import javafx.scene.control.Label;
-
+/**
+ * Class used to populate the brackets on knokoutphase tournament
+ *
+ */
 public class TournamentUtil {
 	public static void populateBrackets(List<Day> days, int nDay, int nM, List<Label> labels) {
 		int idx = 0;

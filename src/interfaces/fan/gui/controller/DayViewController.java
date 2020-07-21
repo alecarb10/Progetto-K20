@@ -16,6 +16,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
+/**
+ * Controller to see the matches in a day
+ * @see Initializable
+ *@see Day
+ *@see Match
+ */
 public class DayViewController implements Initializable {
 	@FXML
 	private Text text;

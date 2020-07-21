@@ -1,8 +1,6 @@
 package interfaces.fan.gui.util;
 
 import java.io.IOException;
-import java.sql.SQLException;
-
 import domain.tournament.Tournament;
 import domain.tournament.TournamentType;
 import interfaces.fan.gui.controller.LeagueRankingController;
@@ -18,6 +16,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Class used to moved from stage to another stage
+ *
+ */
 public class StageLoader {
 	FXMLLoader loader;
 	Parent root;

@@ -19,7 +19,11 @@ import services.persistence.dao.impl.FacadeImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Controller for the fanMenuView
+ * @see Initializable
+ *
+ */
 public class FanMenuController implements Initializable {
 
 	@FXML

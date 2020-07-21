@@ -26,6 +26,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
+/**
+ * Controller for the team details
+ * @see Initializable
+ * @see Team
+ *
+ */
 public class TeamDetailsController implements Initializable {
 	@FXML
 	TableView<Player> table;

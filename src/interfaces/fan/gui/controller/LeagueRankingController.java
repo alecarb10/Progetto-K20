@@ -25,6 +25,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
+/**
+ * Controller for the league ranking
+ *@see Initializable
+ */
+
 public class LeagueRankingController implements Initializable {
 
 	@FXML

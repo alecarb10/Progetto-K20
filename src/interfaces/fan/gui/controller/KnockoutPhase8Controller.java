@@ -23,6 +23,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
+
 public class KnockoutPhase8Controller implements Initializable {
 	@FXML
 	Button backButton;

@@ -20,6 +20,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
+/**
+ * Controller to control the result of knockoutphase with 2 teams
+ * @see Initializable
+ * @see KnockoutPhase
+ */
 public class KnockoutPhase2Controller implements Initializable {
 	@FXML
 	Button backButton;
