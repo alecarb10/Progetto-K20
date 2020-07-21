@@ -8,16 +8,16 @@
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.AddStadiumController">
    <children>
-      <TableView fx:id="tblViewStadium" layoutX="248.0" layoutY="111.0" prefHeight="375.0" prefWidth="227.0">
+      <TableView fx:id="tblViewStadium" layoutX="246.0" layoutY="79.0" prefHeight="400.0" prefWidth="345.0">
         <columns>
-          <TableColumn fx:id="tblClmnStadiumName" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="tblClmnStadiumCity" prefWidth="75.0" text="City" />
-          <TableColumn fx:id="tblClmnStadiumCapacity" prefWidth="75.0" text="Capacity" />
+          <TableColumn fx:id="tblClmnStadiumName" prefWidth="115.0" text="Name" />
+          <TableColumn fx:id="tblClmnStadiumCity" prefWidth="115.0" text="City" />
+          <TableColumn fx:id="tblClmnStadiumCapacity" prefWidth="115.0" text="Capacity" />
         </columns>
       </TableView>
-      <TextField fx:id="txtFldStadiumName" layoutX="55.0" layoutY="175.0" promptText="Name" />
-      <TextField fx:id="txtFldStadiumCity" layoutX="55.0" layoutY="218.0" promptText="City" />
-      <TextField fx:id="txtFldStadiumCapacity" layoutX="55.0" layoutY="258.0" promptText="Capacity" />
-      <Button fx:id="btnAddStadium" layoutX="155.0" layoutY="305.0" onAction="#addStadium" mnemonicParsing="false" text="Add" />
+      <TextField fx:id="txtFldStadiumName" layoutX="55.0" layoutY="143.0" promptText="Name" />
+      <TextField fx:id="txtFldStadiumCity" layoutX="55.0" layoutY="183.0" promptText="City" />
+      <TextField fx:id="txtFldStadiumCapacity" layoutX="55.0" layoutY="223.0" promptText="Capacity" />
+      <Button fx:id="btnAddStadium" layoutX="165.0" layoutY="266.0" mnemonicParsing="false" onAction="#addStadium" text="Add" />
    </children>
 </AnchorPane>
