@@ -12,7 +12,7 @@
         <columns>
           <TableColumn fx:id="tblClmnStadiumName" prefWidth="115.0" text="Name" />
           <TableColumn fx:id="tblClmnStadiumCity" prefWidth="115.0" text="City" />
-          <TableColumn fx:id="tblClmnStadiumCapacity" prefWidth="115.0" text="Capacity" />
+          <TableColumn fx:id="tblClmnStadiumCapacity" prefWidth="110.0" text="Capacity" />
         </columns>
       </TableView>
       <TextField fx:id="txtFldStadiumName" layoutX="55.0" layoutY="143.0" promptText="Name" />
