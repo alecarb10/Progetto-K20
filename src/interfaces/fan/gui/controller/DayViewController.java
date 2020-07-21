@@ -9,7 +9,10 @@ import domain.match.Match;
 import domain.tournament.Tournament;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
@@ -22,20 +25,24 @@ public class DayViewController implements Initializable {
 	private ListView<String> matchNotPlayed;
 	FacadeImpl facade = FacadeImpl.getInstance();
 
-	public void passingDataToDay(Tournament tournamentpass, Day dayPass) throws SQLException {
+	public void passingDataToDay(Tournament tournamentpass, Day dayPass)  {
 		text.setText("DAY " + dayPass.getNumber());
-		for (Day day : facade.getGroupSchedule(tournamentpass)) {
-			if (day.getId() == dayPass.getId()) {
-				for (Match match : day.getMatchesList()) {
-					if (match.isPlayed()) {
-						matchPlayed.getItems().add(match.toString());
-					} else if (match.isPlayed() == false) {
-						matchNotPlayed.getItems().add(match.toString());
+		try {
+			for (Day day : facade.getGroupSchedule(tournamentpass)) {
+				if (day.getId() == dayPass.getId()) {
+					for (Match match : day.getMatchesList()) {
+						if (match.isPlayed()) {
+							matchPlayed.getItems().add(match.toString());
+						} else if (match.isPlayed() == false) {
+							matchNotPlayed.getItems().add(match.toString());
+						}
+
 					}
-
 				}
-			}
 
+			}
+		} catch (SQLException e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
 		}
 
 	}

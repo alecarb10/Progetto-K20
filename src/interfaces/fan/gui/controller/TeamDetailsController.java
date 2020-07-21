@@ -1,6 +1,5 @@
 package interfaces.fan.gui.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -16,10 +15,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
@@ -47,38 +49,45 @@ public class TeamDetailsController implements Initializable {
 	FacadeImpl facade = FacadeImpl.getInstance();
 	ObservableList<Player> players = FXCollections.observableArrayList();
 	Tournament tournamentB;
-	
 
-	public void passingData(Tournament tournamentPass, Team teamPass) throws SQLException {
+	public void passingData(Tournament tournamentPass, Team teamPass) {
 		text.setText(teamPass.getName());
 		tournamentB = tournamentPass;
 
-		for (Day day : facade.getGroupSchedule(tournamentPass)) {
-			for (Match match : day.getMatchesList()) {
-				if ((match.getHomeTeam().getId() == teamPass.getId() || match.getAwayTeam().getId() == teamPass.getId())
-						&& match.isPlayed()) {
-					matchesPlayed.getItems().add(match.toString());
-				} else if (match.getHomeTeam().getId() == teamPass.getId()
-						|| match.getAwayTeam().getId() == teamPass.getId()) {
-					matchesNotPlayed.getItems().add(match.toString());
+		try {
+			for (Day day : facade.getGroupSchedule(tournamentPass)) {
+				for (Match match : day.getMatchesList()) {
+					if ((match.getHomeTeam().getId() == teamPass.getId()
+							|| match.getAwayTeam().getId() == teamPass.getId()) && match.isPlayed()) {
+						matchesPlayed.getItems().add(match.toString());
+					} else if (match.getHomeTeam().getId() == teamPass.getId()
+							|| match.getAwayTeam().getId() == teamPass.getId()) {
+						matchesNotPlayed.getItems().add(match.toString());
+					}
 				}
 			}
+		} catch (SQLException e) {
+			new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
 		}
 
-		for (Team team : facade.getTeamsByTournament(tournamentPass)) {
-			if (team.getId() == teamPass.getId()) {
-				for (Player player : team.getPlayers()) {
-					players.add(player);
+		try {
+			for (Team team : facade.getTeamsByTournament(tournamentPass)) {
+				if (team.getId() == teamPass.getId()) {
+					for (Player player : team.getPlayers()) {
+						players.add(player);
+					}
 				}
 			}
+		} catch (SQLException e) {
+			new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
 		}
 
 	}
 
-	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
+	public void backButtonClicked(ActionEvent event) {
 		StageLoader SLB = new StageLoader();
 		SLB.backToLeague(event, tournamentB);
-		
+
 	}
 
 	@Override

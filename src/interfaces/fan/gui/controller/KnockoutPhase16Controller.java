@@ -1,6 +1,5 @@
 package interfaces.fan.gui.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,8 +14,11 @@ import interfaces.fan.gui.util.TournamentUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import services.persistence.dao.impl.FacadeImpl;
 
@@ -90,21 +92,34 @@ public class KnockoutPhase16Controller implements Initializable {
 	FacadeImpl facade = FacadeImpl.getInstance();
 	List<Day> days;
 	List<Label> labelDay1 = new ArrayList<>();
-	List<Label> labelDay2 = new ArrayList<>();	
+	List<Label> labelDay2 = new ArrayList<>();
 	List<Label> labelDay3 = new ArrayList<>();
 	List<Label> labelDay4 = new ArrayList<>();
 	Tournament tournament;
-	public void passingDataToKnock16(Tournament k16) throws SQLException {
+
+	public void passingDataToKnock16(Tournament k16) {
 		tournament = k16;
 		textBoard.setText(k16.getName());
-		if(k16.getTournamentType() == TournamentType.MIXED) {
-			k16.setGroupSchedule(facade.getGroupSchedule(k16));
-			if(k16.getGroup().isCompleted()) {
-				k16.setBoardSchedule(facade.getBoardSchedule(k16));
+		if (k16.getTournamentType() == TournamentType.MIXED) {
+			try {
+				k16.setGroupSchedule(facade.getGroupSchedule(k16));
+			} catch (SQLException e) {
+				new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
+			}
+			if (k16.getGroup().isCompleted()) {
+				try {
+					k16.setBoardSchedule(facade.getBoardSchedule(k16));
+				} catch (SQLException e) {
+					new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
+				}
 			}
 		}
-		if(k16.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
-			k16.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(k16));
+		if (k16.getTournamentType() == TournamentType.KNOCKOUT_PHASE) {
+			try {
+				k16.setBoardSchedule(FacadeImpl.getInstance().getBoardSchedule(k16));
+			} catch (SQLException e) {
+				new Alert(AlertType.ERROR, e.getMessage(), ButtonType.OK).show();
+			}
 		}
 
 		labelDay1.add(label1);
@@ -144,27 +159,24 @@ public class KnockoutPhase16Controller implements Initializable {
 		labelDay4.add(label29);
 		labelDay4.add(label30);
 		TournamentUtil.populateBrackets(k16.getBoardSchedule(), 3, 3, labelDay4);
-		
-		if(k16.getBoardSchedule().size() > 3){
-			if(k16.getBoardSchedule().get(3).getMatchesList().get(0).isPlayed()) {
-			label31.setText((k16.getBoardSchedule().get(3).getMatchesList().get(0).getWinner().getName()));		
+
+		if (k16.getBoardSchedule().size() > 3) {
+			if (k16.getBoardSchedule().get(3).getMatchesList().get(0).isPlayed()) {
+				label31.setText((k16.getBoardSchedule().get(3).getMatchesList().get(0).getWinner().getName()));
 			}
 		}
-		
+
 	}
-	
-	public void backButtonClicked(ActionEvent event) throws IOException, SQLException {
+
+	public void backButtonClicked(ActionEvent event) {
 		StageLoader SLB = new StageLoader();
 		SLB.backToFanMenuOrLeague(event, tournament);
 	}
 
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	
 }

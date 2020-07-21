@@ -12,6 +12,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -23,10 +26,14 @@ public class StageLoader {
 	Rectangle2D primScreenBounds;
 		
 	
-	public void show(String URL, String title, ActionEvent event) throws IOException {
+	public void show(String URL, String title, ActionEvent event)  {
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
-		root = loader.load();
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
+		}
 		scene = new Scene(root);
 		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
 		primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -38,10 +45,14 @@ public class StageLoader {
 		primaryStage.show();		
 	}
 	
-	public void show(String URL, String title, Stage primaryStage) throws IOException {
+	public void show(String URL, String title, Stage primaryStage)  {
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
-		root = loader.load();
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
+		}
 		scene = new Scene(root);
 		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
 		primaryStage.getIcons().add(new Image("interfaces/manager/gui/images/favicon.png"));
@@ -51,10 +62,14 @@ public class StageLoader {
 		primaryStage.centerOnScreen();
 		primaryStage.show();		
 	}
-	public void showDaySelected(String URL, String title, ActionEvent event) throws IOException {
+	public void showDaySelected(String URL, String title, ActionEvent event)  {
 		loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource(URL));
-		root = loader.load();
+		try {
+			root = loader.load();
+		} catch (IOException e) {
+			new Alert(AlertType.ERROR,e.getMessage(),ButtonType.OK).show();
+		}
 		scene = new Scene(root);
 		scene.getStylesheets().add("interfaces/manager/gui/style/Style.css");
 		primaryStage = new Stage();
@@ -66,13 +81,13 @@ public class StageLoader {
 		primaryStage.show();
 	}
 	
-	public void backToLeague(ActionEvent event, Tournament tournament) throws IOException, SQLException {
+	public void backToLeague(ActionEvent event, Tournament tournament)  {
 		StageLoader SLB = new StageLoader();
 		SLB.show("interfaces/fan/gui/resources/LeagueRanking.fxml", "Ranking", event);
 		LeagueRankingController lrc = SLB.getLoader().getController();
 		lrc.passingData(tournament);
 	}
-	public void backToFanMenuOrLeague(ActionEvent event, Tournament tournament) throws IOException, SQLException {
+	public void backToFanMenuOrLeague(ActionEvent event, Tournament tournament) {
 		if(tournament.getTournamentType() == TournamentType.MIXED) {
 			backToLeague(event, tournament);
 		}
@@ -81,6 +96,7 @@ public class StageLoader {
 		SLB.show("interfaces/fan/gui/resources/FanMenu.fxml", "Fan menu", event);
 			}
 	}
+	
 	
 	public FXMLLoader getLoader() {
 		return loader;
