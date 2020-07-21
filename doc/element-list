@@ -5,11 +5,8 @@ domain.team
 domain.tournament
 domain.util
 interfaces.fan.gui
-interfaces.fan.gui.view
-interfaces.fan.gui.view.element
-interfaces.fan.gui.view.knockoutphase
-interfaces.fan.gui.view.league
-interfaces.fan.gui.view.util
+interfaces.fan.gui.controller
+interfaces.fan.gui.util
 interfaces.fan.webapp
 interfaces.fan.webapp.servlet
 interfaces.manager.gui
