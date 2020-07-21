@@ -19,7 +19,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,8 +42,7 @@ import javafx.util.Pair;
 import services.persistence.dao.impl.FacadeImpl;
 
 /**
- * Controller for insert the results of matches that played into a particular
- * tournament
+ * Controller for insert the results of matches that played into a particular tournament
  * 
  * @see Initializable
  * @see Tournament
@@ -63,16 +61,15 @@ public class InsertResultController implements Initializable {
 	@FXML
 	private ListView<String> listViewMatches;
 
-	private ToggleGroup toggleGrp;
-	private ObservableList<String> tournaments, days, matches;
-	private Dialog<Pair<String, String>> dialog; // = new Dialog<>();
 	private String username;
+	private ObservableList<String> tournaments, days, matches;
+	private Dialog<Pair<String, String>> dialog;
+	private ToggleGroup toggleGrp;
 	private FacadeImpl facadeImpl;
 	private List<Tournament> tournamentsList;
 	private Tournament tournament;
 	private Match match;
 	private int indexDay;
-	// private List<Day> daysList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,31 +80,6 @@ public class InsertResultController implements Initializable {
 		days = FXCollections.observableArrayList();
 		matches = FXCollections.observableArrayList();
 		facadeImpl = FacadeImpl.getInstance();
-//		cmbBoxTournament.setOnAction((ActionEvent)->{
-//			if(toggleGrp.getSelectedToggle()!=null)
-//				toggleGrp.getSelectedToggle().setSelected(false);
-//			GraphicControlsHandler.resetComboBox(cmbBoxDay, "Select Day");
-//			tournament=getTournament(cmbBoxTournament.getSelectionModel().getSelectedItem());
-//			radioBtnAutoSelection(tournament);
-//			try {
-//				days.clear();
-//				if(radioBtnGroup.isSelected()) {
-//					tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
-//					for(Day d:tournament.getGroupSchedule()) 
-//						days.add(Integer.toString(d.getNumber()));
-//				}
-//				else if(radioBtnBoard.isSelected()) {
-//					tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
-//					for(Day d:tournament.getBoardSchedule())
-//						days.add(Integer.toString(d.getNumber()));			
-//				}
-//				cmbBoxDay.setItems(days);
-//			
-//			} catch (Exception ex) {
-//				ex.printStackTrace();
-//			}
-//			
-//		});
 		toggleGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 			@Override
 			public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
@@ -137,90 +109,6 @@ public class InsertResultController implements Initializable {
 				}
 			}
 		});
-//		cmbBoxDay.setOnAction((ActionEvent)->{
-//			matches.clear();		
-//			Day selectedDay=null;
-//			if(cmbBoxDay.getValue()!=null) {
-//				indexDay=Integer.parseInt(cmbBoxDay.getSelectionModel().getSelectedItem())-1;	
-//				if(radioBtnGroup.isSelected()) 
-//					selectedDay=tournament.getGroupSchedule().get(indexDay);
-//				else if(radioBtnBoard.isSelected())
-//					selectedDay=tournament.getBoardSchedule().get(indexDay);
-//				for(Match m: selectedDay.getMatchesList()){
-//					matches.add(String.format("%s vs. %s", m.getHomeTeam().getName().toUpperCase(),m.getAwayTeam().getName().toUpperCase()));
-//				}
-//				this.listViewMatches.setItems(matches);
-//				this.listViewMatches.setCellFactory(TextFieldListCell.forListView());
-//				this.listViewMatches.setOnMouseClicked(new EventHandler<MouseEvent>(){
-//
-//					@Override
-//					public void handle(MouseEvent event) {
-//						if(event.getClickCount()==2) {
-//							int indexMatch=listViewMatches.getSelectionModel().getSelectedIndex();
-//								if(radioBtnGroup.isSelected())	
-//									match= tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch);
-//								else if(radioBtnBoard.isSelected())
-//								match= tournament.getBoardSchedule().get(indexDay).getMatchesList().get(indexMatch);
-//							Optional<Pair<String,String>> result=getDialogResult(match);
-//							result.ifPresent(score-> {
-//								String matchScore[]=score.getValue().trim().split("-");
-//								int homeScore=Integer.parseInt(matchScore[0]);
-//								int awayScore=Integer.parseInt(matchScore[1]);
-//								try {
-//									int scheduleSize=-1;
-//									if(radioBtnBoard.isSelected()) {
-//										scheduleSize=tournament.getBoardSchedule().size();
-//										if(homeScore==awayScore) {
-//											new Alert(AlertType.ERROR,"You can't insert a draw in board.",ButtonType.OK).show();
-//											dialog.close();
-//											return;
-//										}
-//									}
-//									if (tournament.insertScore(indexDay + 1, match, homeScore, awayScore)) {
-//										if(radioBtnGroup.isSelected()) {
-//											if (facadeImpl.updateMatch(tournament.getGroupSchedule().get(indexDay).getMatchesList().get(indexMatch))) {
-//												tournament.setGroupSchedule(facadeImpl.getGroupSchedule(tournament));
-//												if(tournament.getGroup().isCompleted()&&!radioBtnGroup.isDisable()) {
-//													tournament.addTeams(facadeImpl.getTeamsByTournament(tournament));
-//													tournament.initBoard(tournament.getTeamsList());												
-//													facadeImpl.storeBoard(tournament);
-//													tournament.getBoard().setId(facadeImpl.getLastElementID(tournament.getBoard()));
-//													for(Team team:tournament.getTeamsList())
-//														facadeImpl.updateTeam(tournament, team);
-//													facadeImpl.storeSchedule(tournament.getBoardSchedule(), tournament);
-//												}
-//											}
-//										}
-//										else if(radioBtnBoard.isSelected()) {
-//											if (facadeImpl.updateMatch(tournament.getBoardSchedule().get(indexDay).getMatchesList().get(indexMatch))) {				
-//												if (tournament.getBoardSchedule().size() > scheduleSize) {
-//													tournament.getBoard().setId(facadeImpl.getBoardIDByTournament(tournament));
-//													if (facadeImpl.storeDay(tournament.getBoardSchedule().get(tournament.getBoardSchedule().size() - 1), tournament)) {
-//														days.clear();
-//														for(Day d:tournament.getBoardSchedule())
-//															days.add(Integer.toString(d.getNumber()));	
-//														cmbBoxDay.getSelectionModel().selectLast();
-//													}
-//														
-//												}
-//												tournament.setBoardSchedule(facadeImpl.getBoardSchedule(tournament));
-//											}
-//											
-//										}									
-//									}
-//								}catch (Exception ex) {
-//									ex.printStackTrace();
-//								}
-//								
-//							});
-//						}
-//					}
-//					
-//				});
-//			}
-//			
-//		});
-
 	}
 
 	private Optional<Pair<String, String>> getDialogResult(Match match) {
