@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="interfaces.manager.gui.controller.ProfileController">
@@ -14,10 +14,13 @@
          <image>
              <Image url="@/interfaces/manager/gui/images/profile.jpg" />
          </image></ImageView>
-      <Text fx:id="txtUsername" layoutX="304.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
-      <TextField fx:id="txtFldName" layoutX="304.0" layoutY="83.0" promptText="Name" /> 
-      <TextField fx:id="txtFldSurname" layoutX="304.0" layoutY="121.0" promptText="Surname" />
-      <Button fx:id="btnDelete" layoutX="54.0" layoutY="462.0" onAction="#deleteManager" mnemonicParsing="false" text="Delete Profile" />
-      <Button layoutX="503.0" layoutY="233.0" onAction="#saveManagerInfo" mnemonicParsing="false" text="Save" />
+      <Text fx:id="txtUsername" layoutX="300.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <TextField fx:id="txtFldName" layoutX="304.0" layoutY="110.0" promptText="Name" /> 
+      <TextField fx:id="txtFldSurname" layoutX="304.0" layoutY="150.0" promptText="Surname" />
+      <Button fx:id="btnDelete" layoutX="54.0" layoutY="462.0" mnemonicParsing="false" onAction="#deleteManager" text="Delete Profile" />
+      <Button layoutX="411.0" layoutY="200.0" mnemonicParsing="false" onAction="#saveManagerInfo" text="Save" />
    </children>
 </AnchorPane>

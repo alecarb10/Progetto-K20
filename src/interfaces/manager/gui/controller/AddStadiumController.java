@@ -30,11 +30,6 @@ import services.persistence.dao.impl.FacadeImpl;
 
 public class AddStadiumController implements Initializable {
 
-//	@FXML
-//	private ComboBox<String> cmbBoxTournament;
-//	
-//	private String username;
-//	private ObservableList<String> tournaments = FXCollections.observableArrayList();
 	@FXML
 	private TextField txtFldStadiumName, txtFldStadiumCity, txtFldStadiumCapacity;
 	@FXML

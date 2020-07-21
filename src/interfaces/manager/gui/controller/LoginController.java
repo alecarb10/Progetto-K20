@@ -3,8 +3,6 @@ package interfaces.manager.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicHandler;

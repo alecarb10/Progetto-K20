@@ -13,17 +13,12 @@ import domain.tournament.KnockoutPhase;
 import domain.tournament.League;
 import domain.tournament.MixedTournament;
 import domain.tournament.Tournament;
-import interfaces.manager.gui.util.Constants;
 import interfaces.manager.gui.util.GraphicControlsHandler;
-import interfaces.manager.gui.util.GraphicHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -34,7 +29,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 import services.persistence.dao.impl.FacadeImpl;
 
 /**
@@ -64,21 +58,8 @@ public class CreateTournamentController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		facadeImpl=FacadeImpl.getInstance();
 		this.cmbBoxType.setItems(FXCollections.observableArrayList("League", "Knockout Phase", "Mixed"));
-//		this.cmbBoxType.setOnAction((ActionEvent) -> {
-//			this.cmbBoxSize.setItems(this.getSizesList());
-//		});
 		teams = FXCollections.observableArrayList();
 		initListViewTeams();
-//		txtFldTeam.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//			@Override
-//			public void handle(KeyEvent keyEvent) {
-//				if (keyEvent.getCode().equals(KeyCode.ENTER))
-//					addTeam();
-//			}
-//		});
-//		this.btnAddTeam.setOnAction((ActionEvent) -> {
-//			addTeam();
-//		});
 	}
 
 	public void removeTeamFromList(ActionEvent event) {
