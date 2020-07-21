@@ -20,18 +20,21 @@
             <HBox prefHeight="31.0" prefWidth="233.0">
                <children>
                   <TextField fx:id="txtFldTeam" onKeyPressed="#handleEnterOnAddTeam" prefHeight="25.0" prefWidth="137.0" promptText="Team Name" />
-                  <Button fx:id="btnAddTeam" onAction="#addTeamInList" mnemonicParsing="false" text="Add">
+                  <Button fx:id="btnAddTeam" mnemonicParsing="false" onAction="#addTeamInList" prefHeight="25.0" prefWidth="67.0" text="Add">
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#removeTeamFromList" text="Delete" />
+                  <Button mnemonicParsing="false" onAction="#removeTeamFromList" prefHeight="25.0" prefWidth="90.0" text="Delete">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <ListView fx:id="listViewTeams" prefHeight="283.0" prefWidth="217.0" />
          </children>
       </VBox>
-      <Button fx:id="btnCreate" layoutX="478.0" layoutY="504.0" onAction="#createTournament" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Create" />
+      <Button fx:id="btnCreate" layoutX="478.0" layoutY="504.0" mnemonicParsing="false" onAction="#createTournament" prefHeight="25.0" prefWidth="85.0" text="Create" />
       <Text layoutX="43.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teams:" />
    </children>
 </AnchorPane>
